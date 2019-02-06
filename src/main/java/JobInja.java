@@ -2,7 +2,7 @@ import java.util.*;
 
 public class JobInja {
     private ArrayList<Bid> BidList = new ArrayList<Bid>();
-    private ArrayList<Project> ProjectList = new ArrayList<Project>();
+    private static ArrayList<Project> ProjectList = new ArrayList<Project>();
     private ArrayList<User> UserList = new ArrayList<User>();
 
     public ArrayList<Bid> getBidList() {
@@ -31,6 +31,15 @@ public class JobInja {
             newProject.addSkill(key, value);
         }
         ProjectList.add(newProject);
+    }
+
+    public static Project findItemInProjectList(String title) {
+        for(Project p : ProjectList) {
+            if(p.getTitle().equals(title)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     public ArrayList<User> getUserList() {
