@@ -17,7 +17,6 @@ public class Bid{
 
     public void setBiddingAmount(int budget){
         this.biddingAmount = budget;
-
     }
 
     public void setBiddingUser(String usernme){

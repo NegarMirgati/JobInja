@@ -18,7 +18,6 @@ public class Project {
 
     public void setBudget(int budget){
         this.budget = budget;
-
     }
 
     public void addSkill(String name, int score){

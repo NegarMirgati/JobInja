@@ -4,6 +4,7 @@ public class BidCommand implements Command {
     private String projectTitle;
     private int biddingAmount;
     private String biddingUser;
+
     public BidCommand(String projectTitle, int biddingAmount, String biddingUser){
         this.projectTitle = projectTitle;
         this.biddingAmount = biddingAmount;
@@ -16,6 +17,7 @@ public class BidCommand implements Command {
     private void checkCommand() {
         Project selectedProject =  JobInja.findItemInProjectList(projectTitle);
         User selectedUser = JobInja.findItemInUserList(biddingUser);
+
         if (selectedProject != null && selectedUser != null && biddingAmount <= selectedProject.getBudget()){
             if ( checkSkills( selectedProject.getSkills(),selectedUser.getSkills() )== true) {
                 JobInja.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
@@ -40,7 +42,6 @@ public class BidCommand implements Command {
             } else {
                 return true;
             }
-
         }
         return true;
     }
