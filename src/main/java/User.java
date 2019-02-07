@@ -4,6 +4,11 @@ public class User {
     private String username;
     private HashMap<String, Integer> skills;
 
+    public User(String username, HashMap<String, Integer> skills) {
+        this.username = username;
+        this.skills = skills;
+    }
+
     public void setUsername(String username){
         this.username = username;
     }

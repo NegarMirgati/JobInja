@@ -1,9 +1,15 @@
 import java.util.HashMap;
 
-public class Bid {
+public class Bid{
     private String projectTitle;
     private int biddingAmount;
     private String biddingUser;
+
+    public Bid(String projectTitle, int biddingAmount, String biddingUser) {
+        this.projectTitle = projectTitle;
+        this.biddingAmount = biddingAmount;
+        this.biddingUser = biddingUser;
+    }
 
     public void setProjectTitle(String title){
         this.projectTitle = title;

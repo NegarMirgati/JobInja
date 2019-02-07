@@ -6,6 +6,12 @@ public class Project {
     private HashMap<String, Integer> skills;
     private int budget;
 
+    public Project(String title, HashMap<String, Integer> skills, int budget) {
+        this.title = title;
+        this.skills = skills;
+        this.budget = budget;
+    }
+
     public void setTitle(String title){
         this.title = title;
     }
