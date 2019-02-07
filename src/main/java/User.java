@@ -6,7 +6,7 @@ public class User {
 
     public User(String username, HashMap<String, Integer> skills) {
         this.username = username;
-        this.skills = skills;
+        this.skills = new HashMap<String, Integer>(skills);
     }
 
     public void setUsername(String username){

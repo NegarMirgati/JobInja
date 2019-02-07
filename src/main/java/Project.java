@@ -8,7 +8,7 @@ public class Project {
 
     public Project(String title, HashMap<String, Integer> skills, int budget) {
         this.title = title;
-        this.skills = skills;
+        this.skills = new HashMap<String, Integer>(skills);
         this.budget = budget;
     }
 
