@@ -20,6 +20,9 @@ public class BidCommand implements Command {
             if ( checkSkills( selectedProject.getSkills(),selectedUser.getSkills() )== true) {
                 JobInja.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
             }
+            else {
+                System.out.println("BidCommand not executed (inadequate skills)");
+            }
         }
         else {
             System.out.println("BidCommand not executed");
