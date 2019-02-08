@@ -36,7 +36,7 @@ public class BidCommand implements Command {
 
             if (USkills.containsKey(name)) {
 
-                if (USkills.get(name) <= PSkills.get(name)) {
+                if (USkills.get(name) < PSkills.get(name)) {
                    return false;
                 }
             } else {

@@ -1,5 +1,3 @@
-import com.sun.tools.javac.code.Attribute;
-
 import java.util.*;
 
 public class JobInja {
@@ -51,7 +49,8 @@ public class JobInja {
         Project p = projectList.get(projectTitle);
         int jobOffer = p.getBudget();
         ArrayList<Bid> projectBids = bidList.get(projectTitle);
-
+        if(projectBids == null)
+            return;
         for (Bid b : projectBids) {
             currentValue = 0;
             User u = findItemInUserList(b.getBiddingUser());
