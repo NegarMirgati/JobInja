@@ -21,6 +21,7 @@ public class BidCommand implements Command {
         if (selectedProject != null && selectedUser != null && biddingAmount <= selectedProject.getBudget()){
             if ( checkSkills( selectedProject.getSkills(),selectedUser.getSkills() )== true) {
                 JobInja.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
+                System.out.println(biddingUser);
             }
          //   else {
                 //System.out.println("BidCommand not executed (inadequate skills)");
@@ -33,14 +34,12 @@ public class BidCommand implements Command {
 
     private boolean checkSkills(HashMap<String, Integer> PSkills , HashMap<String, Integer> USkills) {
         for (String name: PSkills.keySet()) {
-
             if (USkills.containsKey(name)) {
-
                 if (USkills.get(name) < PSkills.get(name)) {
                    return false;
                 }
             } else {
-                return true;
+                return false;
             }
         }
         return true;
