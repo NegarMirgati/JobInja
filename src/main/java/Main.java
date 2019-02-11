@@ -1,5 +1,4 @@
 import javafx.util.Pair;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {

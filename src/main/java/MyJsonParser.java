@@ -67,7 +67,6 @@ public class MyJsonParser {
         } else {
             System.out.println("ERR : incorrect input format.");
             return null;
-
         }
     }
 
