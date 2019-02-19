@@ -10,26 +10,28 @@ public class Main {
             Pair<String, String> commandParts = getCommandParts();
             String commandName = commandParts.getKey();
             String commandData = commandParts.getValue();
+            Command cmd;
 
             switch (commandName) {
                 case "register":
-                    Command Register = MyJsonParser.parseUserInfo(commandData);
-                    Register.execute();
+                    cmd = MyJsonParser.parseUserInfo(commandData);
                     break;
                 case "addProject":
-                    Command addProject = MyJsonParser.parseProjectInfo(commandData);
-                    addProject.execute();
+                    cmd =  MyJsonParser.parseProjectInfo(commandData);
                     break;
                 case "bid":
-                    Command bid = MyJsonParser.parseBidInfo(commandData);
-                    bid.execute();
+                    cmd =  MyJsonParser.parseBidInfo(commandData);
                     break;
                 case "auction":
-                    Command auction = MyJsonParser.parseAuctionInfo(commandData);
-                    auction.execute();
+                    cmd = MyJsonParser.parseAuctionInfo(commandData);
                     isFinished = true;
                     break;
+                default :
+                    cmd = null;
+                    break;
             }
+            if(cmd != null)
+                cmd.execute();
         }
     }
 
