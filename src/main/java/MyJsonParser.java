@@ -27,7 +27,7 @@ public class MyJsonParser {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
             String userName = jsonObject.get("username").getAsString();
             JsonElement skills = jsonObject.get("skills");
-            HashMap<String, Integer> skillsMap = parseSkills(skills);
+            HashMap<String, Skill> skillsMap = parseSkills(skills);
             Command registerCommand  = new RegisterCommand(userName, skillsMap);
             return registerCommand;
 
@@ -60,7 +60,7 @@ public class MyJsonParser {
             String title = jsonObject.get("title").getAsString();
             int budget = jsonObject.get("budget").getAsInt();
             JsonElement skills = jsonObject.get("skills");
-            HashMap<String, Integer> skillsMap = parseSkills(skills);
+            HashMap<String, Skill> skillsMap = parseSkills(skills);
             Command addProjectCommand = new AddProjectCommand(title, skillsMap, budget);
             return addProjectCommand;
 
@@ -70,9 +70,9 @@ public class MyJsonParser {
         }
     }
 
-    private static HashMap<String, Integer> parseSkills(JsonElement skills){
+    private static HashMap<String, Skill> parseSkills(JsonElement skills){
         JsonArray array = skills.getAsJsonArray();
-        HashMap<String, Integer> skillsMap = new HashMap<String, Integer>();
+        HashMap<String, Skill> skillsMap = new HashMap<String, Skill>();
         for (int i = 0; i < array.size(); i++) {
             JsonObject reader = array.get(i).getAsJsonObject();
             Set set = reader.entrySet();
@@ -87,11 +87,14 @@ public class MyJsonParser {
                     java.util.Map.Entry<String, JsonElement> f = it.next();
                     String key = f.getKey();
                     if (key.equals("name")) {
-                        skillsMap.put(f.getValue().getAsString(), 0);
-                        currentKey = f.getValue().getAsString();
+                        String skillName = f.getValue().getAsString();
+                        Skill s = new Skill(skillName, 0);
+                        skillsMap.put(skillName, s);
+                        currentKey = skillName;
                     }
                     else if (key.equals("points")) {
-                        skillsMap.put(currentKey, f.getValue().getAsInt());
+                        Skill s = new Skill(currentKey, f.getValue().getAsInt());
+                        skillsMap.put(currentKey, s);
                     }
                 }
             }

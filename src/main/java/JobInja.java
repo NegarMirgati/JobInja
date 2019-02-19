@@ -20,7 +20,7 @@ public class JobInja {
         return projectList;
     }
 
-    public static void addProject(String title, HashMap<String, Integer> skills, int budget) {
+    public static void addProject(String title, HashMap<String, Skill> skills, int budget) {
         Project newProject = new Project(title, skills, budget);
         projectList.put(title, newProject);
     }
@@ -37,7 +37,7 @@ public class JobInja {
         return userList;
     }
 
-    public static void addUser(String username, HashMap<String, Integer> skills) {
+    public static void addUser(String username, HashMap<String, Skill> skills) {
         User newUser = new User(username, skills);
         userList.put(username, newUser);
     }
@@ -67,13 +67,13 @@ public class JobInja {
     }
 
     public static int calculatePartialValue(User u, Project p){
-        HashMap<String, Integer> userSkills = u.getSkills();
-        HashMap<String, Integer> projectSkills = p.getSkills();
+        HashMap<String, Skill> userSkills = u.getSkills();
+        HashMap<String, Skill> projectSkills = p.getSkills();
         int currentValue = 0;
-        for (Map.Entry<String, Integer> entry : projectSkills.entrySet()) {
+        for (Map.Entry<String, Skill> entry : projectSkills.entrySet()) {
             String key = entry.getKey();
-            Integer jobSkill = entry.getValue();
-            Integer userSkill = userSkills.get(key);
+            Integer jobSkill = entry.getValue().getPoint();
+            Integer userSkill = userSkills.get(key).getPoint();
             currentValue += 10000 * Math.pow(userSkill - jobSkill, 2);
         }
         return currentValue;

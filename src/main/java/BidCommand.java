@@ -19,16 +19,16 @@ public class BidCommand implements Command {
         User selectedUser = JobInja.findItemInUserList(biddingUser);
 
         if (selectedProject != null && selectedUser != null && biddingAmount <= selectedProject.getBudget()){
-            if ( checkSkills( selectedProject.getSkills(),selectedUser.getSkills() )== true) {
+            if (hasRequiredSkills( selectedProject.getSkills(),selectedUser.getSkills())) {
                 JobInja.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
             }
         }
     }
 
-    private boolean checkSkills(HashMap<String, Integer> PSkills , HashMap<String, Integer> USkills) {
+    private boolean hasRequiredSkills(HashMap<String, Skill> PSkills , HashMap<String, Skill> USkills) {
         for (String name: PSkills.keySet()) {
             if (USkills.containsKey(name)) {
-                if (USkills.get(name) < PSkills.get(name)) {
+                if (USkills.get(name).getPoint() < PSkills.get(name).getPoint()) {
                    return false;
                 }
             } else {

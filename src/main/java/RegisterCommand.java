@@ -2,11 +2,11 @@ import java.util.HashMap;
 
 public class RegisterCommand implements Command{
     private String username;
-    private HashMap<String, Integer> skills;
+    private HashMap<String, Skill> skills;
 
-    public RegisterCommand(String username, HashMap<String, Integer> skills) {
+    public RegisterCommand(String username, HashMap<String, Skill> skills) {
         this.username = username;
-        this.skills = new HashMap<String, Integer>(skills);
+        this.skills = new HashMap<String, Skill>(skills);
     }
 
     public void execute() {
