@@ -4,9 +4,15 @@ public class JobInja {
     private static HashMap<String, ArrayList<Bid>> bidList = new HashMap<String, ArrayList<Bid>>();
     private static HashMap<String, Project> projectList = new HashMap<String, Project>();
     private static HashMap<String, User> userList = new HashMap<String, User>();
+    private static HashMap<String, Skill> skillList = new HashMap<String, Skill>();
 
     public static HashMap<String, ArrayList<Bid>> getBidList() {
         return bidList;
+    }
+
+    public static void addSkill(String name, int point ){
+        Skill newSkill = new Skill(name, point);
+        skillList.put(name, newSkill);
     }
 
     public static void addBid(String projectTitle, int biddingAmount, String biddingUser) {
@@ -89,5 +95,13 @@ public class JobInja {
             Project p = entry.getValue();
             System.out.println("key: " + key + "  id:" + p.getId() + "  title: " + p.getTitle() );
         }
-    } */
+    }
+    public static void printSkills() {
+        for (Map.Entry<String, Skill> entry : skillList.entrySet()) {
+            String key = entry.getKey();
+            Skill s = entry.getValue();
+            System.out.println("key: " + key + "  name:" + s.getName() + "  point: " + s.getPoint() );
+     }
+    }
+    */
 }

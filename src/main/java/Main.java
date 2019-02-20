@@ -13,7 +13,9 @@ public class Main {
 
     public static void main(String[] args) throws MalformedURLException {
         addProjects();
-        JobInja.printProjects();
+        addSkills();
+        //JobInja.printProjects();
+       // JobInja.printSkills();
 
         while (!isFinished) {
             Pair<String, String> commandParts = getCommandParts();
@@ -52,6 +54,19 @@ public class Main {
         try {
             ArrayList<JsonElement> projectlist =  connection.httpGet(new URL("http://142.93.134.194:8000/joboonja/project"));
             ArrayList<Command> command_list = MyJsonParser.parseProjectList(projectlist);
+            for (Command command : command_list) {
+                command.execute();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void addSkills(){
+        HttpConnection connection = new HttpConnection();
+        try {
+            ArrayList<JsonElement> skillList =  connection.httpGet(new URL("http://142.93.134.194:8000/joboonja/skill"));
+            ArrayList<Command> command_list = MyJsonParser.parseSkillList(skillList);
             for (Command command : command_list) {
                 command.execute();
 

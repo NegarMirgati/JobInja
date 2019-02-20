@@ -61,7 +61,6 @@ public class MyJsonParser {
         }
         return c;
     }
-
     public static Command parseProjectInfo(String json) {
         JsonElement jsonTree = parser.parse(json);
         if (jsonTree.isJsonObject()) {
@@ -71,7 +70,7 @@ public class MyJsonParser {
             String description = jsonObject.get("description").getAsString();
             String imageURL  = jsonObject.get("imageUrl").getAsString();
             int budget = jsonObject.get("budget").getAsInt();
-            long deadline = jsonObject.get("deadline").getAsInt();
+            long deadline = jsonObject.get("deadline").getAsLong();
             JsonElement skills = jsonObject.get("skills");
             HashMap<String, Skill> skillsMap = parseSkills(skills);
             Command addProjectCommand = new AddProjectCommand(id, title, description, imageURL, budget, deadline, skillsMap);
@@ -112,9 +111,32 @@ public class MyJsonParser {
                 }
             }
         }
-    return skillsMap;
+        return skillsMap;
     }
 
+    public static ArrayList<Command> parseSkillList (ArrayList<JsonElement> list) {
+        ArrayList<Command> c = new ArrayList<Command>();
+        for (JsonElement temp : list) {
+            c.add(parseSkillInfo(temp.toString()));
+        }
+        return c;
+    }
+    public static Command parseSkillInfo(String json) {
+        JsonElement jsonTree = parser.parse(json);
+        if (jsonTree.isJsonObject()) {
+            JsonObject jsonObject = jsonTree.getAsJsonObject();
+            String name = jsonObject.get("name").getAsString();
+            //int point = jsonObject.get("point").getAsInt();
+            Command addSkillCommand = new AddSkillCommand(name,-1);
+            return addSkillCommand;
+
+        } else {
+            System.out.println("ERR : incorrect input format.");
+            return null;
+        }
+    }
+
+
+
+
 }
-
-

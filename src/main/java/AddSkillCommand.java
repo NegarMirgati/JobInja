@@ -1,0 +1,13 @@
+public class AddSkillCommand implements Command {
+    private String name;
+    private int point;
+
+    public AddSkillCommand (String name, int point){
+        this.name = name;
+        this.point = point;
+    }
+
+    public void execute(){
+        JobInja.addSkill(this.name , this.point);
+    }
+}
