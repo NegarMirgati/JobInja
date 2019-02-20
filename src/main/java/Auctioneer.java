@@ -1,65 +1,19 @@
 import java.util.*;
 
-public class JobInja {
-    private static HashMap<String, ArrayList<Bid>> bidList = new HashMap<String, ArrayList<Bid>>();
-    private static HashMap<String, Project> projectList = new HashMap<String, Project>();
-    private static HashMap<String, User> userList = new HashMap<String, User>();
-    private static HashMap<String, Skill> skillList = new HashMap<String, Skill>();
-
-    public static HashMap<String, ArrayList<Bid>> getBidList() {
-        return bidList;
-    }
-
-    public static void addSkill(String name, int point ){
-        Skill newSkill = new Skill(name, point);
-        skillList.put(name, newSkill);
-    }
-
-    public static void addBid(String projectTitle, int biddingAmount, String biddingUser) {
-        Bid newBid = new Bid( projectTitle, biddingAmount, biddingUser);
-        if(!bidList.containsKey(projectTitle))
-            bidList.put(projectTitle, new ArrayList<Bid>());
-        bidList.get(projectTitle).add(newBid);
-    }
-
-    public static HashMap<String, Project> getProjectList() {
-        return projectList;
-    }
-
-    public static void addProject(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills) {
-        Project newProject = new Project(id, title, description, imageURL, budget, deadline, skills);
-        projectList.put(title, newProject);
-    }
-
-    public static Project findItemInProjectList(String title) {
-        return projectList.get(title);
-    }
-
-    public static User findItemInUserList(String username) {
-        return userList.get(username);
-    }
-
-    public static HashMap<String, User> getUserList() {
-        return userList;
-    }
-
-    public static void addUser(String username, HashMap<String, Skill> skills) {
-        User newUser = new User(username, skills);
-        userList.put(username, newUser);
-    }
+public class Auctioneer {
 
     public static void performAuction(String projectTitle) {
         int bestValue = Integer.MIN_VALUE;
         int currentValue = 0;
         String bestUser = "";
-        Project p = projectList.get(projectTitle);
+        Project p = ProjectRepo.findItemInProjectList(projectTitle);
         int jobOffer = p.getBudget();
-        ArrayList<Bid> projectBids = bidList.get(projectTitle);
+        ArrayList<Bid> projectBids = BidRepo.getBids(projectTitle);
         if(projectBids == null)
             return;
         for (Bid b : projectBids) {
             currentValue = 0;
-            User u = findItemInUserList(b.getBiddingUser());
+            User u = UserRepo.findItemInUserList(b.getBiddingUser());
             currentValue += calculatePartialValue(u, p);
             Integer userOffer = b.getBiddingAmount();
             currentValue += jobOffer - userOffer;
