@@ -1,3 +1,6 @@
+package User;
+import Skill.*;
+
 import java.util.HashMap;
 
 public class User {

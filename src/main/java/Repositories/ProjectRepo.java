@@ -1,3 +1,7 @@
+package Repositories;
+import Project.*;
+import Skill.*;
+
 import java.util.HashMap;
 
 public class ProjectRepo {

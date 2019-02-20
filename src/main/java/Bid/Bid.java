@@ -1,4 +1,4 @@
-import java.util.HashMap;
+package Bid;
 
 public class Bid{
     private String projectTitle;

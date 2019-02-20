@@ -1,3 +1,7 @@
+package Repositories;
+
+import Bid.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

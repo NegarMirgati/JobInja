@@ -1,3 +1,9 @@
+package Commands;
+import User.*;
+import Project.*;
+import Repositories.*;
+import Skill.*;
+
 import java.util.HashMap;
 
 public class BidCommand implements Command {

@@ -1,3 +1,7 @@
+package Commands;
+import Repositories.*;
+import Skill.*;
+
 import java.util.HashMap;
 
 public class RegisterCommand implements Command{

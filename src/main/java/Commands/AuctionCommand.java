@@ -1,3 +1,7 @@
+package Commands;
+
+import Auctioneer.*;
+
 public class AuctionCommand implements Command {
     private String projectTitle;
 

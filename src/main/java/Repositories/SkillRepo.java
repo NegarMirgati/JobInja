@@ -1,3 +1,5 @@
+package Repositories;
+import Skill.*;
 import java.util.HashMap;
 
 public class SkillRepo {

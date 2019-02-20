@@ -1,3 +1,7 @@
+package Commands;
+
+import Repositories.*;
+
 public class AddSkillCommand implements Command {
     private String name;
     private int point;

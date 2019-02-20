@@ -1,3 +1,7 @@
+package  Project;
+import Skill.*;
+import Bid.*;
+import User.*;
 import java.util.*;
 
 public class Project {

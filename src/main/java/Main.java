@@ -1,3 +1,4 @@
+import Commands.*;
 import com.google.gson.JsonElement;
 import javafx.util.Pair;
 
@@ -14,8 +15,6 @@ public class Main {
     public static void main(String[] args) throws MalformedURLException {
         addProjects();
         addSkills();
-        //JobInja.printProjects();
-       // JobInja.printSkills();
 
         while (!isFinished) {
             Pair<String, String> commandParts = getCommandParts();

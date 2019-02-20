@@ -1,3 +1,6 @@
+import Commands.*;
+import Skill.*;
+
 import com.google.gson.*;
 import java.util.*;
 

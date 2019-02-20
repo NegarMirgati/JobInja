@@ -1,3 +1,6 @@
+package Commands;
+import Repositories.ProjectRepo;
+import Skill.*;
 import java.util.HashMap;
 
 public class AddProjectCommand implements Command{
@@ -21,6 +24,6 @@ public class AddProjectCommand implements Command{
 
     public void execute() {
 
-        JobInja.addProject(this.id, this.title, this.description, this.imageURL, this.budget, this.deadline, this.skills);
+        ProjectRepo.addProject(this.id, this.title, this.description, this.imageURL, this.budget, this.deadline, this.skills);
     }
 }
