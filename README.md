@@ -14,3 +14,4 @@ JobInja is a job-finding system for programmers. The base logic for assigning pr
 
 * [Command Pattern With Java Examples](https://dzone.com/articles/design-patterns-command)
 * [Comparison between some JSON libraries](https://blog.overops.com/the-ultimate-json-library-json-simple-vs-gson-vs-jackson-vs-json/)
+* [Simple HTTP Request in java](https://www.baeldung.com/java-http-request)
