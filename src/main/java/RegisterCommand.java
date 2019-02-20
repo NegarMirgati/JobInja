@@ -9,8 +9,7 @@ public class RegisterCommand implements Command{
         this.skills = new HashMap<String, Skill>(skills);
     }
 
-    public void execute() {
-       JobInja.addUser(this.username, this.skills);
+    public void execute() { UserRepo.addUser(this.username, this.skills);
     }
 
 }

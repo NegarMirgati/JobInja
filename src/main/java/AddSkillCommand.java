@@ -8,6 +8,6 @@ public class AddSkillCommand implements Command {
     }
 
     public void execute(){
-        JobInja.addSkill(this.name , this.point);
+        SkillRepo.addSkill(this.name , this.point);
     }
 }

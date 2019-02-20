@@ -15,12 +15,12 @@ public class BidCommand implements Command {
      }
 
     private void checkCommand() {
-        Project selectedProject =  JobInja.findItemInProjectList(projectTitle);
-        User selectedUser = JobInja.findItemInUserList(biddingUser);
+        Project selectedProject =  ProjectRepo.findItemInProjectList(projectTitle);
+        User selectedUser = UserRepo.findItemInUserList(biddingUser);
 
         if (selectedProject != null && selectedUser != null && biddingAmount <= selectedProject.getBudget()){
             if (hasRequiredSkills( selectedProject.getSkills(),selectedUser.getSkills())) {
-                JobInja.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
+                BidRepo.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
             }
         }
     }

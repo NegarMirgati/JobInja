@@ -6,6 +6,6 @@ public class AuctionCommand implements Command {
     }
 
     public void execute(){
-        JobInja.performAuction(this.projectTitle);
+        Auctioneer.performAuction(this.projectTitle);
     }
 }
