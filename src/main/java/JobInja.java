@@ -20,8 +20,8 @@ public class JobInja {
         return projectList;
     }
 
-    public static void addProject(String title, HashMap<String, Skill> skills, int budget) {
-        Project newProject = new Project(title, skills, budget);
+    public static void addProject(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills) {
+        Project newProject = new Project(id, title, description, imageURL, budget, deadline, skills);
         projectList.put(title, newProject);
     }
 
@@ -82,4 +82,12 @@ public class JobInja {
     public static void printWinner(String username){
         System .out.println("-> winner: " + username);
     }
+/*
+    public static void printProjects() {
+        for (Map.Entry<String, Project> entry : projectList.entrySet()) {
+            String key = entry.getKey();
+            Project p = entry.getValue();
+            System.out.println("key: " + key + "  id:" + p.getId() + "  title: " + p.getTitle() );
+        }
+    } */
 }

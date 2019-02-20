@@ -53,15 +53,28 @@ public class MyJsonParser {
         }
     }
 
+    public static ArrayList<Command> parseProjectList (ArrayList<JsonElement> list) {
+        ArrayList<Command> c = new ArrayList<Command>();
+        for (JsonElement temp : list) {
+            c.add(parseProjectInfo(temp.toString()));
+
+        }
+        return c;
+    }
+
     public static Command parseProjectInfo(String json) {
         JsonElement jsonTree = parser.parse(json);
         if (jsonTree.isJsonObject()) {
             JsonObject jsonObject = jsonTree.getAsJsonObject();
+            String id = jsonObject.get("id").getAsString();
             String title = jsonObject.get("title").getAsString();
+            String description = jsonObject.get("description").getAsString();
+            String imageURL  = jsonObject.get("imageUrl").getAsString();
             int budget = jsonObject.get("budget").getAsInt();
+            long deadline = jsonObject.get("deadline").getAsInt();
             JsonElement skills = jsonObject.get("skills");
             HashMap<String, Skill> skillsMap = parseSkills(skills);
-            Command addProjectCommand = new AddProjectCommand(title, skillsMap, budget);
+            Command addProjectCommand = new AddProjectCommand(id, title, description, imageURL, budget, deadline, skillsMap);
             return addProjectCommand;
 
         } else {

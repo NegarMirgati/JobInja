@@ -11,10 +11,15 @@ public class Project {
     private long deadline;
     private User winner;
 
-    public Project(String title, HashMap<String, Skill> skills, int budget) {
+    public Project(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills) {
+        this.id = id;
         this.title = title;
-        this.skills = new HashMap<String, Skill> (skills);
+        this.description = description;
+        this.imageURL = imageURL;
         this.budget = budget;
+        this.deadline = deadline;
+        this.skills = new HashMap<String, Skill> (skills);
+
 
     }
 
