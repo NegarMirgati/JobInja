@@ -1,8 +1,10 @@
 package Repositories;
 import Project.*;
 import Skill.*;
+import Exceptions.*;
 
 import java.util.HashMap;
+import java.util.*;
 
 public class ProjectRepo {
     private static ProjectRepo ourInstance = new ProjectRepo();
@@ -26,6 +28,19 @@ public class ProjectRepo {
 
     public static Project findItemInProjectList(String title) {
         return projectList.get(title);
+    }
+
+    public static Project getProjectById(String id) throws ProjectNotFoundException {
+        Iterator it = projectList.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            Project p = (Project) pair.getValue();
+            if(p.getId().equals(id)){
+                return p;
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        throw new ProjectNotFoundException("Project Not Found");
     }
 
 
