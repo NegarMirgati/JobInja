@@ -19,7 +19,6 @@ public class UserRepo {
     }
 
 
-
     public static User findItemInUserList(String username) {
         return userList.get(username);
     }
@@ -45,4 +44,10 @@ public class UserRepo {
         User newUser = new User(username, skills);
         userList.put(username, newUser);
     }
+
+    public static void addUser(User u) {
+        String userID = u.getUsername();
+        userList.put(userID, u);
+    }
+
 }

@@ -12,6 +12,16 @@ public class User {
     private HashMap<String, Skill> skills;
     private String bio;
 
+    public User(String username, String firstName, String lastName, String jobTitle, String profilePictureURL, HashMap<String, Skill> skills, String bio) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.jobTitle = jobTitle;
+        this.profilePictureURL = profilePictureURL;
+        this.skills = skills;
+        this.bio = bio;
+    }
+
     public User(String username, HashMap<String, Skill> skills) {
         this.username = username;
         this.skills = new HashMap<String, Skill>(skills);

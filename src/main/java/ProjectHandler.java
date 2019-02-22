@@ -1,3 +1,4 @@
+import Exceptions.ProjectNotFoundException;
 import Pages.IPage;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -15,13 +16,13 @@ public class ProjectHandler implements HttpHandler {
         StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
         String page = tokenizer.nextToken();
         String projectId = (tokenizer.nextToken());
-        System.out.println(page);
+        System.out.println(projectId);
         Class<IPage> pageClass;
         try {
-            pageClass = (Class<IPage>) Class.forName("Pages." +page);
+            pageClass = (Class<IPage>) Class.forName("Pages." + page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
-            HashMap<String, String> map = new HashMap<>();
-            map.put("data", "this is a single project request");
+            HashMap<String, String> map = projectContentProvider.getHTMLContentsForProject("1", projectId);
+            System.out.println(map);
             httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
         } catch (ClassNotFoundException |
@@ -40,6 +41,8 @@ public class ProjectHandler implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
+        } catch (ProjectNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
