@@ -11,12 +11,16 @@ import java.util.StringTokenizer;
 public class ProjectsHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-            System.out.println(httpExchange.getRequestURI().getPath());
+            //System.out.println(httpExchange.getRequestURI().getPath());
             StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
+            int count = tokenizer.countTokens();
             String page = tokenizer.nextToken();
-            System.out.println(page);
+
             Class<IPage> pageClass;
             try {
+                if (count != 1 ){
+                    throw new IllegalArgumentException();
+                }
                 pageClass = (Class<IPage>) Class.forName("Pages." +page);
                 IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
                 HashMap<String, String> map = new HashMap<>();

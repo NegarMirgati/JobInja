@@ -5,29 +5,24 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class ProjectHandler implements HttpHandler {
+class UserHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        //System.out.println(httpExchange.getRequestURI().getPath());
         StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
+        String context = tokenizer.nextToken();
         int count = tokenizer.countTokens();
         String page = tokenizer.nextToken();
-        String projectId = (tokenizer.nextToken());
-
+        String userId = (tokenizer.nextToken());
         Class<IPage> pageClass;
         try {
             if (count != 2){
                 throw new IllegalArgumentException();
             }
-            Integer.parseInt(projectId);
-            pageClass = (Class<IPage>) Class.forName("Pages." +page);
+            Integer.parseInt(userId);
+            pageClass = (Class<IPage>) Class.forName("Pages." +"User");
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
-            HashMap<String, String> map = new HashMap<>();
-            map.put("data", "this is a single project request");
-            httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
         } catch (ClassNotFoundException |
                 InstantiationException |
