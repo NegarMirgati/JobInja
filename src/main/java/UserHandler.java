@@ -20,7 +20,6 @@ class UserHandler implements HttpHandler {
             if (count != 2){
                 throw new IllegalArgumentException();
             }
-            Integer.parseInt(userId);
             pageClass = (Class<IPage>) Class.forName("Pages." +"User");
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
             newInstance.HandleRequest(httpExchange);

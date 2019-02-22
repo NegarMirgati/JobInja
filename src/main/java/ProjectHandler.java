@@ -22,7 +22,6 @@ public class ProjectHandler implements HttpHandler {
             if (count != 2){
                 throw new IllegalArgumentException();
             }
-            Integer.parseInt(projectId);
             pageClass = (Class<IPage>) Class.forName("Pages." +page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
             HashMap<String, String> map = new HashMap<>();
