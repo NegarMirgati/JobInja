@@ -25,23 +25,9 @@ public class BidCommand implements Command {
         User selectedUser = UserRepo.findItemInUserList(biddingUser);
 
         if (selectedProject != null && selectedUser != null && biddingAmount <= selectedProject.getBudget()){
-            if (hasRequiredSkills( selectedProject.getSkills(),selectedUser.getSkills())) {
+            if (selectedUser.hasRequiredSkills(selectedProject.getSkills())) {
                 BidRepo.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
             }
         }
     }
-
-    private boolean hasRequiredSkills(HashMap<String, Skill> PSkills , HashMap<String, Skill> USkills) {
-        for (String name: PSkills.keySet()) {
-            if (USkills.containsKey(name)) {
-                if (USkills.get(name).getPoint() < PSkills.get(name).getPoint()) {
-                   return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

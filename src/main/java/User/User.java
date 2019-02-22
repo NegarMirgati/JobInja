@@ -77,4 +77,19 @@ public class User {
         return this.username;
     }
 
-}
+    public boolean hasRequiredSkills(HashMap<String, Skill> requiredSkills){
+        for (String name: requiredSkills.keySet()) {
+            if (skills.containsKey(name)) {
+                if (skills.get(name).getPoint() < requiredSkills.get(name).getPoint()) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    }
+
+

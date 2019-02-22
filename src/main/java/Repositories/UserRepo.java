@@ -1,8 +1,11 @@
 package Repositories;
 
+import Project.Project;
 import User.*;
 import Skill.Skill;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class UserRepo {
     private static UserRepo ourInstance = new UserRepo();
@@ -19,6 +22,19 @@ public class UserRepo {
 
     public static User findItemInUserList(String username) {
         return userList.get(username);
+    }
+
+    public static User getUserById(String id){
+        Iterator it = userList.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            User u = (User)pair.getValue();
+            if(u.getUsername().equals(id)){
+                return u;
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return null;
     }
 
     public static HashMap<String, User> getUserList() {
