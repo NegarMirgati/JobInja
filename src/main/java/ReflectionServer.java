@@ -7,6 +7,7 @@ public class ReflectionServer {
         HttpServer server = HttpServer.create(new InetSocketAddress(8090), 0);
         server.createContext("/project", new ProjectsHandler());
         server.createContext("/project/", new ProjectHandler());
+        server.createContext("/user/", new UserHandler());
         server.setExecutor(null);
         server.start();
     }

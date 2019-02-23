@@ -1,3 +1,4 @@
+import Exceptions.ProjectNotFoundException;
 import Pages.IPage;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -5,13 +6,13 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 class UserHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
-        String context = tokenizer.nextToken();
         int count = tokenizer.countTokens();
         String page = tokenizer.nextToken();
         String userId = (tokenizer.nextToken());
@@ -20,8 +21,12 @@ class UserHandler implements HttpHandler {
             if (count != 2){
                 throw new IllegalArgumentException();
             }
-            pageClass = (Class<IPage>) Class.forName("Pages." +"User");
+
+            pageClass = (Class<IPage>) Class.forName("Pages." +page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
+            HashMap<String, String> map = userContentProvider.getHTMLContentsForUser("1", userId);
+            System.out.println(map);
+            httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
         } catch (ClassNotFoundException |
                 InstantiationException |
@@ -39,6 +44,8 @@ class UserHandler implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
+        } catch (ProjectNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

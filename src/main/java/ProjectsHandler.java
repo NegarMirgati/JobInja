@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 public class ProjectsHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-            //System.out.println(httpExchange.getRequestURI().getPath());
             StringTokenizer tokenizer = new StringTokenizer(httpExchange.getRequestURI().getPath(), "/");
             int count = tokenizer.countTokens();
             String page = tokenizer.nextToken();
