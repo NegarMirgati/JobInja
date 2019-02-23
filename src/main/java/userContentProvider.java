@@ -20,11 +20,11 @@ public class userContentProvider {
 
     private static HashMap<String, String> getUserContentMap(User u){
         HashMap<String, String> contentMap = new HashMap<>();
-        contentMap.put("id: ", u.getUsername());
-        contentMap.put("first name: ", u.getFirstName());
-        contentMap.put("last name: ", u.getLastName());
-        contentMap.put("jobTitle: ", u.getJobTitle());
-        contentMap.put("bio: ", u.getBio());
+        contentMap.put("id", u.getUsername());
+        contentMap.put("first name", u.getFirstName());
+        contentMap.put("last name", u.getLastName());
+        contentMap.put("jobTitle", u.getJobTitle());
+        contentMap.put("bio", u.getBio());
         return contentMap;
 
     }

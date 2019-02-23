@@ -25,12 +25,12 @@ public class project implements IPage {
             Map.Entry pair = (Map.Entry)it.next();
             String value = (String) pair.getValue();
             String str = new String(value.getBytes(), encoding);
-                response += "<li>" +  pair.getKey() + " : " + str + "</li>";
+            response += "<li>" +  pair.getKey() + " : " + str + "</li>";
             it.remove();
         }
         response +=  "</ul>"
-                    + "</body>"
-                    + "</html>";
+                + "</body>"
+                + "</html>";
 
         httpExchange.sendResponseHeaders(200, response.length());
         httpExchange.getResponseHeaders().set("Content-Type", "text/html; charset=" + encoding);

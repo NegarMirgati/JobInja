@@ -42,6 +42,9 @@ public class ProjectRepo {
         }
         throw new ProjectNotFoundException("Project Not Found");
     }
+    public HashMap<String,Project> getAllProjects(){
+        return this.projectList;
+    }
 
 
 }

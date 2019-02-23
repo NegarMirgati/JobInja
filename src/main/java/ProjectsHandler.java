@@ -20,10 +20,10 @@ public class ProjectsHandler implements HttpHandler {
                 if (count != 1 ){
                     throw new IllegalArgumentException();
                 }
-                pageClass = (Class<IPage>) Class.forName("Pages." +page);
+                pageClass = (Class<IPage>) Class.forName("Pages." +page + "s");
                 IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
-                HashMap<String, String> map = new HashMap<>();
-                map.put("data", "salam");
+                HashMap<String, HashMap<String, String>> map = projectContentProvider.getHTMLContentsForAllProjects("1");
+               // System.out.println(map);
                 httpExchange.setAttribute("content", map);
                 newInstance.HandleRequest(httpExchange);
             } catch (ClassNotFoundException |
