@@ -2,6 +2,7 @@ import Exceptions.ProjectNotFoundException;
 import Pages.IPage;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import netscape.security.ForbiddenTargetException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,6 +27,9 @@ public class ProjectHandler implements HttpHandler {
             pageClass = (Class<IPage>) Class.forName("Pages." +page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
             HashMap<String, String> map = projectContentProvider.getHTMLContentsForProject("1", projectId);
+            if (projectContentProvider.checkAccess("1",projectId) ==  false){
+                throw new ForbiddenTargetException();
+            }
             System.out.println(map);
             httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
@@ -35,7 +39,8 @@ public class ProjectHandler implements HttpHandler {
                 IllegalArgumentException |
                 InvocationTargetException |
                 NoSuchMethodException |
-                SecurityException e) {
+                SecurityException |
+                ProjectNotFoundException e) {
             e.printStackTrace();
             String response =
                     "<html>"
@@ -45,8 +50,17 @@ public class ProjectHandler implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        } catch (ProjectNotFoundException e) {
+        }
+        catch (ForbiddenTargetException e) {
             e.printStackTrace();
+            String response =
+                    "<html>"
+                            + "<body>Page \""+ page + "\" access forbidden.</body>"
+                            + "</html>";
+            httpExchange.sendResponseHeaders(403, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
         }
     }
 }

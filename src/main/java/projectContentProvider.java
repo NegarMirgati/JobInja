@@ -11,13 +11,8 @@ public class projectContentProvider {
     public static HashMap<String, String> getHTMLContentsForProject(String userID, String projectID) throws ProjectNotFoundException {
         Project p = ProjectRepo.getProjectById(projectID);
         User u = UserRepo.findItemInUserList(userID);
-        if (u.hasRequiredSkills(p.getSkills())) {
-            //System.out.println("heeeeeere " + getProjectContentMap(p));
-            return getProjectContentMap(p);
-        }
-        else{
-            return null;
-        }
+        return getProjectContentMap(p);
+
     }
 
     private static HashMap<String, String> getProjectContentMap(Project p){
@@ -43,4 +38,15 @@ public class projectContentProvider {
         }
         return allProjects;
     }
+    public static boolean checkAccess(String Uid, String Pid) throws ProjectNotFoundException  {
+        Project p = ProjectRepo.getProjectById(Pid);
+        User u = UserRepo.findItemInUserList(Uid);
+        if (u.hasRequiredSkills(p.getSkills())) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

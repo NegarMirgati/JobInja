@@ -34,7 +34,8 @@ class UserHandler implements HttpHandler {
                 IllegalArgumentException |
                 InvocationTargetException |
                 NoSuchMethodException |
-                SecurityException e) {
+                SecurityException |
+                ProjectNotFoundException e) {
             e.printStackTrace();
             String response =
                     "<html>"
@@ -44,8 +45,6 @@ class UserHandler implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-        } catch (ProjectNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }
