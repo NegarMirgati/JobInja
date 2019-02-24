@@ -27,13 +27,13 @@ public class projectContentProvider {
 
     public static HashMap<String,HashMap<String,String>> getHTMLContentsForAllProjects(String userID){
         HashMap<String,HashMap<String,String>> allProjects = new HashMap<String,HashMap<String,String>>();
-        HashMap<String,Project>ProjectList = ProjectRepo.getProjectList();
+        HashMap<String,Project>ProjectList = new HashMap<>(ProjectRepo.getAllProjects());
         User u = UserRepo.findItemInUserList(userID);
         for (HashMap.Entry<String, Project> entry : ProjectList.entrySet()) {
-            String projectID =  entry.getKey();
+            String projectID = entry.getKey();
             Project p = entry.getValue();
             if (u.hasRequiredSkills(p.getSkills())) {
-                allProjects.put(projectID,getProjectContentMap(p) );
+                allProjects.put(projectID, getProjectContentMap(p));
             }
         }
         return allProjects;

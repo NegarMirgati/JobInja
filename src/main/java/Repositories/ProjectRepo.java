@@ -17,10 +17,6 @@ public class ProjectRepo {
     private ProjectRepo() {
     }
 
-    public static HashMap<String, Project> getProjectList() {
-        return projectList;
-    }
-
     public static void addProject(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills) {
         Project newProject = new Project(id, title, description, imageURL, budget, deadline, skills);
         projectList.put(title, newProject);
@@ -38,12 +34,12 @@ public class ProjectRepo {
             if(p.getId().equals(id)){
                 return p;
             }
-            it.remove(); // avoids a ConcurrentModificationException
+            //it.remove(); // avoids a ConcurrentModificationException
         }
         throw new ProjectNotFoundException("Project Not Found");
     }
-    public HashMap<String,Project> getAllProjects(){
-        return this.projectList;
+    public static HashMap<String,Project> getAllProjects(){
+        return new HashMap<>(projectList);
     }
 
 
