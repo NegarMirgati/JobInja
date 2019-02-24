@@ -34,7 +34,6 @@ public class ProjectRepo {
             if(p.getId().equals(id)){
                 return p;
             }
-            //it.remove(); // avoids a ConcurrentModificationException
         }
         throw new ProjectNotFoundException("Project Not Found");
     }

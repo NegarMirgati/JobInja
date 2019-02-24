@@ -31,7 +31,6 @@ public class UserRepo {
             if(u.getUsername().equals(id)){
                 return u;
             }
-            it.remove(); // avoids a ConcurrentModificationException
         }
         return null;
     }
