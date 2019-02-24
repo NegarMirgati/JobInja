@@ -1,8 +1,8 @@
 import Exceptions.ProjectNotFoundException;
+import Exceptions.ProjectAccessForbiddenException;
 import Pages.IPage;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import netscape.security.ForbiddenTargetException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -28,7 +28,7 @@ public class ProjectHandler implements HttpHandler {
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
             HashMap<String, String> map = projectContentProvider.getHTMLContentsForProject("1", projectId);
             if (projectContentProvider.checkAccess("1",projectId) ==  false){
-                throw new ForbiddenTargetException();
+                throw new ProjectAccessForbiddenException("ACCESS FORBIDDEN");
             }
             //System.out.println(map);
             httpExchange.setAttribute("content", map);
@@ -51,7 +51,7 @@ public class ProjectHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
-        catch (ForbiddenTargetException e) {
+        catch (ProjectAccessForbiddenException e) {
             e.printStackTrace();
             String response =
                     "<html>"
