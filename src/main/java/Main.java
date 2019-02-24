@@ -84,7 +84,7 @@ public class Main {
     }
 
     private static void addUser(){
-        String bio = "khodabiamorz mikhast kheili kara bokone vali pool nadasht";
+        String bio = "خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
         Skill s = new  Skill("HTML", 5);
         Skill s1 = new Skill("Javascript", 4);
         Skill s2 = new Skill("C++", 2);
@@ -94,7 +94,7 @@ public class Main {
         map.put("Javascript", s1);
         map.put("C++", s2);
         map.put("Java", s3);
-        User u = new User("1", "Ali", "Sharifzadeh","Web Programmer", " ",map, bio);
+        User u = new User("1", "علی", "شریف زاده","برنامەنویس وب", " ",map, bio);
         UserRepo.addUser(u);
     }
 }

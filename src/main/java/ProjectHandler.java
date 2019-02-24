@@ -30,7 +30,7 @@ public class ProjectHandler implements HttpHandler {
             if (projectContentProvider.checkAccess("1",projectId) ==  false){
                 throw new ForbiddenTargetException();
             }
-            System.out.println(map);
+            //System.out.println(map);
             httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
         } catch (ClassNotFoundException |

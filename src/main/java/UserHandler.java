@@ -25,7 +25,7 @@ class UserHandler implements HttpHandler {
             pageClass = (Class<IPage>) Class.forName("Pages." +page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
             HashMap<String, String> map = userContentProvider.getHTMLContentsForUser("1", userId);
-            System.out.println(map);
+            //System.out.println(map);
             httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
         } catch (ClassNotFoundException |

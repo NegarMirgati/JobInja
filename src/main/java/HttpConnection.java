@@ -19,26 +19,20 @@ public class HttpConnection {
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
         int status = con.getResponseCode();
-
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
-
         StringBuffer content = new StringBuffer();
-
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
-        String ss = new String(content);
-
+        String Content = new String(content);
         in.close();
         con.disconnect();
 
         Type listType = new TypeToken<ArrayList<String>>() {}.getType();
         Gson gson = new Gson();
-        ArrayList<JsonElement> yourList = new ArrayList<>(Arrays.asList(gson.fromJson(ss,JsonElement[].class)));
-
-
+        ArrayList<JsonElement> yourList = new ArrayList<>(Arrays.asList(gson.fromJson(Content,JsonElement[].class)));
         return yourList;
     }
 
