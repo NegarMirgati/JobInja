@@ -1,7 +1,13 @@
 package Repositories;
+import Commands.Command;
+import Parsers.*;
+import HttpConnection.*;
 import Entities.*;
 import Exceptions.*;
+import com.google.gson.JsonElement;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.*;
 
@@ -38,6 +44,21 @@ public class ProjectRepo {
     }
     public static HashMap<String,Project> getAllProjects(){
         return new HashMap<>(projectList);
+    }
+
+    public static void addProjects(){
+        System.out.println("adding rpojects");
+        HttpConnection connection = new HttpConnection();
+        try {
+            ArrayList<JsonElement> projectlist =  connection.httpGet(new URL("http://142.93.134.194:8000/joboonja/project"));
+            ArrayList<Command> command_list = MyJsonParser.parseProjectList(projectlist);
+            for (Command command : command_list) {
+                command.execute();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

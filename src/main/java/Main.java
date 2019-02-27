@@ -1,14 +1,9 @@
 import Commands.*;
+import Repositories.ProjectRepo;
+import Repositories.SkillRepo;
 import Repositories.UserRepo;
-import Entities.*;
-import com.google.gson.JsonElement;
+import Parsers.*;
 import javafx.util.Pair;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -16,9 +11,9 @@ public class Main {
     private static boolean isFinished = false;
 
     public static void main(String[] args) throws Exception {
-        addProjects();
-        addSkills();
-        addUser();
+        ProjectRepo.addProjects();
+        SkillRepo.addSkills();
+        UserRepo.addUser();
 
         ReflectionServer server = new ReflectionServer();
         server.startServer();
@@ -55,7 +50,7 @@ public class Main {
         return new Pair<> (command.substring(0, spaceIndex), command.substring(spaceIndex));
     }
 
-    private static void addProjects(){
+    /*private static void addProjects(){
         HttpConnection connection = new HttpConnection();
         try {
             ArrayList<JsonElement> projectlist =  connection.httpGet(new URL("http://142.93.134.194:8000/joboonja/project"));
@@ -67,8 +62,9 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private static void addSkills(){
+    }*/
+
+   /* private static void addSkills(){
         HttpConnection connection = new HttpConnection();
         try {
             ArrayList<JsonElement> skillList =  connection.httpGet(new URL("http://142.93.134.194:8000/joboonja/skill"));
@@ -80,9 +76,9 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    private static void addUser(){
+   /* private static void addUser(){
         String bio = "خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
         Skill s = new  Skill("HTML", 5);
         Skill s1 = new Skill("Javascript", 4);
@@ -95,6 +91,6 @@ public class Main {
         map.put("Java", s3);
         User u = new User("1", "علی", "شریف زاده","برنامەنویس وب", " ",map, bio);
         UserRepo.addUser(u);
-    }
+    }*/
 }
 

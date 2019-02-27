@@ -46,4 +46,20 @@ public class UserRepo {
         userList.put(userID, u);
     }
 
+    public static void addUser(){
+        System.out.println("adding user");
+        String bio = "خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
+        Skill s = new  Skill("HTML", 5);
+        Skill s1 = new Skill("Javascript", 4);
+        Skill s2 = new Skill("C++", 2);
+        Skill s3 = new Skill("Java", 3);
+        HashMap<String, Skill> map = new HashMap<String, Skill>();
+        map.put("HTML", s);
+        map.put("Javascript", s1);
+        map.put("C++", s2);
+        map.put("Java", s3);
+        User u = new User("1", "علی", "شریف زاده","برنامەنویس وب", " ",map, bio);
+        UserRepo.addUser(u);
+    }
+
 }
