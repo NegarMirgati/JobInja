@@ -1,5 +1,5 @@
 import Commands.*;
-import Skill.*;
+import Entities.*;
 
 import com.google.gson.*;
 import java.util.*;

@@ -1,7 +1,6 @@
 import Commands.*;
 import Repositories.UserRepo;
-import Skill.*;
-import User.*;
+import Entities.*;
 import com.google.gson.JsonElement;
 import javafx.util.Pair;
 

@@ -3,9 +3,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
 import java.io.OutputStreamWriter;
-
-
-import Project.Project;
+import Entities.*;
 import com.sun.net.httpserver.HttpExchange;
 
 public class projects implements IPage {

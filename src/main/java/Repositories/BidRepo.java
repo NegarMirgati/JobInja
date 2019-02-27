@@ -1,6 +1,6 @@
 package Repositories;
 
-import Bid.*;
+import Entities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

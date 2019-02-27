@@ -1,9 +1,6 @@
 package Auctioneer;
 import Repositories.*;
-import Project.*;
-import Bid.*;
-import Skill.*;
-import User.*;
+import Entities.*;
 import java.util.*;
 
 public class Auctioneer {
@@ -48,20 +45,4 @@ public class Auctioneer {
     public static void printWinner(String username){
         System .out.println("-> winner: " + username);
     }
-/*
-    public static void printProjects() {
-        for (Map.Entry<String, Project> entry : projectList.entrySet()) {
-            String key = entry.getKey();
-            Project p = entry.getValue();
-            System.out.println("key: " + key + "  id:" + p.getId() + "  title: " + p.getTitle() );
-        }
-    }
-    public static void printSkills() {
-        for (Map.Entry<String, Skill> entry : skillList.entrySet()) {
-            String key = entry.getKey();
-            Skill s = entry.getValue();
-            System.out.println("key: " + key + "  name:" + s.getName() + "  point: " + s.getPoint() );
-     }
-    }
-    */
 }

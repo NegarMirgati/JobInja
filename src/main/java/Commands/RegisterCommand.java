@@ -1,6 +1,6 @@
 package Commands;
 import Repositories.*;
-import Skill.*;
+import Entities.*;
 
 import java.util.HashMap;
 

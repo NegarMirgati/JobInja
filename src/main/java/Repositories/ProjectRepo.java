@@ -1,6 +1,5 @@
 package Repositories;
-import Project.*;
-import Skill.*;
+import Entities.*;
 import Exceptions.*;
 
 import java.util.HashMap;

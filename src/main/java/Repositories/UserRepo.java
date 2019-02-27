@@ -1,8 +1,5 @@
 package Repositories;
-
-import Project.Project;
-import User.*;
-import Skill.Skill;
+import Entities.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

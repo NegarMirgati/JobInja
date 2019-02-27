@@ -1,6 +1,7 @@
+package ContentProviders;
+
 import Exceptions.ProjectNotFoundException;
-import Project.*;
-import User.*;
+import Entities.*;
 import Repositories.*;
 
 

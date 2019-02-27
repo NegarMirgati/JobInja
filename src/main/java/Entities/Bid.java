@@ -1,4 +1,4 @@
-package Bid;
+package Entities;
 
 public class Bid{
     private String projectTitle;

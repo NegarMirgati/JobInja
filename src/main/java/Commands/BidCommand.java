@@ -1,8 +1,7 @@
 package Commands;
-import User.*;
-import Project.*;
+import Entities.*;
 import Repositories.*;
-import Skill.*;
+
 
 import java.util.HashMap;
 

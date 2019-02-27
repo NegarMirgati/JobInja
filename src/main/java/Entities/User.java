@@ -1,5 +1,4 @@
-package User;
-import Skill.*;
+package Entities;
 
 import java.util.HashMap;
 

@@ -1,6 +1,6 @@
 package Commands;
 import Repositories.ProjectRepo;
-import Skill.*;
+import Entities.*;
 import java.util.HashMap;
 
 public class AddProjectCommand implements Command{
