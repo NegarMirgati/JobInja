@@ -13,9 +13,9 @@ public class MyServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("ServletContextListener started");
-        //ProjectRepo.addProjects();
-        //SkillRepo.addSkills();
-        //UserRepo.addUser();
+        ProjectRepo.addProjects();
+        SkillRepo.addSkills();
+        UserRepo.addUser();
     }
 }
 
