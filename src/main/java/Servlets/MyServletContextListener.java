@@ -16,6 +16,8 @@ public class MyServletContextListener implements ServletContextListener {
         ProjectRepo.addProjects();
         SkillRepo.addSkills();
         UserRepo.addUser();
+        UserRepo.addUser2();
+        UserRepo.addUser3();
     }
 }
 

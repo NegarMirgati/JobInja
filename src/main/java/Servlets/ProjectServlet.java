@@ -24,10 +24,14 @@ public class ProjectServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
         System.out.println("paaaattttghhhh" + pathInfo);
         HashMap<String, String> map = new HashMap<>();
-        map.put("salam", "khodafeeeez");
-        map.put("salam1", "khodafeeeez1");
-        map.put("salam2", "khodafeeeez2");
+
+        try {
+            map = projectContentProvider.getHTMLContentsForProject("1", "20955d46-0aac-4a6a-b546-d1581026663f");
+        } catch (ProjectNotFoundException e) {
+            e.printStackTrace();
+        }
         request.setAttribute("content", map);
+        System.out.println(request.getAttribute("content"));
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/project.jsp");
         dispatcher.forward(request, response);
     }

@@ -24,7 +24,7 @@ class UserHandler implements HttpHandler {
 
             pageClass = (Class<IPage>) Class.forName("Pages." +page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
-            HashMap<String, String> map = userContentProvider.getHTMLContentsForUser("1", userId);
+            HashMap<String, String> map = userContentProvider.getHTMLContentsForUser(userId);
             //System.out.println(map);
             httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
@@ -34,8 +34,7 @@ class UserHandler implements HttpHandler {
                 IllegalArgumentException |
                 InvocationTargetException |
                 NoSuchMethodException |
-                SecurityException |
-                ProjectNotFoundException e) {
+                SecurityException e) {
             e.printStackTrace();
             String response =
                     "<html>"

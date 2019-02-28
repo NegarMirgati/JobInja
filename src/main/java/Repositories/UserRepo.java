@@ -62,4 +62,36 @@ public class UserRepo {
         UserRepo.addUser(u);
     }
 
+    public static void addUser2(){
+        System.out.println("adding user");
+        String bio = "Stay hungry, stay foolish.";
+        Skill s = new  Skill("HTML", 5);
+        Skill s1 = new Skill("Javascript", 4);
+        Skill s2 = new Skill("C++", 2);
+        Skill s3 = new Skill("Java", 3);
+        HashMap<String, Skill> map = new HashMap<String, Skill>();
+        map.put("HTML", s);
+        map.put("Javascript", s1);
+        map.put("C++", s2);
+        map.put("Java", s3);
+        User u = new User("2", "استیو", "جابز","business magnate", "https://2ch.hk/b/arch/2018-12-06/src/187673928/15440521664830.jpg",map, bio);
+        UserRepo.addUser(u);
+    }
+
+    public static void addUser3(){
+        System.out.println("adding user");
+        String bio = "Your most unhappy customers are your greatest source of learning.";
+        Skill s = new  Skill("HTML", 5);
+        Skill s1 = new Skill("C", 6);
+        Skill s2 = new Skill("Photoshop", 10);
+
+        HashMap<String, Skill> map = new HashMap<String, Skill>();
+        map.put("HTML", s);
+        map.put("C", s1);
+        map.put("Photoshop", s2);
+
+        User u = new User("3", "بیل", "گیتس","business magnate", "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2018/07/11/105322791-1531301768595gettyimages-467620670.1910x1000.jpg",map, bio);
+        UserRepo.addUser(u);
+    }
+
 }
