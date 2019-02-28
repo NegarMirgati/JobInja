@@ -19,6 +19,23 @@ public class userContentProvider {
         }
     }
 
+    public static HashMap<String, String> getUserSkills(String uID) {
+        User u = UserRepo.getUserById(uID);
+        if (u != null) {
+            HashMap<String, String> content = new HashMap<>();
+            HashMap<String, Skill> skills = new HashMap<>(u.getSkills());
+            for (HashMap.Entry<String, Skill> entry : skills.entrySet()) {
+                String skillName = entry.getValue().getName();
+                String skillPoint = Integer.toString(entry.getValue().getPoint());
+                content.put(skillName, skillPoint);
+            }
+            return content;
+        }
+        else{
+            return null;
+        }
+    }
+
     public static HashMap<String,HashMap<String,String>> getHTMLContentsForAllUsers(String currentuserID){
         HashMap<String, User> allUsers = UserRepo.getUserList();
         HashMap<String,HashMap<String,String>> contentMap = new HashMap<String,HashMap<String,String>>();

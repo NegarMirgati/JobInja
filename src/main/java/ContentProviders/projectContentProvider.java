@@ -26,6 +26,11 @@ public class projectContentProvider {
 
     }
 
+    public static boolean hasBadeForProject(String username, String projectID) throws ProjectNotFoundException {
+        Project p = ProjectRepo.getProjectById(projectID);
+        return p.hasBid(username);
+    }
+
     public static HashMap<String,HashMap<String,String>> getHTMLContentsForAllProjects(String userID){
         HashMap<String,HashMap<String,String>> allProjects = new HashMap<String,HashMap<String,String>>();
         HashMap<String,Project>ProjectList = new HashMap<>(ProjectRepo.getAllProjects());

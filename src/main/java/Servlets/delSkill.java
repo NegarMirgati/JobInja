@@ -1,6 +1,8 @@
 package Servlets;
 
 import ContentProviders.userContentProvider;
+import Entities.User;
+import Repositories.UserRepo;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,35 +13,37 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-
-@WebServlet(name = "UserServlet")
-public class UserServlet extends HttpServlet {
+@WebServlet(name = "delSkill")
+public class delSkill extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        boolean submitButtonPressed = request.getParameter("submit") != null;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        String pathInfo = request.getPathInfo();
-        String userId = request.getAttribute("userID").toString();
-        System.out.println("userID" + userId);
-        System.out.println("paaaattttghhhh" + pathInfo);
+
+        String userID = request.getParameter("userID");
+        String name = request.getParameter("name");
+        System.out.println("userId: " +userID);
+        System.out.println("name: " +name);
+        //////
+        User u = UserRepo.getUserById(userID);
+        u.delSkill(name);
+        /////
         HashMap<String, String> map = new HashMap<>();
         HashMap<String, String> skills = new HashMap<String, String>();
 
-        map = userContentProvider.getHTMLContentsForUser(userId);
-        skills = userContentProvider.getUserSkills(userId);
+        map = userContentProvider.getHTMLContentsForUser(userID);
+        skills = userContentProvider.getUserSkills(userID);
 
         request.setAttribute("content", map);
         request.setAttribute("skills",skills);
-        //request.setAttribute("num2", 10);
+        request.setAttribute("userID", userID);
 
         System.out.println(request.getAttribute("content"));
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-       // System.out.println("ljksdfgjsdhfgkjsdhfgksdkfg"+request.getSession().getAttribute("status").toString());
+        // System.out.println("ljksdfgjsdhfgkjsdhfgksdkfg"+request.getSession().getAttribute("status").toString());
         dispatcher.forward(request, response);
 
-
     }
+
 }

@@ -21,6 +21,7 @@ public class Project {
         this.budget = budget;
         this.deadline = deadline;
         this.skills = new HashMap<String, Skill> (skills);
+        this.bids = new HashMap<>();
 
 
     }
@@ -99,6 +100,15 @@ public class Project {
 
     public String getTitle(){
         return this.title;
+    }
+
+    public void addBid(String username, String projectTitle, Integer biddingAmount){
+        Bid b = new Bid(projectTitle, biddingAmount, username);
+        this.bids.put(username, b);
+    }
+
+    public boolean hasBid(String username){
+        return (this.bids.containsKey(username));
     }
 
 }

@@ -99,6 +99,10 @@ public class User {
         return true;
     }
 
+    public void delSkill(String name){
+        this.skills.remove(name);
+    }
+
     }
 
 

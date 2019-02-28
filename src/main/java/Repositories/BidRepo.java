@@ -27,4 +27,5 @@ public class BidRepo {
     public static HashMap<String, ArrayList<Bid>> getBidList() {
         return bidList;
     }
+
 }

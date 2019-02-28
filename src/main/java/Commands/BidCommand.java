@@ -1,32 +1,45 @@
 package Commands;
 import Entities.*;
+import Exceptions.ProjectNotFoundException;
 import Repositories.*;
 
 
 import java.util.HashMap;
 
 public class BidCommand implements Command {
-    private String projectTitle;
+    private String projectID;
     private int biddingAmount;
     private String biddingUser;
 
-    public BidCommand(String projectTitle, int biddingAmount, String biddingUser){
-        this.projectTitle = projectTitle;
+    public BidCommand(String projectID, int biddingAmount, String biddingUser){
+        this.projectID = projectID;
         this.biddingAmount = biddingAmount;
         this.biddingUser = biddingUser;
     }
     public void execute() {
-        checkCommand();
+        Project selectedProject = null;
+        try {
+            selectedProject = ProjectRepo.getProjectById(this.projectID);
+        } catch (ProjectNotFoundException e) {
+            e.printStackTrace();
+        }
+        BidRepo.addBid(this.projectID, this.biddingAmount, this.biddingUser);
+        selectedProject.addBid(biddingUser, this.projectID, biddingAmount);
      }
 
-    private void checkCommand() {
-        Project selectedProject =  ProjectRepo.findItemInProjectList(projectTitle);
+    public boolean bidIsPossible() {
+        Project selectedProject = null;
+        try {
+            selectedProject = ProjectRepo.getProjectById(this.projectID);
+        } catch (ProjectNotFoundException e) {
+            e.printStackTrace();
+        }
         User selectedUser = UserRepo.findItemInUserList(biddingUser);
-
         if (selectedProject != null && selectedUser != null && biddingAmount <= selectedProject.getBudget()){
             if (selectedUser.hasRequiredSkills(selectedProject.getSkills())) {
-                BidRepo.addBid(this.projectTitle, this.biddingAmount, this.biddingUser);
+                return true;
             }
         }
+        return false;
     }
 }

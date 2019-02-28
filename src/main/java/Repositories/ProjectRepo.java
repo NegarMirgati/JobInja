@@ -47,7 +47,7 @@ public class ProjectRepo {
     }
 
     public static void addProjects(){
-        System.out.println("adding rpojects");
+        System.out.println("adding projects");
         HttpConnection connection = new HttpConnection();
         try {
             ArrayList<JsonElement> projectlist =  connection.httpGet(new URL("http://142.93.134.194:8000/joboonja/project"));
