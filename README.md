@@ -15,8 +15,12 @@ JobInja is a job-finding system for programmers. The base logic for assigning pr
 * Patterns
   * [Command Pattern With Java Examples](https://dzone.com/articles/design-patterns-command)
   * [Singleton Design Pattern with Java Examples](https://dzone.com/articles/singleton-making-more-effective)
+  * [MVC Pattern](https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm)
 * Json
   * [Comparison between some JSON libraries](https://blog.overops.com/the-ultimate-json-library-json-simple-vs-gson-vs-jackson-vs-json/)
 * HTTP
   * [Simple HTTP Request in java](https://www.baeldung.com/java-http-request)
+* ُTomcat
+  * [Create Maven Project with Servlet in Intellij Idea](https://medium.com/@backslash112/create-maven-project-with-servlet-in-intellij-idea-2018-be0d673bd9af)
+  * [Servlet Tutorials](https://www.tutorialspoint.com/servlets)
 
