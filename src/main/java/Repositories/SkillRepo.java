@@ -41,4 +41,7 @@ public class SkillRepo {
         }
     }
 
+    public static HashMap<String, Skill> getSkillList() {
+        return skillList;
+    }
 }

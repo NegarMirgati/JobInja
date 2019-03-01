@@ -69,6 +69,18 @@
     <url-pattern>/endorse</url-pattern>
   </servlet-mapping>
 
+    <servlet>
+    <servlet-name>addSkill</servlet-name>
+    <servlet-class>Servlets.addSkill</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>addSkill</servlet-name>
+    <url-pattern>/addSkill</url-pattern>
+  </servlet-mapping>
+
+
+
   <filter>
     <filter-name>UserFilter</filter-name>
     <filter-class>Servlets.Filters.UserFilter</filter-class>

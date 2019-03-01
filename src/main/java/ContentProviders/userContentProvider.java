@@ -69,4 +69,19 @@ public class userContentProvider {
         return contentMap;
 
     }
+
+    public static HashMap<String, String> getExtraSkills(String uId){
+        HashMap<String, String> content = new HashMap<String, String>();
+        User u = UserRepo.findItemInUserList(uId);
+        HashMap<String, Skill> userSkills = new HashMap<String, Skill>(u.getSkills());
+        HashMap<String, Skill> allSkills = new HashMap<String, Skill>(SkillRepo.getSkillList());
+        for (HashMap.Entry<String, Skill> entry : allSkills.entrySet()) {
+            String name = entry.getKey();
+            if( !userSkills.containsKey(name)){
+                content.put(name,uId);
+            }
+
+        }
+        return content;
+    }
 }

@@ -26,13 +26,22 @@
             <td><c:out value=" : "/></td>
             <td><c:out value="${elem.value}"/></td>
             <td>
-                <c:if test="${userID == '1'}">
-                <form action="/delSkill" method="">
-                    <input type="hidden" name="userID" value="${userID}"/>
-                    <input type="hidden" name="name" value="${elem.key}"/>
-                    <button>Delete</button>
-                </form>
-                </c:if>
+                <c:choose>
+                    <c:when test="${userID == '1'}">
+                    <form action="/delSkill" method="">
+                        <input type="hidden" name="userID" value="${userID}"/>
+                        <input type="hidden" name="name" value="${elem.key}"/>
+                        <button>Delete</button>
+                    </form>
+                    </c:when>
+                    <c:otherwise>
+                        <form action="/endorse" method="">
+                            <input type="hidden" name="userID" value="${userID}"/>
+                            <input type="hidden" name="name" value="${elem.key}"/>
+                            <button>Endorse</button>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
             </td>
         </tr>
 
@@ -40,6 +49,19 @@
 
     </tbody>
 </table>
+
+<c:if test="${userID == '1'}">
+    <form action="/addSkill">
+        <input type="hidden" name="userID" value="${userID}"/>
+        <label for="AddSkill">Add Skill: </label>
+        <select name="selectedSkill">
+            <c:forEach var="elem" items="${extraSkills}">
+            <option value="${elem.key}">${elem.key}</option>
+            </c:forEach>
+        </select>
+        <button>Add</button>
+    </form>
+</c:if>
 
 
 

@@ -107,4 +107,10 @@ public class UserRepo {
         u.delSkill(SkillName);
     }
 
+    public static void addSkillToUser(String uId, String skillName){
+        User u = findItemInUserList(uId);
+        Skill s = new Skill(skillName, 0);
+        u.addSkill(skillName, s);
+    }
+
 }

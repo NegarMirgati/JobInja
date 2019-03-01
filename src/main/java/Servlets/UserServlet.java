@@ -25,19 +25,17 @@ public class UserServlet extends HttpServlet {
         String userId = request.getAttribute("userID").toString();
         System.out.println("userID" + userId);
         System.out.println("paaaattttghhhh" + pathInfo);
-        HashMap<String, String> map = new HashMap<>();
-        HashMap<String, String> skills = new HashMap<String, String>();
 
-        map = userContentProvider.getHTMLContentsForUser(userId);
-        skills = userContentProvider.getUserSkills(userId);
+        HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userId));
+        HashMap<String, String> skills = new HashMap<>(userContentProvider.getUserSkills(userId));
+        HashMap<String, String> extraSkills = new HashMap<>(userContentProvider.getExtraSkills(userId));
 
         request.setAttribute("content", map);
         request.setAttribute("skills",skills);
-        //request.setAttribute("num2", 10);
+        request.setAttribute("extraSkills", extraSkills);
 
         System.out.println(request.getAttribute("content"));
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-       // System.out.println("ljksdfgjsdhfgkjsdhfgksdkfg"+request.getSession().getAttribute("status").toString());
         dispatcher.forward(request, response);
 
 

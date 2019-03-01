@@ -1,7 +1,7 @@
 package Servlets;
 
+import Commands.AddSkillToUserCommand;
 import ContentProviders.userContentProvider;
-import Commands.DeleteSkillOfUserCommand;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,20 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 
-@WebServlet(name = "delSkill")
-public class delSkill extends HttpServlet {
+@WebServlet(name = "addSkill")
+public class addSkill extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String userID = request.getParameter("userID");
-        String name = request.getParameter("name");
+        String selectedSkill = request.getParameter("selectedSkill");
         System.out.println("userId: " +userID);
-        System.out.println("name: " +name);
+        System.out.println("selectedSkill: " +selectedSkill);
 
-        DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
+        AddSkillToUserCommand command = new AddSkillToUserCommand(userID, selectedSkill);
         command.execute();
 
         HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userID));
@@ -41,5 +40,4 @@ public class delSkill extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
-
 }
