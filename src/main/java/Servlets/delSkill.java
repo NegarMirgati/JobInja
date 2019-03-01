@@ -1,8 +1,7 @@
 package Servlets;
 
 import ContentProviders.userContentProvider;
-import Entities.User;
-import Repositories.UserRepo;
+import Commands.DeleteSkillOfUser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,10 +24,10 @@ public class delSkill extends HttpServlet {
         String name = request.getParameter("name");
         System.out.println("userId: " +userID);
         System.out.println("name: " +name);
-        //////
-        User u = UserRepo.getUserById(userID);
-        u.delSkill(name);
-        /////
+
+        DeleteSkillOfUser command = new DeleteSkillOfUser(userID, name);
+        command.execute();
+
         HashMap<String, String> map = new HashMap<>();
         HashMap<String, String> skills = new HashMap<String, String>();
 
