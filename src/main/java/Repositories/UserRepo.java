@@ -94,4 +94,13 @@ public class UserRepo {
         UserRepo.addUser(u);
     }
 
+    public static void endorse(String id, String skill){
+        User u = findItemInUserList(id);
+        u.endorse(skill);
+    }
+
+    public static void delSkill(String userId, String SkillName){
+        User u = UserRepo.getUserById(userId);
+        u.delSkill(SkillName);
+    }
 }
