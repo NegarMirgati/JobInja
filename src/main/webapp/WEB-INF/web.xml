@@ -59,6 +59,15 @@
     <url-pattern>/delSkill</url-pattern>
   </servlet-mapping>
 
+<servlet>
+    <servlet-name>endorse</servlet-name>
+    <servlet-class>Servlets.endorse</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>endorse</servlet-name>
+    <url-pattern>/endorse</url-pattern>
+  </servlet-mapping>
 
   <filter>
     <filter-name>UserFilter</filter-name>
