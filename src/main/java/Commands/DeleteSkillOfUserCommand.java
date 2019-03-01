@@ -13,7 +13,7 @@ public class DeleteSkillOfUserCommand implements Command{
 
     @Override
     public void execute() {
-        UserRepo.endorse(userID, skillName);
+        UserRepo.delSkill(userID, skillName);
     }
 
 }
