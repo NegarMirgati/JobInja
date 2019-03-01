@@ -96,11 +96,15 @@ public class UserRepo {
 
     public static void endorse(String id, String skill){
         User u = findItemInUserList(id);
-        u.endorse(skill);
+        if ( !(u.getSkills().get(skill).hasEndorsed(id))){
+            u.endorse(skill);
+            u.getSkills().get(skill).addEndorser(id);
+        }
     }
 
     public static void delSkill(String userId, String SkillName){
         User u = UserRepo.getUserById(userId);
         u.delSkill(SkillName);
     }
+
 }

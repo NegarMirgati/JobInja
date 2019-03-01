@@ -103,6 +103,12 @@ public class User {
         this.skills.remove(name);
     }
 
+    public void endorse(String skill){
+        if ( this.skills.containsKey(skill) ){
+            this.skills.get(skill).endorse();
+        }
+    }
+
     }
 
 
