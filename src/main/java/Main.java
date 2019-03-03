@@ -1,4 +1,5 @@
 import Commands.*;
+import Exceptions.UserNotFoundException;
 import Repositories.ProjectRepo;
 import Repositories.SkillRepo;
 import Repositories.UserRepo;
@@ -10,7 +11,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean isFinished = false;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception, UserNotFoundException {
         ProjectRepo.addProjects();
         SkillRepo.addSkills();
         UserRepo.addUser();

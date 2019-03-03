@@ -22,17 +22,30 @@ public class ProjectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("text/html");
         String pathInfo = request.getPathInfo();
-        System.out.println("paaaattttghhhh" + pathInfo);
         HashMap<String, String> map = new HashMap<>();
+        String projectID = (String)request.getAttribute("projectID");
+        boolean hasBade = false;
 
         try {
-            map = projectContentProvider.getHTMLContentsForProject("1", "20955d46-0aac-4a6a-b546-d1581026663f");
+            hasBade = projectContentProvider.hasBadeForProject("1", projectID);
+            map = projectContentProvider.getHTMLContentsForProject("1", projectID);
+            projectContentProvider.checkAccess("1",projectID);
+            request.setAttribute("content", map);
+            request.setAttribute("hasBadeForThisProject", hasBade);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/project.jsp");
+            dispatcher.forward(request, response);
+
         } catch (ProjectNotFoundException e) {
-            e.printStackTrace();
+            request.setAttribute("exception", e);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
+            dispatcher.forward(request, response);
         }
-        request.setAttribute("content", map);
-        System.out.println(request.getAttribute("content"));
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/project.jsp");
-        dispatcher.forward(request, response);
+
+        catch (ProjectAccessForbiddenException e){
+            request.setAttribute("exception", e);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error403.jsp");
+            dispatcher.forward(request, response);
+
+        }
     }
 }

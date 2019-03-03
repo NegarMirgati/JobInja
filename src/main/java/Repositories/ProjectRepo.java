@@ -58,6 +58,8 @@ public class ProjectRepo {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

@@ -28,10 +28,7 @@ public class ProjectHandler implements HttpHandler {
             pageClass = (Class<IPage>) Class.forName("Pages." +page);
             IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
             HashMap<String, String> map = projectContentProvider.getHTMLContentsForProject("1", projectId);
-            if (projectContentProvider.checkAccess("1",projectId) ==  false){
-                throw new ProjectAccessForbiddenException("ACCESS FORBIDDEN");
-            }
-            //System.out.println(map);
+            projectContentProvider.checkAccess("1",projectId);
             httpExchange.setAttribute("content", map);
             newInstance.HandleRequest(httpExchange);
         } catch (ClassNotFoundException |

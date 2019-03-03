@@ -29,7 +29,14 @@
     </c:forEach>
     </tbody>
 </table>
-
+    <c:if test="${hasBadeForThisProject == 'false'}">
+    <form action="/Bid" method="">
+        <label for="bidAmount">Bid Amount:</label>
+        <input type="hidden" name="projectID" value="${projectID}"/>
+        <input type="number" name="bidAmount">
+        <button>Submit</button>
+    </form>
+    </c:if>
 
 </body>
 </html>

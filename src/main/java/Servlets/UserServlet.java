@@ -1,6 +1,7 @@
 package Servlets;
 
 import ContentProviders.userContentProvider;
+import Exceptions.UserNotFoundException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,18 +27,24 @@ public class UserServlet extends HttpServlet {
         System.out.println("userID" + userId);
         System.out.println("paaaattttghhhh" + pathInfo);
 
-        HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userId));
-        HashMap<String, String> skills = new HashMap<>(userContentProvider.getUserSkills(userId));
-        HashMap<String, String> extraSkills = new HashMap<>(userContentProvider.getExtraSkills(userId));
+        try {
+            HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userId));
+            HashMap<String, String> skills = new HashMap<>(userContentProvider.getUserSkills(userId));
+            HashMap<String, String> extraSkills = new HashMap<>(userContentProvider.getExtraSkills(userId));
 
-        request.setAttribute("content", map);
-        request.setAttribute("skills",skills);
-        request.setAttribute("extraSkills", extraSkills);
+            request.setAttribute("content", map);
+            request.setAttribute("skills", skills);
+            request.setAttribute("extraSkills", extraSkills);
 
-        System.out.println(request.getAttribute("content"));
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-        dispatcher.forward(request, response);
-
+            System.out.println(request.getAttribute("content"));
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
+            dispatcher.forward(request, response);
+        }
+        catch (UserNotFoundException e){
+            request.setAttribute("exception", e);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
+            dispatcher.forward(request, response);
+        }
 
     }
 }

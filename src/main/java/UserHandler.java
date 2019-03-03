@@ -1,4 +1,5 @@
 import Exceptions.ProjectNotFoundException;
+import Exceptions.UserNotFoundException;
 import Pages.IPage;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -44,6 +45,8 @@ class UserHandler implements HttpHandler {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

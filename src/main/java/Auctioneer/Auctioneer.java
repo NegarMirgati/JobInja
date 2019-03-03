@@ -1,11 +1,12 @@
 package Auctioneer;
+import Exceptions.UserNotFoundException;
 import Repositories.*;
 import Entities.*;
 import java.util.*;
 
 public class Auctioneer {
 
-    public static void performAuction(String projectTitle) {
+    public static void performAuction(String projectTitle) throws UserNotFoundException {
         int bestValue = Integer.MIN_VALUE;
         int currentValue = 0;
         String bestUser = "";

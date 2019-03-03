@@ -1,5 +1,6 @@
 package Commands;
 
+import Exceptions.UserNotFoundException;
 import Repositories.UserRepo;
 
 public class EndorseCommand implements Command{
@@ -12,7 +13,7 @@ public class EndorseCommand implements Command{
     }
 
     @Override
-    public void execute() {
+    public void execute() throws UserNotFoundException {
         UserRepo.endorse(this.userId, this.skillName);
     }
 

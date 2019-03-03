@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import Commands.EndorseCommand;
 import ContentProviders.userContentProvider;
+import Exceptions.UserNotFoundException;
 
 @WebServlet(name = "endorse")
 public class endorse extends HttpServlet {
@@ -25,21 +26,33 @@ public class endorse extends HttpServlet {
         System.out.println("name: " +name);
 
         EndorseCommand command = new EndorseCommand(userID, name);
-        command.execute();
+        try {
+            command.execute();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
 
         HashMap<String, String> map = new HashMap<String, String>();
         HashMap<String, String> skills = new HashMap<String, String>();
 
-        map = userContentProvider.getHTMLContentsForUser(userID);
-        skills = userContentProvider.getUserSkills(userID);
+        try {
+            map = userContentProvider.getHTMLContentsForUser(userID);
+            skills = userContentProvider.getUserSkills(userID);
 
-        request.setAttribute("content", map);
-        request.setAttribute("skills",skills);
-        request.setAttribute("userID", userID);
+            request.setAttribute("content", map);
+            request.setAttribute("skills", skills);
+            request.setAttribute("userID", userID);
 
-        System.out.println(request.getAttribute("content"));
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-        dispatcher.forward(request, response);
+            System.out.println(request.getAttribute("content"));
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
+            dispatcher.forward(request, response);
+
+        }catch(
+                UserNotFoundException e){
+            request.setAttribute("exception", e);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
+            dispatcher.forward(request, response);
+        }
 
     }
 }

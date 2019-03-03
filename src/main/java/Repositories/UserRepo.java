@@ -1,5 +1,7 @@
 package Repositories;
 import Entities.*;
+import Exceptions.UserNotFoundException;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,11 +18,14 @@ public class UserRepo {
     }
 
 
-    public static User findItemInUserList(String username) {
-        return userList.get(username);
+    public static User findItemInUserList(String username) throws UserNotFoundException {
+        if(userList.get(username) != null)
+            return userList.get(username);
+        else
+            throw new UserNotFoundException("User Not Found");
     }
 
-    public static User getUserById(String id){
+    public static User getUserById(String id) throws UserNotFoundException{
         Iterator it = userList.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
@@ -94,7 +99,7 @@ public class UserRepo {
         UserRepo.addUser(u);
     }
 
-    public static void endorse(String id, String skill){
+    public static void endorse(String id, String skill) throws UserNotFoundException {
         User u = findItemInUserList(id);
         if ( !(u.getSkills().get(skill).hasEndorsed(id))){
             u.endorse(skill);
@@ -102,12 +107,12 @@ public class UserRepo {
         }
     }
 
-    public static void delSkill(String userId, String SkillName){
-        User u = UserRepo.getUserById(userId);
+    public static void delSkill(String userId, String SkillName) throws UserNotFoundException {
+        User u = UserRepo.findItemInUserList(userId);
         u.delSkill(SkillName);
     }
 
-    public static void addSkillToUser(String uId, String skillName){
+    public static void addSkillToUser(String uId, String skillName) throws UserNotFoundException {
         User u = findItemInUserList(uId);
         Skill s = new Skill(skillName, 0);
         u.addSkill(skillName, s);

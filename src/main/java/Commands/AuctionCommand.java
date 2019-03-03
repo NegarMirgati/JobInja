@@ -1,6 +1,7 @@
 package Commands;
 
 import Auctioneer.*;
+import Exceptions.UserNotFoundException;
 
 public class AuctionCommand implements Command {
     private String projectTitle;
@@ -9,7 +10,7 @@ public class AuctionCommand implements Command {
         this.projectTitle = projectTitle;
     }
 
-    public void execute(){
+    public void execute() throws UserNotFoundException {
         Auctioneer.performAuction(this.projectTitle);
     }
 }

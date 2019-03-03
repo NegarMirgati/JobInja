@@ -1,6 +1,7 @@
 package Commands;
 import Entities.*;
 import Exceptions.ProjectNotFoundException;
+import Exceptions.UserNotFoundException;
 import Repositories.*;
 
 
@@ -27,7 +28,7 @@ public class BidCommand implements Command {
         selectedProject.addBid(biddingUser, this.projectID, biddingAmount);
      }
 
-    public boolean bidIsPossible() {
+    public boolean bidIsPossible() throws UserNotFoundException {
         Project selectedProject = null;
         try {
             selectedProject = ProjectRepo.getProjectById(this.projectID);

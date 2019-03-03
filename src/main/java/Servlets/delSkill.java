@@ -2,6 +2,7 @@ package Servlets;
 
 import ContentProviders.userContentProvider;
 import Commands.DeleteSkillOfUserCommand;
+import Exceptions.UserNotFoundException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,19 +27,31 @@ public class delSkill extends HttpServlet {
         System.out.println("name: " +name);
 
         DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
-        command.execute();
+        try {
+            command.execute();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userID));
-        HashMap<String, String> skills = new HashMap<>(userContentProvider.getUserSkills(userID));
-        HashMap<String, String> extraSkills = new HashMap<>(userContentProvider.getExtraSkills(userID));
+        try {
+            HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userID));
+            HashMap<String, String> skills = new HashMap<>(userContentProvider.getUserSkills(userID));
+            HashMap<String, String> extraSkills = new HashMap<>(userContentProvider.getExtraSkills(userID));
 
-        request.setAttribute("content", map);
-        request.setAttribute("skills",skills);
-        request.setAttribute("extraSkills", extraSkills);
-        request.setAttribute("userID", userID);
+            request.setAttribute("content", map);
+            request.setAttribute("skills", skills);
+            request.setAttribute("extraSkills", extraSkills);
+            request.setAttribute("userID", userID);
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
+            dispatcher.forward(request, response);
+        }
+    catch(
+    UserNotFoundException e){
+        request.setAttribute("exception", e);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
         dispatcher.forward(request, response);
+    }
 
     }
 

@@ -2,6 +2,7 @@ package ContentProviders;
 
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
+import Exceptions.UserNotFoundException;
 import Repositories.*;
 
 
@@ -9,19 +10,14 @@ import java.util.HashMap;
 
 
 public class userContentProvider {
-    public static HashMap<String, String> getHTMLContentsForUser(String uID){
-        User u = UserRepo.getUserById(uID);
-        if (u != null) {
-            return getUserContentMap(u);
-        }
-        else{
-            return null;
-        }
+    public static HashMap<String, String> getHTMLContentsForUser(String uID) throws UserNotFoundException {
+           User u = UserRepo.findItemInUserList(uID);
+           return getUserContentMap(u);
+
     }
 
-    public static HashMap<String, String> getUserSkills(String uID) {
-        User u = UserRepo.getUserById(uID);
-        if (u != null) {
+    public static HashMap<String, String> getUserSkills(String uID) throws UserNotFoundException {
+        User u = UserRepo.findItemInUserList(uID);
             HashMap<String, String> content = new HashMap<>();
             HashMap<String, Skill> skills = new HashMap<>(u.getSkills());
             for (HashMap.Entry<String, Skill> entry : skills.entrySet()) {
@@ -30,10 +26,6 @@ public class userContentProvider {
                 content.put(skillName, skillPoint);
             }
             return content;
-        }
-        else{
-            return null;
-        }
     }
 
     public static HashMap<String,HashMap<String,String>> getHTMLContentsForAllUsers(String currentuserID){
@@ -70,7 +62,7 @@ public class userContentProvider {
 
     }
 
-    public static HashMap<String, String> getExtraSkills(String uId){
+    public static HashMap<String, String> getExtraSkills(String uId) throws UserNotFoundException {
         HashMap<String, String> content = new HashMap<String, String>();
         User u = UserRepo.findItemInUserList(uId);
         HashMap<String, Skill> userSkills = new HashMap<String, Skill>(u.getSkills());

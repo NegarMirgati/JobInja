@@ -1,7 +1,9 @@
 package ContentProviders;
 
+import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
+import Exceptions.UserNotFoundException;
 import Repositories.*;
 
 
@@ -11,7 +13,6 @@ import java.util.HashMap;
 public class projectContentProvider {
     public static HashMap<String, String> getHTMLContentsForProject(String userID, String projectID) throws ProjectNotFoundException {
         Project p = ProjectRepo.getProjectById(projectID);
-        User u = UserRepo.findItemInUserList(userID);
         return getProjectContentMap(p);
 
     }
@@ -34,24 +35,31 @@ public class projectContentProvider {
     public static HashMap<String,HashMap<String,String>> getHTMLContentsForAllProjects(String userID){
         HashMap<String,HashMap<String,String>> allProjects = new HashMap<String,HashMap<String,String>>();
         HashMap<String,Project>ProjectList = new HashMap<>(ProjectRepo.getAllProjects());
-        User u = UserRepo.findItemInUserList(userID);
-        for (HashMap.Entry<String, Project> entry : ProjectList.entrySet()) {
-            String projectID = entry.getKey();
-            Project p = entry.getValue();
-            if (u.hasRequiredSkills(p.getSkills())) {
-                allProjects.put(projectID, getProjectContentMap(p));
+        try {
+            User u = UserRepo.findItemInUserList(userID);
+            for (HashMap.Entry<String, Project> entry : ProjectList.entrySet()) {
+                String projectID = entry.getKey();
+                Project p = entry.getValue();
+                if (u.hasRequiredSkills(p.getSkills())) {
+                    allProjects.put(projectID, getProjectContentMap(p));
+                }
             }
+        }catch (UserNotFoundException e){
+            e.printStackTrace();
         }
         return allProjects;
     }
-    public static boolean checkAccess(String Uid, String Pid) throws ProjectNotFoundException  {
+    public static void checkAccess(String Uid, String Pid) throws ProjectNotFoundException, ProjectAccessForbiddenException {
         Project p = ProjectRepo.getProjectById(Pid);
-        User u = UserRepo.findItemInUserList(Uid);
-        if (u.hasRequiredSkills(p.getSkills())) {
-            return true;
-        }
-        else{
-            return false;
+        try {
+            User u = UserRepo.findItemInUserList(Uid);
+            if (u.hasRequiredSkills(p.getSkills())) {
+                return;
+            } else {
+                throw new ProjectNotFoundException("Access Forbidden");
+            }
+        }catch (UserNotFoundException e){
+            e.printStackTrace();
         }
     }
 

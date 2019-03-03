@@ -1,6 +1,7 @@
 package Repositories;
 import Commands.Command;
 import Entities.*;
+import Exceptions.UserNotFoundException;
 import HttpConnection.*;
 import Parsers.MyJsonParser;
 import com.google.gson.JsonElement;
@@ -37,6 +38,8 @@ public class SkillRepo {
 
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
     }
