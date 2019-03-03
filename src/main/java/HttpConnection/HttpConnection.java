@@ -20,7 +20,7 @@ public class HttpConnection {
         con.setRequestProperty("Content-Type", "application/json");
         int status = con.getResponseCode();
         BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+                new InputStreamReader(con.getInputStream(),"UTF-8"));
         String inputLine;
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {
