@@ -15,11 +15,11 @@ import java.util.HashMap;
 
 @WebServlet(name = "addSkill")
 public class addSkill extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userID = request.getParameter("userID");
         String selectedSkill = request.getParameter("selectedSkill");
         System.out.println("userId: " +userID);
