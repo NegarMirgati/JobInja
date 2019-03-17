@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
+import java.util.StringTokenizer;
 
 
 
-@WebServlet(name = "ProjectServlet")
+@WebServlet(name = "ProjectServlet",  urlPatterns = { "/projects/*" })
 public class ProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,8 +23,12 @@ public class ProjectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         response.setContentType("text/html");
         String pathInfo = request.getPathInfo();
+        String path = (request).getRequestURI();
         HashMap<String, String> map = new HashMap<>();
-        String projectID = (String)request.getAttribute("projectID");
+        StringTokenizer tokenizer = new StringTokenizer(path, "/");
+        String context = tokenizer.nextToken();
+        String projectID = tokenizer.nextToken();
+        request.setAttribute("projectID", projectID);
         boolean hasBade = false;
 
         try {

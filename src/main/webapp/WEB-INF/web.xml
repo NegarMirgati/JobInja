@@ -9,44 +9,6 @@
     <listener-class> Servlets.MyServletContextListener </listener-class>
   </listener>
 
-  <servlet>
-    <servlet-name>ProjectServlet</servlet-name>
-    <servlet-class>Servlets.ProjectServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>ProjectServlet</servlet-name>
-    <url-pattern>/project/</url-pattern>
-  </servlet-mapping>
-
-  <filter>
-    <filter-name>ProjectFilter</filter-name>
-    <filter-class>Servlets.Filters.ProjectFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>ProjectFilter</filter-name>
-    <url-pattern>/project/*</url-pattern>
-  </filter-mapping>
-
-  <servlet>
-    <servlet-name>UsersServlet</servlet-name>
-    <servlet-class>Servlets.UsersServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>UsersServlet</servlet-name>
-    <url-pattern>/users/</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UserServlet</servlet-name>
-    <servlet-class>Servlets.UserServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>UserServlet</servlet-name>
-    <url-pattern>/user/</url-pattern>
-  </servlet-mapping>
 
   <servlet>
     <servlet-name>Bid</servlet-name>
@@ -78,15 +40,6 @@
     <url-pattern>/endorse</url-pattern>
   </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>ProjectsServlet</servlet-name>
-    <url-pattern>/project</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>ProjectsServlet</servlet-name>
-    <servlet-class>Servlets.ProjectsServlet</servlet-class>
-  </servlet>
 
   <servlet>
     <servlet-name>addSkill</servlet-name>
@@ -98,15 +51,6 @@
     <url-pattern>/addSkill</url-pattern>
   </servlet-mapping>
 
-
-  <filter>
-    <filter-name>UserFilter</filter-name>
-    <filter-class>Servlets.Filters.UserFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>UserFilter</filter-name>
-    <url-pattern>/user/*</url-pattern>
-  </filter-mapping>
 
   <error-page>
     <error-code>404</error-code>

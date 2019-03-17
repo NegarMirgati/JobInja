@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 
-@WebServlet(name = "UserServlet")
+@WebServlet(name = "UserServlet",  urlPatterns = { "/users/*" })
 public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,10 +23,12 @@ public class UserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        String pathInfo = request.getPathInfo();
-        String userId = request.getAttribute("userID").toString();
-        System.out.println("userID" + userId);
-        System.out.println("paaaattttghhhh" + pathInfo);
+        String path = (request).getRequestURI();
+        StringTokenizer tokenizer = new StringTokenizer(path, "/");
+        String context = tokenizer.nextToken();
+        String userId = tokenizer.nextToken();
+        request.setAttribute("userID", userId);
+
 
         try {
             HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userId));
