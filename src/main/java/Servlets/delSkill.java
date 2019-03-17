@@ -19,7 +19,7 @@ public class delSkill extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String userID = request.getParameter("userID");
         String name = request.getParameter("name");

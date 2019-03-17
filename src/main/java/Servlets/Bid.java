@@ -12,11 +12,11 @@ import Exceptions.UserNotFoundException;
 
 @WebServlet(name = "Bid")
 public class Bid extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String bidAmount = request.getParameter("bidAmount");
         String projectID = request.getParameter("projectID");

@@ -30,7 +30,7 @@
     </tbody>
 </table>
     <c:if test="${hasBadeForThisProject == 'false'}">
-    <form action="/Bid" method="">
+    <form action="/Bid" method="POST">
         <label for="bidAmount">Bid Amount:</label>
         <input type="hidden" name="projectID" value="${projectID}"/>
         <input type="number" name="bidAmount">
