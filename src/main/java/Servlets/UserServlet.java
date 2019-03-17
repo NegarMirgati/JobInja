@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.PrintWriter;
 import java.util.StringTokenizer;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 
 @WebServlet(name = "UserServlet",  urlPatterns = { "/users/*" })
@@ -22,26 +25,21 @@ public class UserServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
+        response.setContentType("application/json;charset=UTF-8");
         String path = (request).getRequestURI();
         StringTokenizer tokenizer = new StringTokenizer(path, "/");
         String context = tokenizer.nextToken();
         String userId = tokenizer.nextToken();
         request.setAttribute("userID", userId);
 
-
         try {
-            HashMap<String, String> map = new HashMap<>(userContentProvider.getHTMLContentsForUser(userId));
-            HashMap<String, String> skills = new HashMap<>(userContentProvider.getUserSkills(userId));
-            HashMap<String, String> extraSkills = new HashMap<>(userContentProvider.getExtraSkills(userId));
-
-            request.setAttribute("content", map);
-            request.setAttribute("skills", skills);
-            request.setAttribute("extraSkills", extraSkills);
-
-            System.out.println(request.getAttribute("content"));
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-            dispatcher.forward(request, response);
+            JSONObject map = userContentProvider.getHTMLContentsForUser(userId);
+            JSONArray skills = userContentProvider.getUserSkills(userId);
+            JSONArray extraSkills = userContentProvider.getExtraSkills(userId);
+            PrintWriter out = response.getWriter();
+            out.println(map);
+            out.println(skills);
+            out.println(extraSkills);
         }
         catch (UserNotFoundException e){
             request.setAttribute("exception", e);

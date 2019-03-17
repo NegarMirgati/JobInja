@@ -7,11 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 import Commands.EndorseCommand;
 import ContentProviders.userContentProvider;
 import Exceptions.UserNotFoundException;
+import com.google.gson.JsonObject;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 @WebServlet(name = "endorse")
 public class endorse extends HttpServlet {
@@ -20,6 +24,7 @@ public class endorse extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
         String userID = request.getParameter("userID");
         String name = request.getParameter("name");
         System.out.println("userId: " +userID);
@@ -32,20 +37,18 @@ public class endorse extends HttpServlet {
             e.printStackTrace();
         }
 
-        HashMap<String, String> map = new HashMap<String, String>();
-        HashMap<String, String> skills = new HashMap<String, String>();
 
         try {
-            map = userContentProvider.getHTMLContentsForUser(userID);
-            skills = userContentProvider.getUserSkills(userID);
+            JSONObject map = userContentProvider.getHTMLContentsForUser(userID);
+            JSONArray skills = userContentProvider.getUserSkills(userID);
 
             request.setAttribute("content", map);
             request.setAttribute("skills", skills);
             request.setAttribute("userID", userID);
 
-            System.out.println(request.getAttribute("content"));
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/user.jsp");
-            dispatcher.forward(request, response);
+            PrintWriter out = response.getWriter();
+            out.println(map);
+            out.println(skills);
 
         }catch(
                 UserNotFoundException e){

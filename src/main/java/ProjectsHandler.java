@@ -24,9 +24,9 @@ public class ProjectsHandler implements HttpHandler {
                 }
                 pageClass = (Class<IPage>) Class.forName("Pages." +page + "s");
                 IPage newInstance = pageClass.getDeclaredConstructor().newInstance();
-                HashMap<String, HashMap<String, String>> map = projectContentProvider.getHTMLContentsForAllProjects("1");
+                //HashMap<String, HashMap<String, String>> map = projectContentProvider.getHTMLContentsForAllProjects("1");
                // System.out.println(map);
-                httpExchange.setAttribute("content", map);
+              //  httpExchange.setAttribute("content", map);
                 newInstance.HandleRequest(httpExchange);
             } catch (ClassNotFoundException |
                     InstantiationException |

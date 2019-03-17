@@ -5,25 +5,29 @@ import Exceptions.ProjectNotFoundException;
 import Entities.*;
 import Exceptions.UserNotFoundException;
 import Repositories.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 
 import java.util.HashMap;
 
 
 public class projectContentProvider {
-    public static HashMap<String, String> getHTMLContentsForProject(String userID, String projectID) throws ProjectNotFoundException {
+    public static JSONObject getHTMLContentsForProject(String userID, String projectID) throws ProjectNotFoundException {
         Project p = ProjectRepo.getProjectById(projectID);
-        return getProjectContentMap(p);
+        return getProjectContent(p);
 
     }
 
-    private static HashMap<String, String> getProjectContentMap(Project p){
-        HashMap<String, String> contentMap = new HashMap<>();
-        contentMap.put("id", p.getId());
-        contentMap.put("title", p.getDescription());
-        contentMap.put("imageURL", p.getImageURL());
-        contentMap.put("budget", Integer.toString(p.getBudget()));
-        return contentMap;
+    private static JSONObject getProjectContent(Project p){
+
+        JSONObject instance = new JSONObject();
+        instance.put("id", p.getId());
+        instance.put("title", p.getDescription());
+        instance.put("imageURL", p.getImageURL());
+        instance.put("budget", Integer.toString(p.getBudget()));
+        return instance;
 
     }
 
@@ -32,23 +36,28 @@ public class projectContentProvider {
         return p.hasBid(username);
     }
 
-    public static HashMap<String,HashMap<String,String>> getHTMLContentsForAllProjects(String userID){
-        HashMap<String,HashMap<String,String>> allProjects = new HashMap<String,HashMap<String,String>>();
-        HashMap<String,Project>ProjectList = new HashMap<>(ProjectRepo.getAllProjects());
-        try {
-            User u = UserRepo.findItemInUserList(userID);
-            for (HashMap.Entry<String, Project> entry : ProjectList.entrySet()) {
-                String projectID = entry.getKey();
-                Project p = entry.getValue();
-                if (u.hasRequiredSkills(p.getSkills())) {
-                    allProjects.put(projectID, getProjectContentMap(p));
+        public static JSONArray getHTMLContentsForAllProjects(String userID){
+            JSONArray allProjects = new JSONArray();
+            JSONObject instance;
+            HashMap<String,Project>ProjectList = new HashMap<>(ProjectRepo.getAllProjects());
+            try {
+                User u = UserRepo.findItemInUserList(userID);
+                for (HashMap.Entry<String, Project> entry : ProjectList.entrySet()) {
+                    String projectID = entry.getKey();
+                    Project p = entry.getValue();
+                    if (u.hasRequiredSkills(p.getSkills())) {
+                        instance = new JSONObject();
+                        instance.put(projectID, getProjectContent(p));
+                        allProjects.put(instance);
+                    }
                 }
+
+            }catch (UserNotFoundException e){
+                e.printStackTrace();
             }
-        }catch (UserNotFoundException e){
-            e.printStackTrace();
+            return allProjects;
         }
-        return allProjects;
-    }
+
     public static void checkAccess(String Uid, String Pid) throws ProjectNotFoundException, ProjectAccessForbiddenException {
         Project p = ProjectRepo.getProjectById(Pid);
         try {

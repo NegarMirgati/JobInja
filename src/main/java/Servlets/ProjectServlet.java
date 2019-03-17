@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import java.util.StringTokenizer;
+import javax.servlet.RequestDispatcher;
+import org.json.JSONObject;
+
 
 
 
@@ -21,10 +23,9 @@ public class ProjectServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        response.setContentType("text/html");
+        response.setContentType("application/json;charset=UTF-8");
         String pathInfo = request.getPathInfo();
         String path = (request).getRequestURI();
-        HashMap<String, String> map = new HashMap<>();
         StringTokenizer tokenizer = new StringTokenizer(path, "/");
         String context = tokenizer.nextToken();
         String projectID = tokenizer.nextToken();
@@ -33,12 +34,10 @@ public class ProjectServlet extends HttpServlet {
 
         try {
             hasBade = projectContentProvider.hasBadeForProject("1", projectID);
-            map = projectContentProvider.getHTMLContentsForProject("1", projectID);
+            JSONObject map = projectContentProvider.getHTMLContentsForProject("1", projectID);
             projectContentProvider.checkAccess("1",projectID);
-            request.setAttribute("content", map);
-            request.setAttribute("hasBadeForThisProject", hasBade);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/project.jsp");
-            dispatcher.forward(request, response);
+            PrintWriter out = response.getWriter();
+            out.println(map);
 
         } catch (ProjectNotFoundException e) {
             request.setAttribute("exception", e);
