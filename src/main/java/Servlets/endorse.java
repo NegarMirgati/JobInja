@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import Commands.EndorseCommand;
 import ContentProviders.userContentProvider;
+import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.UserNotFoundException;
 import com.google.gson.JsonObject;
 import org.json.JSONObject;
@@ -33,12 +34,6 @@ public class endorse extends HttpServlet {
         EndorseCommand command = new EndorseCommand(userID, name);
         try {
             command.execute();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
             JSONObject map = userContentProvider.getHTMLContentsForUser(userID);
             JSONArray skills = userContentProvider.getUserSkills(userID);
 
@@ -50,11 +45,27 @@ public class endorse extends HttpServlet {
             out.println(map);
             out.println(skills);
 
-        }catch(
-                UserNotFoundException e){
+        }
+        catch (EndorseAlreadyDoneException e){
             request.setAttribute("exception", e);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            dispatcher.forward(request, response);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 409);
+            instance.put("message", e.getMessage());
+            instance.put("developerMessage", "User has already endorsed this skill");
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+            response.setStatus(response.SC_CONFLICT);
+        }
+        catch(UserNotFoundException e){
+            request.setAttribute("exception", e);
+            response.setStatus(response.SC_NOT_FOUND);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 404);
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
+            //dispatcher.forward(request, response);
         }
 
     }

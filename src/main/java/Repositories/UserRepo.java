@@ -1,5 +1,6 @@
 package Repositories;
 import Entities.*;
+import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 
@@ -100,11 +101,14 @@ public class UserRepo {
         UserRepo.addUser(u);
     }
 
-    public static void endorse(String id, String skill) throws UserNotFoundException {
+    public static void endorse(String id, String skill) throws UserNotFoundException, EndorseAlreadyDoneException {
         User u = findItemInUserList(id);
         if ( !(u.getSkills().get(skill).hasEndorsed(id))){
             u.endorse(skill);
             u.getSkills().get(skill).addEndorser(id);
+        }
+        else{
+            throw new EndorseAlreadyDoneException("Conflict");
         }
     }
 

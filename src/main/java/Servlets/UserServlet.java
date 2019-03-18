@@ -41,7 +41,7 @@ public class UserServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(map);
             out.println(skills);
-            out.println(extraSkills);
+            //out.println(extraSkills);
         }
         catch (UserNotFoundException e){
             response.setStatus(response.SC_NOT_FOUND);

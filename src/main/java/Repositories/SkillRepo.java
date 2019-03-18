@@ -1,6 +1,7 @@
 package Repositories;
 import Commands.Command;
 import Entities.*;
+import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 import HttpConnection.*;
@@ -38,11 +39,7 @@ public class SkillRepo {
                 command.execute();
 
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        } catch (SkillNotFoundException e) {
+        } catch (IOException | UserNotFoundException | SkillNotFoundException | EndorseAlreadyDoneException e) {
             e.printStackTrace();
         }
     }
