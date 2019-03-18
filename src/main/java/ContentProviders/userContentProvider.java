@@ -2,6 +2,7 @@ package ContentProviders;
 
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
+import Exceptions.UserAccessForbidden;
 import Exceptions.UserNotFoundException;
 import Repositories.*;
 import org.json.JSONArray;
@@ -14,8 +15,8 @@ import java.util.HashMap;
 
 public class userContentProvider {
     public static JSONObject getHTMLContentsForUser(String uID) throws UserNotFoundException {
-           User u = UserRepo.findItemInUserList(uID);
-           return getUserContent(u);
+        User u = UserRepo.findItemInUserList(uID);
+        return getUserContent(u);
 
     }
 
@@ -34,13 +35,13 @@ public class userContentProvider {
         return content;
     }
 
-    public static JSONArray getHTMLContentsForAllUsers(String currentuserID){
+    public static JSONArray getHTMLContentsForAllUsers(String currentuserID) {
         HashMap<String, User> allUsers = UserRepo.getUserList();
         JSONArray contentMap = new JSONArray();
         JSONObject instance;
         for (HashMap.Entry<String, User> entry : allUsers.entrySet()) {
             String uid = entry.getKey();
-            if(uid != currentuserID){
+            if (uid != currentuserID) {
                 instance = new JSONObject();
                 instance.put(uid, getShortUserContent(entry.getValue()));
                 contentMap.put(instance);
@@ -50,7 +51,7 @@ public class userContentProvider {
         return contentMap;
     }
 
-    private static JSONObject getUserContent(User u){
+    private static JSONObject getUserContent(User u) {
         JSONObject contentMap = new JSONObject();
         contentMap.put("id", u.getUsername());
         contentMap.put("first name", u.getFirstName());
@@ -61,10 +62,10 @@ public class userContentProvider {
 
     }
 
-    private static JSONObject getShortUserContent(User u){
+    private static JSONObject getShortUserContent(User u) {
         JSONObject contentMap = new JSONObject();
         contentMap.put("id", u.getUsername());
-        contentMap.put("name", u.getFirstName() + " " +  u.getLastName());
+        contentMap.put("name", u.getFirstName() + " " + u.getLastName());
         contentMap.put("jobTitle", u.getJobTitle());
         return contentMap;
 
@@ -78,13 +79,20 @@ public class userContentProvider {
         HashMap<String, Skill> allSkills = new HashMap<String, Skill>(SkillRepo.getSkillList());
         for (HashMap.Entry<String, Skill> entry : allSkills.entrySet()) {
             String name = entry.getKey();
-            if( !userSkills.containsKey(name)){
+            if (!userSkills.containsKey(name)) {
                 instance = new JSONObject();
-                instance.put(name,uId);
+                instance.put(name, uId);
                 content.put(instance);
             }
 
         }
         return content;
+    }
+
+    public static void checkCurrentUser(String id) throws UserAccessForbidden {
+        if ( !(id.equals("1"))) {
+            throw new UserAccessForbidden("access forbidden");
+
+        }
     }
 }
