@@ -2,6 +2,7 @@ package Servlets;
 
 import ContentProviders.userContentProvider;
 import Commands.DeleteSkillOfUserCommand;
+import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 
 import javax.servlet.RequestDispatcher;
@@ -32,8 +33,15 @@ public class delSkill extends HttpServlet {
         DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
         try {
             command.execute();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
+        } catch (SkillNotFoundException |
+                 UserNotFoundException e){
+            request.setAttribute("exception", e);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 404);
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+            response.setStatus(response.SC_NOT_FOUND);
         }
 
         try {
@@ -50,8 +58,7 @@ public class delSkill extends HttpServlet {
             out.println(map);
 
         }
-        catch(
-                UserNotFoundException e){
+        catch(UserNotFoundException e){
             request.setAttribute("exception", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
             dispatcher.forward(request, response);

@@ -1,4 +1,5 @@
 package Commands;
+import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 import Repositories.*;
 import Entities.*;
@@ -13,7 +14,7 @@ public class DeleteSkillOfUserCommand implements Command{
     }
 
     @Override
-    public void execute() throws UserNotFoundException {
+    public void execute() throws UserNotFoundException, SkillNotFoundException {
         UserRepo.delSkill(userID, skillName);
     }
 

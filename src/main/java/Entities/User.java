@@ -1,5 +1,7 @@
 package Entities;
 
+import Exceptions.SkillNotFoundException;
+
 import java.util.HashMap;
 
 public class User {
@@ -99,8 +101,14 @@ public class User {
         return true;
     }
 
-    public void delSkill(String name){
-        this.skills.remove(name);
+    public void delSkill(String name) throws SkillNotFoundException {
+        if (this.skills.containsKey(name)){
+            this.skills.remove(name);
+        }
+        else{
+            throw new SkillNotFoundException("skill not found");
+        }
+
     }
 
     public void endorse(String skill){

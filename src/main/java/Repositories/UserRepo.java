@@ -1,5 +1,6 @@
 package Repositories;
 import Entities.*;
+import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 
 import java.util.HashMap;
@@ -107,7 +108,7 @@ public class UserRepo {
         }
     }
 
-    public static void delSkill(String userId, String SkillName) throws UserNotFoundException {
+    public static void delSkill(String userId, String SkillName) throws UserNotFoundException, SkillNotFoundException {
         User u = UserRepo.findItemInUserList(userId);
         u.delSkill(SkillName);
     }

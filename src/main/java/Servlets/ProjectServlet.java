@@ -48,8 +48,6 @@ public class ProjectServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(instance);
             response.setStatus(response.SC_NOT_FOUND);
-            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            //dispatcher.forward(request, response);
         }
 
         catch (ProjectAccessForbiddenException e){
@@ -61,9 +59,6 @@ public class ProjectServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(instance);
             response.setStatus(response.SC_FORBIDDEN);
-            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error403.jsp");
-            //dispatcher.forward(request, response);
-
         }
     }
 }

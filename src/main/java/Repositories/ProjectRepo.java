@@ -60,6 +60,8 @@ public class ProjectRepo {
             e.printStackTrace();
         } catch (UserNotFoundException e) {
             e.printStackTrace();
+        } catch (SkillNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

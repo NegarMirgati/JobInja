@@ -1,6 +1,7 @@
 package Repositories;
 import Commands.Command;
 import Entities.*;
+import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 import HttpConnection.*;
 import Parsers.MyJsonParser;
@@ -40,6 +41,8 @@ public class SkillRepo {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (SkillNotFoundException e) {
             e.printStackTrace();
         }
     }
