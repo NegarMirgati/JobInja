@@ -45,9 +45,14 @@ public class UserServlet extends HttpServlet {
         }
         catch (UserNotFoundException e){
             response.setStatus(response.SC_NOT_FOUND);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 404);
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
             request.setAttribute("exception", e);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            dispatcher.forward(request, response);
+            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
+            //dispatcher.forward(request, response);
         }
 
     }

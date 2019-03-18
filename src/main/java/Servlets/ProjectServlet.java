@@ -42,16 +42,27 @@ public class ProjectServlet extends HttpServlet {
 
         } catch (ProjectNotFoundException e) {
             request.setAttribute("exception", e);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 404);
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
             response.setStatus(response.SC_NOT_FOUND);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            dispatcher.forward(request, response);
+            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
+            //dispatcher.forward(request, response);
         }
 
         catch (ProjectAccessForbiddenException e){
             request.setAttribute("exception", e);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 403);
+            instance.put("message", e.getMessage());
+            instance.put("developerMessage", "User does not have minimum skills to view this project");
+            PrintWriter out = response.getWriter();
+            out.println(instance);
             response.setStatus(response.SC_FORBIDDEN);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error403.jsp");
-            dispatcher.forward(request, response);
+            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error403.jsp");
+            //dispatcher.forward(request, response);
 
         }
     }
