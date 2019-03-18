@@ -36,12 +36,15 @@ public class UserServlet extends HttpServlet {
             JSONObject map = userContentProvider.getHTMLContentsForUser(userId);
             JSONArray skills = userContentProvider.getUserSkills(userId);
             JSONArray extraSkills = userContentProvider.getExtraSkills(userId);
+            response.setStatus(response.SC_OK);
+
             PrintWriter out = response.getWriter();
             out.println(map);
             out.println(skills);
             out.println(extraSkills);
         }
         catch (UserNotFoundException e){
+            response.setStatus(response.SC_NOT_FOUND);
             request.setAttribute("exception", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
             dispatcher.forward(request, response);

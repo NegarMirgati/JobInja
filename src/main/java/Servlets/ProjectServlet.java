@@ -36,17 +36,20 @@ public class ProjectServlet extends HttpServlet {
             hasBade = projectContentProvider.hasBadeForProject("1", projectID);
             JSONObject map = projectContentProvider.getHTMLContentsForProject("1", projectID);
             projectContentProvider.checkAccess("1",projectID);
+            response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
 
         } catch (ProjectNotFoundException e) {
             request.setAttribute("exception", e);
+            response.setStatus(response.SC_NOT_FOUND);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
             dispatcher.forward(request, response);
         }
 
         catch (ProjectAccessForbiddenException e){
             request.setAttribute("exception", e);
+            response.setStatus(response.SC_FORBIDDEN);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error403.jsp");
             dispatcher.forward(request, response);
 

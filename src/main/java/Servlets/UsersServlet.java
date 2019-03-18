@@ -22,6 +22,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         JSONArray map = userContentProvider.getHTMLContentsForAllUsers("1");
+        response.setStatus(response.SC_OK);
         PrintWriter out = response.getWriter();
         out.println(map);
 

@@ -22,6 +22,7 @@ public class ProjectsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(response.SC_OK);
         JSONArray map = projectContentProvider.getHTMLContentsForAllProjects("1");
         PrintWriter out = response.getWriter();
         out.println(map);

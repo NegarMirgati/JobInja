@@ -65,7 +65,7 @@ public class projectContentProvider {
             if (u.hasRequiredSkills(p.getSkills())) {
                 return;
             } else {
-                throw new ProjectNotFoundException("Access Forbidden");
+                throw new ProjectAccessForbiddenException("Access Forbidden");
             }
         }catch (UserNotFoundException e){
             e.printStackTrace();
