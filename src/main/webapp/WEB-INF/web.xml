@@ -9,17 +9,6 @@
     <listener-class> Servlets.MyServletContextListener </listener-class>
   </listener>
 
-
-  <servlet>
-    <servlet-name>Bid</servlet-name>
-    <servlet-class>Servlets.Bid</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>Bid</servlet-name>
-    <url-pattern>/Bid</url-pattern>
-  </servlet-mapping>
-
   <servlet>
     <servlet-name>delSkill</servlet-name>
     <servlet-class>Servlets.delSkill</servlet-class>

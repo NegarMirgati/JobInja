@@ -1,5 +1,6 @@
 package ContentProviders;
 
+import Exceptions.BidAlreadyDoneException;
 import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
@@ -31,8 +32,11 @@ public class projectContentProvider {
 
     }
 
-    public static boolean hasBadeForProject(String username, String projectID) throws ProjectNotFoundException {
+    public static boolean hasBadeForProject(String username, String projectID) throws ProjectNotFoundException ,BidAlreadyDoneException {
         Project p = ProjectRepo.getProjectById(projectID);
+        if ( p.hasBid(username)  == true) {
+            throw  new BidAlreadyDoneException("biding already done");
+        }
         return p.hasBid(username);
     }
 

@@ -2,7 +2,9 @@ package Servlets;
 import Exceptions.*;
 import ContentProviders.*;
 
+import javax.jws.WebParam;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,10 @@ import org.json.JSONObject;
 
 
 
-@WebServlet(name = "ProjectServlet",  urlPatterns = { "/projects/*" })
+@WebServlet(  name = "ProjectServlet",  urlPatterns = { "/project"} , initParams = {
+        @WebInitParam(name = "id" , value = "Not provided") } )
+
+
 public class ProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,9 +31,10 @@ public class ProjectServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String pathInfo = request.getPathInfo();
         String path = (request).getRequestURI();
-        StringTokenizer tokenizer = new StringTokenizer(path, "/");
-        String context = tokenizer.nextToken();
-        String projectID = tokenizer.nextToken();
+        //StringTokenizer tokenizer = new StringTokenizer(path, "/");
+        //String context = tokenizer.nextToken();
+       // String projectID = tokenizer.nextToken();
+        String projectID = request.getParameter("id");
         request.setAttribute("projectID", projectID);
         boolean hasBade = false;
 
@@ -59,6 +65,8 @@ public class ProjectServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(instance);
             response.setStatus(response.SC_FORBIDDEN);
+        } catch (BidAlreadyDoneException e) {
+            e.printStackTrace();
         }
     }
 }
