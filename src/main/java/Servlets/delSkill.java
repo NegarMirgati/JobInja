@@ -45,6 +45,7 @@ public class delSkill extends HttpServlet {
                 out.println(status);
         } catch (UserAccessForbidden userAccessForbidden) {
             JSONObject instance = new JSONObject();
+            instance.put("status", 403);
             instance.put("message", userAccessForbidden.getMessage());
             PrintWriter out = response.getWriter();
             out.println(instance);
