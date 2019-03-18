@@ -22,11 +22,11 @@ import org.json.JSONObject;
         @WebInitParam(name = "amount" , value = "Not provided")} )
 
 public class Bid extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String bidAmount = request.getParameter("amount");
         String projectID = request.getParameter("id");
