@@ -2,23 +2,24 @@ package Servlets;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-
 import Commands.EndorseCommand;
 import ContentProviders.userContentProvider;
 import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.UserNotFoundException;
-import com.google.gson.JsonObject;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-@WebServlet(name = "endorse")
+@WebServlet(name = "endorse", urlPatterns = { "/users/endorse"} , initParams = {
+    @WebInitParam(name = "userID" , value = "Not provided"),
+        @WebInitParam(name = "name" , value = "Not provided")} )
+
 public class endorse extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

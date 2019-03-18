@@ -9,38 +9,6 @@
     <listener-class> Servlets.MyServletContextListener </listener-class>
   </listener>
 
-  <servlet>
-    <servlet-name>delSkill</servlet-name>
-    <servlet-class>Servlets.delSkill</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>delSkill</servlet-name>
-    <url-pattern>/delSkill</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>endorse</servlet-name>
-    <servlet-class>Servlets.endorse</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>endorse</servlet-name>
-    <url-pattern>/endorse</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>addSkill</servlet-name>
-    <servlet-class>Servlets.addSkill</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>addSkill</servlet-name>
-    <url-pattern>/addSkill</url-pattern>
-  </servlet-mapping>
-
-
   <error-page>
     <error-code>404</error-code>
     <location>/error404.jsp</location>
