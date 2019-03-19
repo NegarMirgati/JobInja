@@ -16,7 +16,7 @@ import Exceptions.UserNotFoundException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-@WebServlet(name = "endorse", urlPatterns = { "/users/endorse"} , initParams = {
+@WebServlet(name = "endorse", urlPatterns = { "/user/endorse"} , initParams = {
     @WebInitParam(name = "userID" , value = "Not provided"),
         @WebInitParam(name = "name" , value = "Not provided")} )
 

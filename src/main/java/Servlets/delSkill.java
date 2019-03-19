@@ -19,7 +19,7 @@ import java.util.HashMap;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-@WebServlet(name = "delSkill" ,   urlPatterns = { "/users/delSkill"} , initParams = {
+@WebServlet(name = "delSkill" ,   urlPatterns = { "/user/delSkill"} , initParams = {
         @WebInitParam(name = "id" , value = "Not provided"),
         @WebInitParam(name = "name" , value = "Not provided")} )
 
