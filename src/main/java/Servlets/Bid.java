@@ -34,24 +34,23 @@ public class Bid extends HttpServlet {
         BidCommand bidCommand = new BidCommand(projectID, Integer.valueOf(bidAmount), "1");
         response.setContentType("application/json;charset=UTF-8");
         try {
-            boolean hasBade = projectContentProvider.hasBadeForProject("1", projectID);
+            projectContentProvider.hasBadeForProject("1", projectID);
             projectContentProvider.checkAccess("1", projectID);
             if(!bidCommand.bidIsPossible()){
-                bidCommand.execute();
                 response.setStatus(response.SC_BAD_REQUEST);
                 JSONObject status = new JSONObject();
                 status.put("status", "Invalid bid amount");
                 PrintWriter out = response.getWriter();
                 out.println(status);
-
             }
-            else if(hasBade == false ){
+            else{
                 bidCommand.execute();
                 response.setStatus(response.SC_OK);
                 JSONObject status = new JSONObject();
-                status.put("status", "Your bid has successfully submited!!!");
+                status.put("status", "bid successfully done.");
                 PrintWriter out = response.getWriter();
                 out.println(status);
+
             }
         } catch (UserNotFoundException |
                 ProjectNotFoundException e) {
