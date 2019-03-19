@@ -36,21 +36,24 @@ public class delSkill extends HttpServlet {
         System.out.println("name: " +name);
 
         try {
-                userContentProvider.checkCurrentUser(userID);
-                DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
-                command.execute();
-                JSONObject status = new JSONObject();
-                status.put("status", "delete was done successfully");
-                PrintWriter out = response.getWriter();
-                out.println(status);
+            userContentProvider.checkCurrentUser(userID);
+            DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
+            command.execute();
+            JSONObject status = new JSONObject();
+            status.put("status", "delete was done successfully");
+            response.setStatus(response.SC_OK);
+            PrintWriter out = response.getWriter();
+            out.println(status);
+
         } catch (UserAccessForbidden userAccessForbidden) {
             JSONObject instance = new JSONObject();
             instance.put("status", 403);
             instance.put("message", userAccessForbidden.getMessage());
+            response.setStatus(response.SC_FORBIDDEN);
             PrintWriter out = response.getWriter();
             out.println(instance);
-        } catch (UserNotFoundException |
-                SkillNotFoundException e) {
+
+        } catch (UserNotFoundException | SkillNotFoundException e){
             request.setAttribute("exception", e);
             JSONObject instance = new JSONObject();
             instance.put("status", 404);

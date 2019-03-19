@@ -39,7 +39,6 @@ public class ProjectServlet extends HttpServlet {
         boolean hasBade = false;
 
         try {
-            hasBade = projectContentProvider.hasBadeForProject("1", projectID);
             JSONObject map = projectContentProvider.getHTMLContentsForProject("1", projectID);
             projectContentProvider.checkAccess("1",projectID);
             response.setStatus(response.SC_OK);
@@ -65,8 +64,6 @@ public class ProjectServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(instance);
             response.setStatus(response.SC_FORBIDDEN);
-        } catch (BidAlreadyDoneException e) {
-            e.printStackTrace();
         }
     }
 }

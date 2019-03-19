@@ -1,5 +1,6 @@
 package ContentProviders;
 
+import Exceptions.InvalidSkillException;
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
 import Exceptions.UserAccessForbidden;
@@ -7,6 +8,7 @@ import Exceptions.UserNotFoundException;
 import Repositories.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.ArrayList;
 
 
 
@@ -71,22 +73,12 @@ public class userContentProvider {
 
     }
 
-    public static JSONArray getExtraSkills(String uId) throws UserNotFoundException {
-        JSONArray content = new JSONArray();
-        JSONObject instance;
-        User u = UserRepo.findItemInUserList(uId);
-        HashMap<String, Skill> userSkills = new HashMap<String, Skill>(u.getSkills());
+    public static void validateSkill(String skillName) throws InvalidSkillException {
         HashMap<String, Skill> allSkills = new HashMap<String, Skill>(SkillRepo.getSkillList());
-        for (HashMap.Entry<String, Skill> entry : allSkills.entrySet()) {
-            String name = entry.getKey();
-            if (!userSkills.containsKey(name)) {
-                instance = new JSONObject();
-                instance.put(name, uId);
-                content.put(instance);
-            }
 
+        if(!allSkills.containsKey(skillName)){
+            throw new InvalidSkillException("Invalid Skill");
         }
-        return content;
     }
 
     public static void checkCurrentUser(String id) throws UserAccessForbidden {

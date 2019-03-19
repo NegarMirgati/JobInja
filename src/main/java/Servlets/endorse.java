@@ -41,7 +41,7 @@ public class endorse extends HttpServlet {
             request.setAttribute("content", map);
             request.setAttribute("skills", skills);
             request.setAttribute("userID", userID);
-
+            response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
             out.println(skills);

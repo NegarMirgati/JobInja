@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import Commands.*;
 import ContentProviders.projectContentProvider;
 import Exceptions.BidAlreadyDoneException;
+import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
 import Exceptions.UserNotFoundException;
 import org.json.JSONObject;
@@ -34,7 +35,17 @@ public class Bid extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         try {
             boolean hasBade = projectContentProvider.hasBadeForProject("1", projectID);
-            if(bidCommand.bidIsPossible() && hasBade == false ){
+            projectContentProvider.checkAccess("1", projectID);
+            if(!bidCommand.bidIsPossible()){
+                bidCommand.execute();
+                response.setStatus(response.SC_BAD_REQUEST);
+                JSONObject status = new JSONObject();
+                status.put("status", "Invalid bid amount");
+                PrintWriter out = response.getWriter();
+                out.println(status);
+
+            }
+            else if(hasBade == false ){
                 bidCommand.execute();
                 response.setStatus(response.SC_OK);
                 JSONObject status = new JSONObject();
@@ -50,9 +61,21 @@ public class Bid extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(instance);
             response.setStatus(response.SC_NOT_FOUND);
+
         } catch (BidAlreadyDoneException e) {
             JSONObject instance = new JSONObject();
+            instance.put("status", 409);
             instance.put("message", e.getMessage());
+            response.setStatus(response.SC_CONFLICT);
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+        }
+
+        catch (ProjectAccessForbiddenException e){
+            JSONObject instance = new JSONObject();
+            instance.put("status", 403);
+            instance.put("message", e.getMessage());
+            response.setStatus(response.SC_FORBIDDEN);
             PrintWriter out = response.getWriter();
             out.println(instance);
         }

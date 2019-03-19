@@ -1,9 +1,7 @@
 package Commands;
 
-import Exceptions.EndorseAlreadyDoneException;
-import Exceptions.SkillNotFoundException;
-import Exceptions.UserNotFoundException;
+import Exceptions.*;
 
 public interface Command {
-    public void execute() throws UserNotFoundException, SkillNotFoundException, EndorseAlreadyDoneException;
+    public void execute() throws UserNotFoundException, SkillNotFoundException, EndorseAlreadyDoneException, AddSkillAlreadyDoneException;
 }
