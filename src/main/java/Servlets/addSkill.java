@@ -61,6 +61,7 @@ public class addSkill extends HttpServlet {
         } catch (AddSkillAlreadyDoneException e) {
             request.setAttribute("exception", e);
             JSONObject instance = new JSONObject();
+            instance.put("status", 409);
             instance.put("message", e.getMessage());
             PrintWriter out = response.getWriter();
             out.println(instance);
