@@ -34,14 +34,9 @@ public class UserServlet extends HttpServlet {
 
         try {
             JSONObject map = userContentProvider.getHTMLContentsForUser(userId);
-            JSONArray skills = userContentProvider.getUserSkills(userId);
-            JSONArray extraSkills = userContentProvider.getExtraSkills(userId);
             response.setStatus(response.SC_OK);
-
             PrintWriter out = response.getWriter();
             out.println(map);
-            out.println(skills);
-            //out.println(extraSkills);
         }
         catch (UserNotFoundException e){
             response.setStatus(response.SC_NOT_FOUND);
@@ -51,8 +46,6 @@ public class UserServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(instance);
             request.setAttribute("exception", e);
-            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            //dispatcher.forward(request, response);
         }
 
     }

@@ -17,7 +17,6 @@ public class userContentProvider {
     public static JSONObject getHTMLContentsForUser(String uID) throws UserNotFoundException {
         User u = UserRepo.findItemInUserList(uID);
         return getUserContent(u);
-
     }
 
     public static JSONArray getUserSkills(String uID) throws UserNotFoundException {
@@ -51,13 +50,14 @@ public class userContentProvider {
         return contentMap;
     }
 
-    private static JSONObject getUserContent(User u) {
+    private static JSONObject getUserContent(User u) throws UserNotFoundException {
         JSONObject contentMap = new JSONObject();
         contentMap.put("id", u.getUsername());
         contentMap.put("first name", u.getFirstName());
         contentMap.put("last name", u.getLastName());
         contentMap.put("jobTitle", u.getJobTitle());
         contentMap.put("bio", u.getBio());
+        contentMap.put("skills",getUserSkills(u.getUsername()));
         return contentMap;
 
     }
