@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 public class ProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setStatus(response.SC_NOT_IMPLEMENTED);
 
     }
 

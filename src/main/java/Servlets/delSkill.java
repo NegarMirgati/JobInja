@@ -25,6 +25,7 @@ import org.json.JSONArray;
 
 public class delSkill extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setStatus(response.SC_NOT_IMPLEMENTED);
 
     }
 

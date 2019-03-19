@@ -5,6 +5,7 @@ import Exceptions.UserNotFoundException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,19 +18,21 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-@WebServlet(name = "UserServlet",  urlPatterns = { "/users/*" })
+@WebServlet(  name = "UserServlet",  urlPatterns = { "/user"} , initParams = {
+        @WebInitParam(name = "id" , value = "Not provided") } )
 public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        boolean submitButtonPressed = request.getParameter("submit") != null;
+        response.setStatus(response.SC_NOT_IMPLEMENTED);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String path = (request).getRequestURI();
-        StringTokenizer tokenizer = new StringTokenizer(path, "/");
-        String context = tokenizer.nextToken();
-        String userId = tokenizer.nextToken();
+        //StringTokenizer tokenizer = new StringTokenizer(path, "/");
+        //String context = tokenizer.nextToken();
+        // String userId = tokenizer.nextToken();
+        String userId = request.getParameter("id");
         request.setAttribute("userID", userId);
 
         try {
@@ -47,6 +50,5 @@ public class UserServlet extends HttpServlet {
             out.println(instance);
             request.setAttribute("exception", e);
         }
-
     }
 }

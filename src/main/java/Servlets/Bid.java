@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 public class Bid extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setStatus(response.SC_NOT_IMPLEMENTED);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
