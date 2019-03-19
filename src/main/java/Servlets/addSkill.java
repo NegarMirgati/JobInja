@@ -33,6 +33,8 @@ public class addSkill extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String userID = request.getParameter("id");
         String selectedSkill = request.getParameter("name");
+        System.out.println("id:" + userID);
+        System.out.println("name:" + selectedSkill);
 
         try {
             userContentProvider.validateSkill(selectedSkill);
@@ -40,7 +42,8 @@ public class addSkill extends HttpServlet {
             AddSkillToUserCommand command = new AddSkillToUserCommand(userID, selectedSkill);
             command.execute();
             JSONObject status = new JSONObject();
-            status.put("status", "skill was added successfully");
+            status.put("status", "200");
+            status.put("message", "skill successfully added");
             PrintWriter out = response.getWriter();
             out.println(status);
         }
