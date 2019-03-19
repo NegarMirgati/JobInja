@@ -47,24 +47,20 @@ public class ProjectServlet extends HttpServlet {
             out.println(map);
 
         } catch (ProjectNotFoundException e) {
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 404);
-            instance.put("message", e.getMessage());
-            PrintWriter out = response.getWriter();
-            out.println(instance);
-            response.setStatus(response.SC_NOT_FOUND);
+            printApiOutputError(e, 404,response);
         }
 
         catch (ProjectAccessForbiddenException e){
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 403);
-            instance.put("message", e.getMessage());
-            instance.put("developerMessage", "User does not have minimum skills to view this project");
-            PrintWriter out = response.getWriter();
-            out.println(instance);
-            response.setStatus(response.SC_FORBIDDEN);
+            printApiOutputError(e, 403,response);
         }
+    }
+
+    private void printApiOutputError(Throwable e, int statusCode, HttpServletResponse response) throws IOException{
+        JSONObject instance = new JSONObject();
+        instance.put("status", statusCode);
+        instance.put("message", e.getMessage());
+        response.setStatus(statusCode);
+        PrintWriter out = response.getWriter();
+        out.println(instance);
     }
 }

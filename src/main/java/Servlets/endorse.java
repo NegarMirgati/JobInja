@@ -11,13 +11,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import Commands.EndorseCommand;
 import ContentProviders.userContentProvider;
-import Exceptions.EndorseAlreadyDoneException;
-import Exceptions.UserNotFoundException;
+import Exceptions.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
 @WebServlet(name = "endorse", urlPatterns = { "/user/endorse"} , initParams = {
-    @WebInitParam(name = "userID" , value = "Not provided"),
+    @WebInitParam(name = "id" , value = "Not provided"),
         @WebInitParam(name = "name" , value = "Not provided")} )
 
 public class endorse extends HttpServlet {
@@ -28,47 +27,51 @@ public class endorse extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        String userID = request.getParameter("userID");
+        String userID = request.getParameter("id");
         String name = request.getParameter("name");
-        System.out.println("userId: " +userID);
+        System.out.println("id: " +userID);
         System.out.println("name: " +name);
 
         EndorseCommand command = new EndorseCommand(userID, name);
         try {
+            if(userID != null && userID.equals("1"))
+                throw new UserAccessForbidden("Forbidden endorse");
+
+            userContentProvider.validateSkill(name);
             command.execute();
-            JSONObject map = userContentProvider.getHTMLContentsForUser(userID);
-            JSONArray skills = userContentProvider.getUserSkills(userID);
-
-            request.setAttribute("content", map);
-            request.setAttribute("skills", skills);
-            request.setAttribute("userID", userID);
             response.setStatus(response.SC_OK);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 200);
+            instance.put("message", "Endorse successfully done");
             PrintWriter out = response.getWriter();
-            out.println(map);
-            out.println(skills);
-
+            out.println(instance);
         }
         catch (EndorseAlreadyDoneException e){
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 409);
-            instance.put("message", e.getMessage());
-            instance.put("developerMessage", "User has already endorsed this skill");
-            PrintWriter out = response.getWriter();
-            out.println(instance);
-            response.setStatus(response.SC_CONFLICT);
+            printApiOutputError(e, 409,response);
         }
         catch(UserNotFoundException e){
-            request.setAttribute("exception", e);
-            response.setStatus(response.SC_NOT_FOUND);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 404);
-            instance.put("message", e.getMessage());
-            PrintWriter out = response.getWriter();
-            out.println(instance);
-            //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            //dispatcher.forward(request, response);
+            printApiOutputError(e, 404,response);
+        }
+        catch (InvalidSkillException e){
+
+            printApiOutputError(e, 422,response);
+        }
+        catch (UserAccessForbidden e){
+
+            printApiOutputError(e, 422,response);
+        }
+        catch (SkillNotFoundException e){
+            printApiOutputError(e, 404,response);
         }
 
+    }
+
+    private void printApiOutputError(Throwable e, int statusCode, HttpServletResponse response) throws IOException{
+        JSONObject instance = new JSONObject();
+        instance.put("status", statusCode);
+        instance.put("message", e.getMessage());
+        response.setStatus(statusCode);
+        PrintWriter out = response.getWriter();
+        out.println(instance);
     }
 }

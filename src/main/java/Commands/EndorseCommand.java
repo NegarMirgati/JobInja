@@ -1,6 +1,7 @@
 package Commands;
 
 import Exceptions.EndorseAlreadyDoneException;
+import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 import Repositories.UserRepo;
 
@@ -14,7 +15,7 @@ public class EndorseCommand implements Command{
     }
 
     @Override
-    public void execute() throws UserNotFoundException, EndorseAlreadyDoneException {
+    public void execute() throws UserNotFoundException, EndorseAlreadyDoneException, SkillNotFoundException {
         UserRepo.endorse(this.userId, this.skillName);
     }
 

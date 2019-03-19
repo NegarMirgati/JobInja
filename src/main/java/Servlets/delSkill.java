@@ -46,23 +46,21 @@ public class delSkill extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println(status);
 
-        } catch (UserAccessForbidden userAccessForbidden) {
-            JSONObject instance = new JSONObject();
-            instance.put("status", 403);
-            instance.put("message", userAccessForbidden.getMessage());
-            response.setStatus(response.SC_FORBIDDEN);
-            PrintWriter out = response.getWriter();
-            out.println(instance);
+        } catch (UserAccessForbidden e) {
+            printApiOutputError(e, 403,response);
 
         } catch (UserNotFoundException | SkillNotFoundException e){
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 404);
-            instance.put("message", e.getMessage());
-            PrintWriter out = response.getWriter();
-            out.println(instance);
-            response.setStatus(response.SC_NOT_FOUND);
+            printApiOutputError(e, 404,response);
         }
+    }
+
+    private void printApiOutputError(Throwable e, int statusCode, HttpServletResponse response) throws IOException{
+        JSONObject instance = new JSONObject();
+        instance.put("status", statusCode);
+        instance.put("message", e.getMessage());
+        response.setStatus(statusCode);
+        PrintWriter out = response.getWriter();
+        out.println(instance);
     }
 
 }

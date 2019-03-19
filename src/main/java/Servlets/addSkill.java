@@ -34,8 +34,6 @@ public class addSkill extends HttpServlet {
         String userID = request.getParameter("id");
         String selectedSkill = request.getParameter("name");
 
-
-
         try {
             userContentProvider.validateSkill(selectedSkill);
             userContentProvider.checkCurrentUser(userID);
@@ -47,41 +45,26 @@ public class addSkill extends HttpServlet {
             out.println(status);
         }
         catch( UserNotFoundException e){
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 404);
-            instance.put("message", e.getMessage());
-            PrintWriter out = response.getWriter();
-            out.println(instance);
-            response.setStatus(response.SC_NOT_FOUND);
+            printApiOutputError(e, 404,response);
 
-        } catch (UserAccessForbidden userAccessForbidden) {
-            JSONObject instance = new JSONObject();
-            response.setStatus(403);
-            instance.put("status", 403);
-            instance.put("message", userAccessForbidden.getMessage());
-            PrintWriter out = response.getWriter();
-            out.println(instance);
+        } catch (UserAccessForbidden e) {
+            printApiOutputError(e, 403,response);
 
         } catch (AddSkillAlreadyDoneException e) {
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            response.setStatus(409);
-            instance.put("status", 409);
-            instance.put("message", e.getMessage());
-            PrintWriter out = response.getWriter();
-            out.println(instance);
+            printApiOutputError(e, 409,response);
         }
         catch(InvalidSkillException e){
-            request.setAttribute("exception", e);
-            JSONObject instance = new JSONObject();
-            instance.put("status", 422);
-            instance.put("message", e.getMessage());
-            instance.put("developerMessage", "This skill is not in the list of valid skills for users.");
-            response.setStatus(422);
-            PrintWriter out = response.getWriter();
-            out.println(instance);
+            printApiOutputError(e, 422,response);
 
         }
+    }
+
+    private void printApiOutputError(Throwable e, int statusCode, HttpServletResponse response) throws IOException{
+        JSONObject instance = new JSONObject();
+        instance.put("status", statusCode);
+        instance.put("message", e.getMessage());
+        response.setStatus(statusCode);
+        PrintWriter out = response.getWriter();
+        out.println(instance);
     }
 }

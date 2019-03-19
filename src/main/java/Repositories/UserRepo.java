@@ -73,9 +73,9 @@ public class UserRepo {
     public static void addUser2(){
         System.out.println("adding user");
         String bio = "Stay hungry, stay foolish.";
-        Skill s = new  Skill("HTML", 5);
-        Skill s1 = new Skill("Javascript", 4);
-        Skill s2 = new Skill("C++", 2);
+        Skill s = new  Skill("Linux", 5);
+        Skill s1 = new Skill("SEO", 4);
+        Skill s2 = new Skill("C", 2);
         Skill s3 = new Skill("Java", 3);
         HashMap<String, Skill> map = new HashMap<String, Skill>();
         map.put("HTML", s);
@@ -102,8 +102,12 @@ public class UserRepo {
         UserRepo.addUser(u);
     }
 
-    public static void endorse(String id, String skill) throws UserNotFoundException, EndorseAlreadyDoneException {
+    public static void endorse(String id, String skill) throws UserNotFoundException, EndorseAlreadyDoneException, SkillNotFoundException {
         User u = findItemInUserList(id);
+        System.out.println(u.getSkills());
+        if(!(u.getSkills().containsKey(skill)))
+            throw new SkillNotFoundException("Skill not found");
+
         if ( !(u.getSkills().get(skill).hasEndorsed(id))){
             u.endorse(skill);
             u.getSkills().get(skill).addEndorser(id);
