@@ -28,7 +28,7 @@ public class delSkill extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String userID = request.getParameter("id");
         String name = request.getParameter("name");
@@ -45,6 +45,7 @@ public class delSkill extends HttpServlet {
                 out.println(status);
         } catch (UserAccessForbidden userAccessForbidden) {
             JSONObject instance = new JSONObject();
+            instance.put("status", 403);
             instance.put("message", userAccessForbidden.getMessage());
             PrintWriter out = response.getWriter();
             out.println(instance);
