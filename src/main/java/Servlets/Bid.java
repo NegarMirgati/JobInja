@@ -31,9 +31,10 @@ public class Bid extends HttpServlet {
 
         String bidAmount = request.getParameter("amount");
         String projectID = request.getParameter("id");
-        BidCommand bidCommand = new BidCommand(projectID, Integer.valueOf(bidAmount), "1");
-        response.setContentType("application/json;charset=UTF-8");
+
         try {
+            BidCommand bidCommand = new BidCommand(projectID, Integer.valueOf(bidAmount), "1");
+            response.setContentType("application/json;charset=UTF-8");
             projectContentProvider.hasBadeForProject("1", projectID);
             projectContentProvider.checkAccess("1", projectID);
             if(!bidCommand.bidIsPossible()){
@@ -77,6 +78,16 @@ public class Bid extends HttpServlet {
             response.setStatus(response.SC_FORBIDDEN);
             PrintWriter out = response.getWriter();
             out.println(instance);
+        }
+
+        catch(NumberFormatException e){
+            JSONObject instance = new JSONObject();
+            instance.put("status", 422);
+            instance.put("message", "Invalid parameter type exception");
+            response.setStatus(422);
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+
         }
 
     }
