@@ -1,5 +1,6 @@
 package Entities;
 
+import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 
 import java.util.HashMap;

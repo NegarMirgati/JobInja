@@ -2,10 +2,13 @@ package Servlets;
 
 import Commands.AddSkillToUserCommand;
 import ContentProviders.userContentProvider;
+import Exceptions.AddSkillAlreadyDoneException;
+import Exceptions.UserAccessForbidden;
 import Exceptions.UserNotFoundException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +19,10 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-@WebServlet(name = "addSkill")
+@WebServlet(name = "addSkill", urlPatterns = { "/users/addSkill"} , initParams = {
+        @WebInitParam(name = "id" , value = "Not provided"),
+        @WebInitParam(name = "name" , value = "Not provided")} )
+
 public class addSkill extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -24,40 +30,40 @@ public class addSkill extends HttpServlet {
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        String userID = request.getParameter("userID");
-        String selectedSkill = request.getParameter("selectedSkill");
-        System.out.println("userId: " +userID);
-        System.out.println("selectedSkill: " +selectedSkill);
+        String userID = request.getParameter("id");
+        String selectedSkill = request.getParameter("name");
 
-        AddSkillToUserCommand command = new AddSkillToUserCommand(userID, selectedSkill);
+
         try {
+            userContentProvider.checkCurrentUser(userID);
+            AddSkillToUserCommand command = new AddSkillToUserCommand(userID, selectedSkill);
             command.execute();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject map = userContentProvider.getHTMLContentsForUser(userID);
-            JSONArray skills = userContentProvider.getUserSkills(userID);
-            JSONArray extraSkills = userContentProvider.getExtraSkills(userID);
-
-            request.setAttribute("content", map);
-            request.setAttribute("skills",skills);
-            request.setAttribute("extraSkills", extraSkills);
-            request.setAttribute("userID", userID);
-
+            JSONObject status = new JSONObject();
+            status.put("status", "skill was added successfully");
             PrintWriter out = response.getWriter();
-            out.println(map);
-            out.println(extraSkills);
-            out.println(skills);
-            out.println(selectedSkill);
-
+            out.println(status);
         }
-        catch(
-                UserNotFoundException e){
+        catch( UserNotFoundException e){
             request.setAttribute("exception", e);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error404.jsp");
-            dispatcher.forward(request, response);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 404);
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+            response.setStatus(response.SC_NOT_FOUND);
+
+        } catch (UserAccessForbidden userAccessForbidden) {
+            JSONObject instance = new JSONObject();
+            instance.put("status", 403);
+            instance.put("message", userAccessForbidden.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+        } catch (AddSkillAlreadyDoneException e) {
+            request.setAttribute("exception", e);
+            JSONObject instance = new JSONObject();
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
         }
     }
 }

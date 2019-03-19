@@ -1,6 +1,7 @@
 package Repositories;
 import Commands.Command;
 import Entities.*;
+import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
@@ -27,6 +28,8 @@ public class SkillRepo {
     public static void addSkill(String name, int point ){
         Skill newSkill = new Skill(name, point);
         skillList.put(name, newSkill);
+
+
     }
 
     public static void addSkills(){
@@ -40,6 +43,8 @@ public class SkillRepo {
 
             }
         } catch (IOException | UserNotFoundException | SkillNotFoundException | EndorseAlreadyDoneException e) {
+            e.printStackTrace();
+        } catch (AddSkillAlreadyDoneException e) {
             e.printStackTrace();
         }
     }

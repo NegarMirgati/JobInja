@@ -1,5 +1,6 @@
 package Repositories;
 import Entities.*;
+import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
@@ -117,10 +118,13 @@ public class UserRepo {
         u.delSkill(SkillName);
     }
 
-    public static void addSkillToUser(String uId, String skillName) throws UserNotFoundException {
+    public static void addSkillToUser(String uId, String skillName) throws UserNotFoundException, AddSkillAlreadyDoneException {
         User u = findItemInUserList(uId);
-        Skill s = new Skill(skillName, 0);
-        u.addSkill(skillName, s);
+        if (!u.getSkills().containsKey(skillName)) {
+            Skill s = new Skill(skillName, 0);
+            u.addSkill(skillName, s);
+        }
+        else throw new AddSkillAlreadyDoneException("skill is already in skill list");
     }
 
 }

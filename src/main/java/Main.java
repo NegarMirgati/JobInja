@@ -1,4 +1,5 @@
 import Commands.*;
+import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
@@ -13,7 +14,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static boolean isFinished = false;
 
-    public static void main(String[] args) throws Exception, UserNotFoundException, SkillNotFoundException, EndorseAlreadyDoneException {
+    public static void main(String[] args) throws Exception, UserNotFoundException, SkillNotFoundException, EndorseAlreadyDoneException, AddSkillAlreadyDoneException {
         ProjectRepo.addProjects();
         SkillRepo.addSkills();
         UserRepo.addUser();

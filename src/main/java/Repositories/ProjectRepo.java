@@ -58,6 +58,8 @@ public class ProjectRepo {
             }
         } catch (IOException | UserNotFoundException | SkillNotFoundException | EndorseAlreadyDoneException e) {
             e.printStackTrace();
+        } catch (AddSkillAlreadyDoneException e) {
+            e.printStackTrace();
         }
     }
 

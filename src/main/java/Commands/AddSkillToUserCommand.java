@@ -1,5 +1,6 @@
 package Commands;
 
+import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.UserNotFoundException;
 import Repositories.*;
 
@@ -12,7 +13,7 @@ public class AddSkillToUserCommand implements Command {
         this.skillName = skillName;
     }
 
-    public void execute() throws UserNotFoundException {
+    public void execute() throws UserNotFoundException, AddSkillAlreadyDoneException {
       UserRepo.addSkillToUser(uId, skillName);
     }
 }
