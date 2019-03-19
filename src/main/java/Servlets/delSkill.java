@@ -37,6 +37,11 @@ public class delSkill extends HttpServlet {
         System.out.println("name: " +name);
 
         try {
+            if(userID == null)
+                throw new UserNotFoundException("user not found");
+            else if(name == null)
+                throw new SkillNotFoundException("skill not found");
+
             userContentProvider.checkCurrentUser(userID);
             DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
             command.execute();
