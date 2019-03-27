@@ -1,0 +1,597 @@
+
+@import url("../Assets/fonts/iransans-fonts/fonts.scss");
+@import url("../Assets/fonts/vazir-font-v19.2.0/vazir-fonts.scss");
+
+.htmlBodyStyle{
+  height: 100%;
+  width: 100%;
+  background-color: rgb(246, 246, 246);
+}
+.container-fluid {
+  height: 100%;
+}
+
+.site-header {
+  background-color: white;
+  height: 6%;
+  margin-top : 0%;
+  padding-left : 8%;
+}
+
+#homelogo a {
+  all: initial;
+  cursor: pointer;
+}
+
+.header-img {
+  width: 12%;
+  height: 100%;
+  margin-right: 9%;
+  margin-top : -1%;
+  float:right;
+}
+
+.site-header a {
+  color: black;
+  font-family: Vazir-100;
+  border-radius: 3px;
+  text-align: center;
+  padding-right: 15px;
+  text-decoration: none;
+  font-size: 17px; 
+  width : 13%;
+  display: inline-block;
+  padding: 12px;
+  line-height: 25px;
+}
+.site-header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.flex-equal > * {
+  -ms-flex: 1;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+
+.overflow-hidden { overflow: hidden; }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  height: 7%;
+  width: 100%;
+  background-color: rgb(54,54,54);
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  font-family: 'Vazir';
+  color: rgb(128, 128, 128);
+}
+
+  .main {
+    width: 100%;
+    padding-top: 0%;
+    padding-left: 0%;
+    padding-right: 0%;
+    background-color: rgb(246, 246,246);
+    
+  }
+
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  .rectangle {
+    display: inline-block;
+    z-index: 1000;
+    height: 15%;
+    width: 0.7%;
+    background:rgb(137, 210, 210);
+    top : 43%;
+    left : 71.85%;
+    position: absolute;
+  }
+
+  .rectangle-2 {
+    display: inline-block;
+    z-index: 1000;
+    height: 15%;
+    width: 10%;
+    background : rgb(108, 197, 201);
+    top : 43%;
+    left : 62%;
+    position: absolute;
+  }
+
+  .rectangle-3 {
+    display: inline-block;
+    z-index: 900;
+    height: 15%;
+    width: 4%;
+    background : rgb(130, 218, 222);
+    top : 43%;
+    left : 61%;
+    position: absolute;
+  }
+
+
+  #parallelogram-2 {
+    width: 10.5%;
+    height: 14.8%;
+    transform: skew(-30deg);
+    background: rgb(108, 197, 201);
+    top : 43%;
+    left : 60.5%;
+    position: absolute;
+    z-index: 900;
+  }
+
+  #parallelogram-1 {
+    width: 10.9%;
+    height: 14.8%;
+    transform: skew(-30deg);
+    background: rgb(130, 218, 222);
+    top : 43%;
+    left : 59.6%;
+    position: absolute;
+  }
+
+  .profile{
+    background-color: rgb(246, 246, 246);
+    width:100%;
+  }
+
+  #picRow{
+      height: 30%;
+  }
+
+.profile-photo
+  {
+    height : 80%; 
+    width : 15%; 
+    top : 15%;
+    left : 71.9%;
+    z-index : 12;
+    border-radius: 11%;
+    border: 8px solid white;
+    z-index: 2;
+    position: absolute;
+    display: inline-block;
+    }
+
+    @media (max-width: 1087px) {
+      .rectangle{
+        left : 72%;
+      }
+    }
+
+  .profile-name
+  {
+    top : 43.5%;
+    right : 29.5%;
+    padding-top: 2%;
+    display: inline-block;
+    z-index: 10;
+    font-family: Vazir-Bold;
+    font-size: 200%;
+    position: absolute;
+  }
+
+  .profile-job
+  {
+    top : 77%;
+    right : 29.5%;
+    z-index: 10;
+    font-family: Vazir;
+    font-size: 100%;
+    background-color: rgb(246, 246, 246);
+    position: absolute;
+  }
+
+
+.site-header #account{
+  width: 40%;
+}
+
+  .skill{
+    padding-right : 1%;
+  }
+
+  .skill-btn{
+    background-color: white;
+  }
+   
+  .badge-green{
+    background-color: rgb(26,177,30);
+  }
+  .badge-blue{
+    background-color: rgb(187,239,241);
+  }
+  .badge-red{
+    background-color: rgb(212, 11, 36);
+  }
+
+  .blue-box{
+    background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
+    height: 58%;
+    position: absolute;
+    top : 0%;
+  }
+
+  .reg-blue-box{
+    height: 40%;
+  }
+
+  .skills{
+    padding-left : 12%;
+    overflow: scroll;
+    margin-bottom : 7%;
+  }
+  .skills button{
+    padding : 1%;
+  }
+
+  .skills button:hover{
+    background-color: #ddd;
+  }
+
+  .skills button .badge{
+    padding : 5px;
+  }
+
+  .add-skill-form-container{
+    padding: 0.3%;
+    margin-bottom: 1rem;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 27%;
+    float: right;
+
+  }
+
+  #skill-row{
+    height: 16%;
+    padding-top : 2%;
+  }
+
+  #add-skill-name{
+    padding-top : 1%;
+    padding-right: 10%;
+    font-family: Vazir-Bold;
+    text-align: right;
+    width: 16.2%;
+    margin : 0%;
+    float : right;
+  }
+
+  .add-skill-form-container .add-skill-form .add-skill-input{
+    background: #f9f9f9;
+    border : 1px solid #eeeeee;
+    width : 68%;
+    padding : 3px;
+    text-align: right;
+    direction : rtl;
+    height : 40px; 
+    font-family: Vazir-100;
+  }
+  
+  .add-skill-button{
+    background-color: rgb(23, 153, 164);
+    font-family: Vazir-100;
+    font-size: 80%;
+    color: white;
+    border-radius: 4px;
+    width: 30%;
+    height : 40px;
+    padding: 3px;
+  }
+
+  @-moz-document url-prefix() {
+
+    .add-skill-button { padding-top: 6px;}
+
+}
+
+  .add-skill-button:hover{
+
+    background-color: #1bb5c2;
+  }
+
+  .rtl-text{
+    direction : rtl;
+    overflow: scroll;
+    text-align : right;
+    font-family: Vazir;
+    font-size: 90%;
+    background-color: rgb(246, 246, 246);
+    padding-right: 13%;
+    padding-left: 13%;
+    padding-top: 2%;
+    margin-bottom: 0%;
+  }
+
+  .row-100{
+    height: 24%;
+  }
+
+  .main-background{
+    background-color: rgb(246, 246, 246);
+  }
+
+  @keyframes slideshow {
+    10% {left: 0;}
+    20% {left: 0;}
+    30% {left: -100%;}
+    40% {left: -100%;}
+    50% {left: -200%;}
+    60% {left: -200%;}
+    70% {left: -300%;}
+    80% {left: -300%;}
+    90% {left: -400%;}
+    100% {left: -400%}
+  }
+  
+  
+  #slider{
+    z-index: 10;
+    overflow:hidden;
+    width:40%;
+    height: 60%;
+    margin:1% auto;
+    margin-top: 8%;
+    border-radius: 3%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  #slider figure img{
+    width:20%;
+    float:left;
+  }
+  #slider figure{
+    position:relative;
+    width:500%;
+    margin:0;
+    left:0;
+    text-align:left;
+    animation:20s slideshow infinite
+  }
+
+  .slide-img{
+    width: 40%;
+    height: 90%;
+  }
+  
+  @media screen and (max-width: 767px) {#slider {overflow: hidden; width: 100%; margin: 0 auto;}}
+
+  #register{
+    font-family: Vazir-Bold;
+    font-size: 110%;
+  }
+
+  .register-container{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-style: dashed;
+    border-color: rgb(35, 209, 220);
+    padding-right : 5%;
+    padding-left : 5%;
+    text-align: center;
+    padding-top: 1%;
+    border-radius: 2%;
+    width: 40%;
+    margin-left: 30%;
+    overflow : scroll;
+    background-color : white;
+    padding-bottom: 5%;
+    margin-bottom: 10%;
+    margin-top : -3%;
+    
+  }
+
+  .register-form input[type=text],  input[type=password]{
+    width: 100%;
+    padding: 2% 4%;
+    margin: 4px 0;
+    display: inline-block;
+    border-radius: 5%;
+    box-sizing: border-box;
+    font-size: 80%;
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .register-form label{
+    direction: rtl;
+    text-align: right;
+  }
+
+  .register-container .register-form{
+    font-family: Vazir-100;
+  }
+
+  .register-container .register-form input{
+    width : 40%;
+  }
+
+  .Bluebar {
+  position: relative;
+  padding: 156px 0 10px;
+  background : rgb(186, 239, 241);
+  z-index: -1;
+
+}
+
+.position {
+  position: absolute;
+  padding-left: 240px;
+  padding-right: 50px;
+  top: 110px;
+}
+
+.color {
+  background-color: snow;
+}
+
+
+.project-photo
+  {
+    position: absolute;
+    top: 20px;
+    left: 80%;
+    width: 17%;
+    height: 75%;
+    border: 8px solid white;
+    }
+
+.insideRowPos {
+   right: 200px;
+}
+
+.projectTitle {
+  color: #0a0a0a;
+  text-align:center ;
+  top: 10px;
+  font-weight:bold;
+  padding-left: 190px;
+}
+
+.timePos {
+  color: rgb(99, 99, 99);
+  top: 15px;
+  font-weight:bold;
+  padding-left: 190px;
+}
+.timeNeg {
+  color: red;
+  top: 15px;
+  font-weight:bold;
+  padding-left: 190px;
+}
+.winner{
+  color: rgb(28, 147,75);
+  top: 2%;
+  font-weight:bold;
+  padding-left: 190px;
+}
+.budget {
+  color: rgb(17, 132, 139);
+  top:5px;
+  font-weight:bold;
+  padding-left: 190px;
+}
+.descriptionTitle{
+  color: black;
+  top: 3px;
+  font-weight:bold;
+  padding-left: 190px;
+}
+.description{
+  color: black;
+  top: 3px;
+  padding-left: 190px;
+
+}
+
+.projectBorder {
+  border-style: none none dashed none;
+  display: inline-block;
+  color: darkturquoise;
+  height: 10%;
+  margin-top: 0px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 5px 5px 0px 0px;
+}
+
+.skillsBorder {
+  display: inline-block;
+  height: 10%;
+  margin-top: 0px;
+  background-color: rgb(246, 246,246);
+  padding-bottom: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+
+}
+
+.resultsBorder {
+  display: inline-block;
+  height: 10%;
+  margin-top: 0px;
+  background-color: white;
+  padding-bottom: 1%;
+  margin-bottom: 10%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 0px 0px 5px 5px;
+
+
+}
+.textPosition {
+  position:relative;
+  direction:rtl;
+  text-align:right;
+  font-family: Vazir;
+}
+.text {
+  color: rgb(17, 132, 139);
+  font-weight:bold;
+  top: 10px;
+  right: 7px;
+}
+.badgeColor {
+  background-color: rgb(186, 239, 241);
+}
+.btnColor {
+  background-color: white;
+}
+
+.bodyColor {
+  background-color: rgb(246, 246,246);
+}
+
+.bidFormTitle{
+  font-weight: bold;
+  color: black;
+  top:5px;
+}
+
+.bidForm{
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+
+.bidBtnColor {
+  background-color: darkturquoise;
+  color: white;
+}
+
+.bidColor {
+  background-color: white;
+  color:darkturquoise;
+}
+.bidBorder{
+  border:1px solid darkturquoise;
+}
+
+.result {
+  font-weight:bold;
+  top: 10px;
+  right: 7px;
+  display: inline;
+}
+.resultPos {
+  color: rgb(28, 147,75);
+}
+
+.resultNeg {
+  color: red;
+}
