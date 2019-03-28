@@ -82,6 +82,7 @@
     padding-left: 0%;
     padding-right: 0%;
     background-color: rgb(246, 246,246);
+    height: calc(100vh - 7% - 6%);
     
   }
 
@@ -223,13 +224,13 @@
 
   .blue-box{
     background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
-    height: 58%;
-    position: absolute;
+    height: 100%;
     top : 0%;
   }
 
   .reg-blue-box{
-    height: 40%;
+    position: relative;
+    z-index: -1;
   }
 
   .skills{
@@ -296,6 +297,11 @@
     height : 40px;
     padding: 3px;
   }
+
+  .login-button{
+    margin-top: 10%;
+    font-size: 100%;
+}
 
   @-moz-document url-prefix() {
 
@@ -374,12 +380,12 @@
   
   @media screen and (max-width: 767px) {#slider {overflow: hidden; width: 100%; margin: 0 auto;}}
 
-  #register{
+  #registerlogin{
     font-family: Vazir-Bold;
     font-size: 110%;
   }
 
-  .register-container{
+  .registerlogin-container{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-style: dashed;
     border-color: rgb(35, 209, 220);
@@ -415,11 +421,11 @@
     text-align: right;
   }
 
-  .register-container .register-form{
+  .registerlogin-container .register-form{
     font-family: Vazir-100;
   }
 
-  .register-container .register-form input{
+  .registerlogin-container .register-form input{
     width : 40%;
   }
 

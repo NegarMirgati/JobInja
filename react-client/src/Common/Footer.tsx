@@ -4,10 +4,10 @@ import 'src/Styles/style.css'
 class Footer extends Component{
     render(){
         return(
-            <div class = "row">
-                <div class = "col-sm-12">
-                    <div class = "footer">
-                        <div class = "container">
+            <div className = "row">
+                <div className = "col-sm-12">
+                    <div className = "footer">
+                        <div className = "container">
                             <p> تمامی حقوق این سایت متعلق به جاب اونجا می باشد © </p>
                         </div>
                     </div>
