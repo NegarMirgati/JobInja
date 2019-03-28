@@ -5,9 +5,13 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 import Login from 'src/Login/Login'
-ReactDOM.render( <Router>
-    <Route exact path = "/login" component={Login} />
-  </Router>,
+import Register from './Register/Register';
+import Test1 from './Test1/Test1';
+ReactDOM.render( 
+    <Router>
+      <Route exact path = "/login" component={Login} />
+      <Route exact path = "/register" component={Register} />
+    </Router>,
   document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
