@@ -59,7 +59,7 @@ class RegisterForm extends Component<Props, State>{
 
     handleSubmit = (event : any) => {
         event.preventDefault();
-        const {password, confirmPassword } = this.state;
+        const {password, confirmPassword} = this.state;
         let hasError: boolean = false;
         
         Object.values(this.state).map(value => {
@@ -69,6 +69,10 @@ class RegisterForm extends Component<Props, State>{
         }
         });
 
+        if(password.length < 6){
+            toast.error("رمز عبور باید دارای حداقل ۶ حرف باشد");
+            hasError = true
+        }
         if (password !== confirmPassword) {
             toast.error("عدم همخوانی رمز عبور");
             hasError = true

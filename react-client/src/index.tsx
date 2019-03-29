@@ -6,11 +6,13 @@ import * as serviceWorker from './serviceWorker';
 
 import Login from 'src/Login/Login'
 import Register from './Register/Register';
-import Test1 from './Test1/Test1';
+import User from './User/User';
+
 ReactDOM.render( 
     <Router>
       <Route exact path = "/login" component={Login} />
       <Route exact path = "/register" component={Register} />
+      <Route exact path = "/user" component={User} />
     </Router>,
   document.getElementById('root'));
 

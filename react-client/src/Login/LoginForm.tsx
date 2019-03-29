@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
 
@@ -22,6 +24,22 @@ class LoginForm extends Component{
         console.log('pass changed');
     }
 
+    handleSubmit = (event : any) => {
+        event.preventDefault();
+        let hasError: boolean = false;
+        
+        Object.values(this.state).map(value => {
+            if(!value && hasError == false){
+            toast.error("لطفا تمامی فیلد ها را وارد کنید")
+            hasError = true
+        }
+        });
+        if(hasError == false){
+            toast.success("ورود موفق");
+            // TODO : make API call
+        }
+    }
+
     render(){
         return(
             <div>
@@ -39,7 +57,7 @@ class LoginForm extends Component{
                                     <input onChange = {this.handleUsernameChange} type="text" id="userName" placeholder = "نام کاربری"/><br/>
                                     <label htmlFor="password"><b>رمز عبور</b></label><br/>
                                     <input onChange = {this.handlePasswordchange} type="password" id="password" placeholder= "رمز عبور"/><br/>
-                                    <button type = "button" className = "add-skill-button login-button" > ورود </button>
+                                    <button onClick = {this.handleSubmit} type = "button" className = "add-skill-button login-button" > ورود </button>
                                 </form>
                             </div>
                         </div>
