@@ -9,18 +9,23 @@ export default class User extends Component<RouteComponentProps<any>,  State> {
   constructor(props : any) {
     super(props);
     this.state = {
-        result: [],
-        isLoggedInUser : false
+        isLoggedInUser : "",
+        userId : ""
     };
 }
   componentDidMount(){
     const parsed = queryString.parse(this.props.location.search);
     console.log(parsed)  
     let thisId = parsed.id
+    this.setState({userId : parsed.id});
+
     if(thisId == '1') 
-      this.setState({isLoggedInUser: true});
+      this.setState({isLoggedInUser: 'true'});
     else 
-      this.setState({isLoggedInUser: false});
+      this.setState({isLoggedInUser: 'false'});
+
+    console.log('whhhatt', thisId)
+    this.setState({userId: thisId}) 
   
   }
 
@@ -28,7 +33,9 @@ export default class User extends Component<RouteComponentProps<any>,  State> {
     return (
       <div>
            <Header/>
-           { this.state.isLoggedInUser? <UserComponentLogged/> :  <OtherUserComponent/>}
+           { this.state.isLoggedInUser == 'true'? <UserComponentLogged {...this.state}/> : null}
+            {this.state.isLoggedInUser == 'false'? <OtherUserComponent{...this.state}/> : null}
+           
            <Footer/>
         
       </div>
@@ -37,6 +44,6 @@ export default class User extends Component<RouteComponentProps<any>,  State> {
 }
 
 interface State{
-  result : [],
-  isLoggedInUser : boolean  
+  isLoggedInUser : string 
+  userId : any
 }

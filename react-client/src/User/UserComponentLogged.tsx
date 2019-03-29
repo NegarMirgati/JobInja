@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 const axios = require('axios');
-import qs from 'query-string';
-import profilePhoto from 'src/Assets/images/dibi.jpeg'
+import UserCommon from './UserCommon'
 export default class UserComponentLogged extends Component<any,  State> {
 
   constructor(props : any) {
@@ -15,21 +14,18 @@ export default class UserComponentLogged extends Component<any,  State> {
       proLink : "",
       skills : []
     };
-
-    axios.get('http://localhost:8080/user?id=1')
+    var linktmp = 'http://localhost:8080/user?id='
+    var  link = linktmp.concat(this.props.userId)
+    axios.get(link)
     .then((response : any) => {
       let obj: any = JSON.parse(JSON.stringify(response.data));
-      console.log(Object.values(obj))
-      console.log(obj["name"])
       this.setState({name: obj["name"]});
       this.setState({lastname: obj["lastname"]});
       this.setState({id: obj["id"]});
       this.setState({job: obj["jobTitle"]});
       this.setState({bio: obj["bio"]});
       this.setState({proLink: obj["proLink"]});
-      this.setState({skills:obj["skills"]});
-
-    console.log('lala', this.state.job)
+      this.setState({skills : obj["skills"]});
     })
     .catch(function (error : any) {
     // handle error
@@ -41,47 +37,34 @@ export default class UserComponentLogged extends Component<any,  State> {
     });
   }
 
-  componentDidMount(){
-    axios.get('http://localhost:8080/user?id=1', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      transformResponse: axios.defaults.transformResponse.concat((data : any) => {
-      })
-    })
+  createSkills = () : any => {
+  var keys : string[] = [];
+  for(var i = 0; i < this.state.skills.length; i++){
+    Object.keys(this.state.skills[i]).map((key) => {
+      const value = this.state.skills[i][key];
+      var test = key.concat(", ",value)
+      console.log(test)
+      keys.push(test)
+    });
   }
+  const skillsJSX = (keys).map( key =>{
+      return(
+        <button type="button" className="btn skill-btn">
+        {key.split(',')[0]} <span className="badge badge-blue"> {key.split(',')[1]} </span>
+        </button>
+      )
+    });
+      return skillsJSX;
+  }
+  
+
   render() {
     document.body.classList.add('htmlBodyStyle');
-    console.log('tada', this.state.job)
+
     return (
       <div>
         <div className= "container-fluid main">
-          <div className="row" id = "picRow">
-            <div className = "col-sm-12">
-              <div className="blue-box"><br></br> <br></br> <br></br> <br></br> <br></br></div>
-                <div className = "text-right">
-                  <p className = "profile-name"> {this.state.name} {' '} {this.state.lastname} </p>
-
-                  <p className = "profile-job"> {this.state.job} </p>
-                </div>
-              <div>
-                <img  src={this.state.proLink} className="img-rounded profile-photo img-responsive " alt="image"/>
-                  <div className = "rectangle"></div>
-                  <div className = "rectangle-2"></div>
-                  <div className = "rectangle-3"></div>
-                  <div id = "parallelogram-1"></div>
-                  <div id = "parallelogram-2"></div>
-              </div>
-            </div>
-          </div>
-          <div className = "row">
-            <div className = "col-sm-12">
-              <p className = "rtl-text"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-          چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-            </p>
-          </div>
-          </div>
-
+        <UserCommon {...this.state} />
         <div className = "row justify-content" id = "skill-row">
             <div className = "col-sm-12">
               <div id = "add-skill-name">
@@ -103,20 +86,7 @@ export default class UserComponentLogged extends Component<any,  State> {
 
         <div className = "row justify-content-end skills">
           <div className = "col">
-            <div>
-            <button type="button" className="btn skill-btn">
-            HTML <span className="badge badge-blue">5</span>
-            </button>
-            <button type="button" className="btn skill-btn">
-            CSS <span className="badge badge-blue">3</span>
-            </button>
-            <button type="button" className="btn skill-btn">
-            JavaScript <span className="badge badge-blue">16</span>
-            </button>
-            <button type="button" className="btn skill-btn">
-            TypeScript <span className="badge badge-red">-</span>
-            </button>
-          </div>
+          <div>{this.createSkills()} </div>
           <div className = "col"></div>
         </div>
       </div>

@@ -178,7 +178,7 @@
 
   .profile-name
   {
-    top : 70%;
+    top : 75%;
     right : 29.5%;
     padding-top: 2%;
     display: inline-block;
@@ -190,7 +190,7 @@
 
   .profile-job
   {
-    top : 130%;
+    top : 135%;
     right : 29.5%;
     z-index: 10;
     font-family: Vazir;
@@ -214,9 +214,11 @@
    
   .badge-green{
     background-color: rgb(26,177,30);
+    
   }
   .badge-blue{
     background-color: rgb(187,239,241);
+    
   }
   .badge-red{
     background-color: rgb(212, 11, 36);
