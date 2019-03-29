@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
@@ -29,17 +31,16 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String path = (request).getRequestURI();
-        //StringTokenizer tokenizer = new StringTokenizer(path, "/");
-        //String context = tokenizer.nextToken();
-        // String userId = tokenizer.nextToken();
         String userId = request.getParameter("id");
         request.setAttribute("userID", userId);
 
         try {
             JSONObject map = userContentProvider.getHTMLContentsForUser(userId);
+            //JSONArray skills = userContentProvider.getUserSkills(userId);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
+            //out.println(skills);
         }
         catch (UserNotFoundException e){
             response.setStatus(response.SC_NOT_FOUND);

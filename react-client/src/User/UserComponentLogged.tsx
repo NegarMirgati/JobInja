@@ -1,8 +1,58 @@
 import React, { Component } from 'react'
+const axios = require('axios');
+import qs from 'query-string';
 import profilePhoto from 'src/Assets/images/dibi.jpeg'
-export default class UserComponent extends Component {
+export default class UserComponentLogged extends Component<any,  State> {
+
+  constructor(props : any) {
+    super(props);
+    this.state = {
+      id : "",
+      name : "",
+      lastname : "",
+      job : "",
+      bio : "",
+      proLink : "",
+      skills : []
+    };
+
+    axios.get('http://localhost:8080/user?id=1')
+    .then((response : any) => {
+      let obj: any = JSON.parse(JSON.stringify(response.data));
+      console.log(Object.values(obj))
+      console.log(obj["name"])
+      this.setState({name: obj["name"]});
+      this.setState({lastname: obj["lastname"]});
+      this.setState({id: obj["id"]});
+      this.setState({job: obj["jobTitle"]});
+      this.setState({bio: obj["bio"]});
+      this.setState({proLink: obj["proLink"]});
+      this.setState({skills:obj["skills"]});
+
+    console.log('lala', this.state.job)
+    })
+    .catch(function (error : any) {
+    // handle error
+    console.log(error);
+
+    })
+    .then(function () {
+    // always executed
+    });
+  }
+
+  componentDidMount(){
+    axios.get('http://localhost:8080/user?id=1', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      transformResponse: axios.defaults.transformResponse.concat((data : any) => {
+      })
+    })
+  }
   render() {
     document.body.classList.add('htmlBodyStyle');
+    console.log('tada', this.state.job)
     return (
       <div>
         <div className= "container-fluid main">
@@ -10,11 +60,12 @@ export default class UserComponent extends Component {
             <div className = "col-sm-12">
               <div className="blue-box"><br></br> <br></br> <br></br> <br></br> <br></br></div>
                 <div className = "text-right">
-                  <p className = "profile-name"> دیبی </p>
-                  <p className = "profile-job"> خوار خوار خوارم من </p>
+                  <p className = "profile-name"> {this.state.name} {' '} {this.state.lastname} </p>
+
+                  <p className = "profile-job"> {this.state.job} </p>
                 </div>
               <div>
-                <img  src={profilePhoto} className="img-rounded profile-photo img-responsive " alt="image"/>
+                <img  src={this.state.proLink} className="img-rounded profile-photo img-responsive " alt="image"/>
                   <div className = "rectangle"></div>
                   <div className = "rectangle-2"></div>
                   <div className = "rectangle-3"></div>
@@ -74,5 +125,15 @@ export default class UserComponent extends Component {
     </div>
     )
   }
-
 }
+
+interface State{
+  id : ""
+  name : "",
+  lastname : "",
+  job : "",
+  bio : "",
+  proLink : "",
+  skills : []
+}
+

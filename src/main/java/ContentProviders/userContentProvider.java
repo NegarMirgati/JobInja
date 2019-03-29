@@ -1,7 +1,6 @@
 package ContentProviders;
 
 import Exceptions.InvalidSkillException;
-import Exceptions.ProjectNotFoundException;
 import Entities.*;
 import Exceptions.UserAccessForbidden;
 import Exceptions.UserNotFoundException;
@@ -38,6 +37,7 @@ public class userContentProvider {
 
     public static JSONArray getHTMLContentsForAllUsers(String currentuserID) {
         HashMap<String, User> allUsers = UserRepo.getUserList();
+        System.out.println(allUsers);
         JSONArray contentMap = new JSONArray();
         JSONObject instance;
         for (HashMap.Entry<String, User> entry : allUsers.entrySet()) {
@@ -55,10 +55,11 @@ public class userContentProvider {
     private static JSONObject getUserContent(User u) throws UserNotFoundException {
         JSONObject contentMap = new JSONObject();
         contentMap.put("id", u.getUsername());
-        contentMap.put("first name", u.getFirstName());
-        contentMap.put("last name", u.getLastName());
+        contentMap.put("name", u.getFirstName());
+        contentMap.put("lastname", u.getLastName());
         contentMap.put("jobTitle", u.getJobTitle());
         contentMap.put("bio", u.getBio());
+        contentMap.put("proLink", u.getProfilePictureURL());
         contentMap.put("skills",getUserSkills(u.getUsername()));
         return contentMap;
 

@@ -56,7 +56,8 @@ public class UserRepo {
 
     public static void addUser(){
         System.out.println("adding user");
-        String bio = "خدا بیامرز میخواست خیلی کارا بکنه ولی پول نداشت";
+        String bio = "ملطان غم مادر";
+        String proLink  = "https://static.yeklist.com/kala/images/1/p-96.jpg";
         Skill s = new  Skill("HTML", 5);
         Skill s1 = new Skill("Javascript", 4);
         Skill s2 = new Skill("C++", 2);
@@ -66,13 +67,13 @@ public class UserRepo {
         map.put("Javascript", s1);
         map.put("C++", s2);
         map.put("Java", s3);
-        User u = new User("1", "علی", "شریف زاده","برنامەنویس وب", " ",map, bio);
+        User u = new User("1", "پسر", "عمه زا","خارخاسک", proLink, map, bio);
         UserRepo.addUser(u);
     }
 
     public static void addUser2(){
         System.out.println("adding user");
-        String bio = "Stay hungry, stay foolish.";
+        String bio = "سیرداغ";
         Skill s = new  Skill("Linux", 5);
         Skill s1 = new Skill("SEO", 4);
         Skill s2 = new Skill("C", 2);
@@ -82,13 +83,13 @@ public class UserRepo {
         map.put("SEO", s1);
         map.put("C", s2);
         map.put("Java", s3);
-        User u = new User("2", "استیو", "جابز","business magnate", "https://2ch.hk/b/arch/2018-12-06/src/187673928/15440521664830.jpg",map, bio);
+        User u = new User("2", "فامیل", "دور","پدر نمونه", "http://cdn-tehran.wisgoon.com/dlir-s3/10531477474534427630.jpeg",map, bio);
         UserRepo.addUser(u);
     }
 
     public static void addUser3(){
         System.out.println("adding user");
-        String bio = "Your most unhappy customers are your greatest source of learning.";
+        String bio = "مگه چیه؟ عیده دیگه";
         Skill s = new  Skill("HTML", 5);
         Skill s1 = new Skill("C", 6);
         Skill s2 = new Skill("Photoshop", 10);
@@ -98,7 +99,7 @@ public class UserRepo {
         map.put("C", s1);
         map.put("Photoshop", s2);
 
-        User u = new User("3", "بیل", "گیتس","business magnate", "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2018/07/11/105322791-1531301768595gettyimages-467620670.1910x1000.jpg",map, bio);
+        User u = new User("3", "پسر", "خاله","نونوا", "http://www.soonami.ir/wp-content/uploads/49384726_617182022059223_729630059174640160_n.jpg",map, bio);
         UserRepo.addUser(u);
     }
 
