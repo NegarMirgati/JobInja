@@ -44,6 +44,7 @@ public class addSkill extends HttpServlet {
             JSONObject status = new JSONObject();
             status.put("status", "200");
             status.put("message", "skill successfully added");
+            System.out.println("skill successfully added " + selectedSkill);
             PrintWriter out = response.getWriter();
             out.println(status);
         }

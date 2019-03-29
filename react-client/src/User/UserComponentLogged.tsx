@@ -1,6 +1,7 @@
 import React, { Component, ReactNode } from 'react'
 const axios = require('axios');
 import UserCommon from './UserCommon'
+import { toast } from 'react-toastify';
 export default class UserComponentLogged extends Component<any,  State> {
 
   constructor(props : any) {
@@ -32,11 +33,7 @@ export default class UserComponentLogged extends Component<any,  State> {
     .catch(function (error : any) {
     // handle error
     console.log(error);
-
     })
-    .then(function () {
-    // always executed
-    });
   }
 
   createSkills = () : any => {
@@ -68,6 +65,35 @@ export default class UserComponentLogged extends Component<any,  State> {
       return skillsJSX;
 
   }
+
+  addSkill = () => {
+    var linktmp = 'http://localhost:8080/user/addSkill?id='
+    var  link = linktmp.concat(this.props.userId, '&name=')
+    var e = document.getElementById("addSkill") as  HTMLSelectElement;
+    var selectedSkill = e.options[e.selectedIndex].value;
+    var finalLink = link.concat(selectedSkill)
+    console.log(finalLink)
+    axios.put(finalLink)
+    .then((response : any) => {
+        var array : any[] = [...this.state.possibleSkills]; // make a separate copy of the array
+        var index = array.indexOf(selectedSkill)
+        if (index !== -1) {
+          array.splice(index, 1);
+          this.setState({possibleSkills: array});
+        }
+        var newelem = {};
+        (newelem as any)[selectedSkill] = "0";
+        this.setState({ skills: this.state.skills.concat([newelem])
+        })
+      
+      toast.success('مهارت با موفقیت اضافه شد')
+    })
+    .catch(function (error : any) {
+      toast.error('خطا در اضافه کردن مهارت')
+      console.log(error);
+    })
+
+  }
   
 
   render() {
@@ -84,9 +110,9 @@ export default class UserComponentLogged extends Component<any,  State> {
               </div>
               <div className = "add-skill-form-container">
                 <form className = "add-skill-form">
-                  <button type = "button" className = "add-skill-button" > افزودن مهارت </button>
-                    <select className =  "add-skill-input" placeholder ="--انتخاب مهارت--">
-                      <option>  --انتخاب مهارت--  </option>
+                  <button onClick= {this.addSkill} type = "button" className = "add-skill-button" > افزودن مهارت </button>
+                    <select className =  "add-skill-input" placeholder ="--انتخاب مهارت--" id = "addSkill">
+                      <option selected disabled>  --انتخاب مهارت--  </option>
                       {this.addPossibleSkills()}
                     </select>
                 </form>
@@ -114,7 +140,7 @@ interface State{
   job : "",
   bio : "",
   proLink : "",
-  skills : [],
-  possibleSkills : []
+  skills : any[],
+  possibleSkills : any[]
 }
 
