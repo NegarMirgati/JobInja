@@ -8,6 +8,7 @@ import Repositories.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import Repositories.UserRepo;
 
 
 
@@ -31,6 +32,19 @@ public class userContentProvider {
             instance = new JSONObject();
             instance.put(skillName, skillPoint);
             content.put(instance);
+        }
+        return content;
+    }
+
+    public static JSONArray getUserPossibleSkills(String uID) throws UserNotFoundException {
+        User u = UserRepo.findItemInUserList(uID);
+        JSONArray content = new JSONArray();
+        HashMap<String, Skill> skills = new HashMap<>(u.getSkills());
+        HashMap<String, Skill> allSkills = new HashMap<>(SkillRepo.getSkillList());
+        for (HashMap.Entry<String, Skill> entry : allSkills.entrySet()) {
+            String skillName = entry.getValue().getName();
+            if(!(skills.containsKey(skillName)))
+                content.put(skillName);
         }
         return content;
     }
@@ -61,6 +75,8 @@ public class userContentProvider {
         contentMap.put("bio", u.getBio());
         contentMap.put("proLink", u.getProfilePictureURL());
         contentMap.put("skills",getUserSkills(u.getUsername()));
+        contentMap.put("possibleSkills", getUserPossibleSkills(u.getUsername()));
+        System.out.println(getUserPossibleSkills(u.getUsername()));
         return contentMap;
 
     }

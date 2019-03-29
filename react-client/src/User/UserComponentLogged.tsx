@@ -12,7 +12,8 @@ export default class UserComponentLogged extends Component<any,  State> {
       job : "",
       bio : "",
       proLink : "",
-      skills : []
+      skills : [],
+      possibleSkills : []
     };
     var linktmp = 'http://localhost:8080/user?id='
     var  link = linktmp.concat(this.props.userId)
@@ -26,6 +27,7 @@ export default class UserComponentLogged extends Component<any,  State> {
       this.setState({bio: obj["bio"]});
       this.setState({proLink: obj["proLink"]});
       this.setState({skills : obj["skills"]});
+      this.setState({possibleSkills: obj["possibleSkills"]});
     })
     .catch(function (error : any) {
     // handle error
@@ -56,6 +58,16 @@ export default class UserComponentLogged extends Component<any,  State> {
     });
       return skillsJSX;
   }
+
+  addPossibleSkills = () : any => {
+    const skillsJSX = (this.state.possibleSkills).map( key =>{
+      return(
+        <option value={key}> {key} </option>
+      )
+    });
+      return skillsJSX;
+
+  }
   
 
   render() {
@@ -75,9 +87,7 @@ export default class UserComponentLogged extends Component<any,  State> {
                   <button type = "button" className = "add-skill-button" > افزودن مهارت </button>
                     <select className =  "add-skill-input" placeholder ="--انتخاب مهارت--">
                       <option>  --انتخاب مهارت--  </option>
-                      <option value="Python">Python</option>
-                      <option value="Java">Java</option>
-                      <option value="Database">Database</option>
+                      {this.addPossibleSkills()}
                     </select>
                 </form>
               </div>
@@ -104,6 +114,7 @@ interface State{
   job : "",
   bio : "",
   proLink : "",
-  skills : []
+  skills : [],
+  possibleSkills : []
 }
 

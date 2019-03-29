@@ -11,7 +11,8 @@ export default class OtherUserComponent extends Component<any,  State> {
       job : "",
       bio : "",
       proLink : "",
-      skills : []
+      skills : [],
+      hasEndorsedSkill : []
     };
     console.log('ddddddd', this.props.userId)
     var linktmp = 'http://localhost:8080/user?id='
@@ -26,6 +27,11 @@ export default class OtherUserComponent extends Component<any,  State> {
       this.setState({bio: obj["bio"]});
       this.setState({proLink: obj["proLink"]});
       this.setState({skills : obj["skills"]});
+      var len= obj["skills"].length
+      for(var j = 0; j < len; j++){
+        var joined = this.state.hasEndorsedSkill.concat(false);
+        this.setState({ hasEndorsedSkill : joined })      
+      }
     })
     .catch(function (error : any) {
     // handle error
@@ -50,7 +56,9 @@ export default class OtherUserComponent extends Component<any,  State> {
   const skillsJSX = (keys).map( key =>{
       return(
         <button type="button" className="btn skill-btn">
-        {key.split(',')[0]} <span className="badge badge-blue"> {key.split(',')[1]} </span>
+        {key.split(',')[0]} 
+        <span className="badge badge-blue"> 
+        {key.split(',')[1]} </span>
         </button>
       )
     });
@@ -85,6 +93,7 @@ interface State{
   job : "",
   bio : "",
   proLink : "",
-  skills : []
+  skills : [],
+  hasEndorsedSkill : boolean[]
 }
 

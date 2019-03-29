@@ -288,6 +288,8 @@
     direction : rtl;
     height : 40px; 
     font-family: Vazir-100;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
   
   .add-skill-button{
