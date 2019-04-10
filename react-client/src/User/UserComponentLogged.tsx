@@ -46,14 +46,44 @@ export default class UserComponentLogged extends Component<any,  State> {
       keys.push(test)
     });
   }
-  const skillsJSX = (keys).map( key =>{
-      return(
-        <button type="button" className="btn skill-btn">
-        {key.split(',')[0]} <span className="badge badge-blue"> {key.split(',')[1]} </span>
-        </button>
-      )
-    });
+    var skillsJSX : JSX.Element[] = [];
+    var num = keys.length;
+    console.log(num);
+    for(var i = 0; i < keys.length; i ++) {
+      var key = keys[i];
+      var tkn : string = "skillBtn" + (i + 1).toString();
+      skillsJSX.push(<button type="button" id = {tkn}  onClick = {this.delSkill} value = 
+      { key.split(',')[0]}  className="btn skill-btn">
+      {key.split(',')[0]} <span className="badge badge-blue" > {key.split(',')[1]}</span>
+      </button>)
+     
+   }
       return skillsJSX;
+  }
+
+  delSkill = (event : any) => {
+    console.log(event.target.value);
+    var linktmp = 'http://localhost:8080/user/delSkill?id='
+    var  link = linktmp.concat(this.props.userId, '&name=')
+    var selectedSkill = event.target.value;
+    var finalLink = link.concat(selectedSkill);
+    console.log(finalLink)
+    axios.post(finalLink)
+    .then((response : any) => {
+        var mySkills : any[] = [...this.state.skills]; // make a separate copy of the array
+        for(var i  = 0; i < mySkills.length; i ++){
+          if(mySkills[i].hasOwnProperty(selectedSkill)){
+            mySkills.splice(i, 1);
+            this.setState({skills: mySkills});
+          }
+        }
+  
+        var array : any[] = [...this.state.possibleSkills]; // make a separate copy of the array
+        array.push(selectedSkill);
+        this.setState({possibleSkills: array});
+        })
+      
+      toast.success('مهارت با موفقیت حذف شد')
   }
 
   addPossibleSkills = () : any => {
@@ -101,7 +131,6 @@ export default class UserComponentLogged extends Component<any,  State> {
 
     return (
       <div>
-        <div className= "container-fluid main">
         <UserCommon {...this.state} />
         <div className = "row justify-content" id = "skill-row">
             <div className = "col-sm-12">
@@ -128,7 +157,6 @@ export default class UserComponentLogged extends Component<any,  State> {
       </div>
 
     </div>   
-    </div>
     )
   }
 }

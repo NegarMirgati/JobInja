@@ -24,12 +24,8 @@ import org.json.JSONArray;
         @WebInitParam(name = "name" , value = "Not provided")} )
 
 public class delSkill extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setStatus(response.SC_NOT_IMPLEMENTED);
-
-    }
-
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String userID = request.getParameter("id");
         String name = request.getParameter("name");
