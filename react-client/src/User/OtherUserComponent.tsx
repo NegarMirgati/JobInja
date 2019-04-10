@@ -1,5 +1,6 @@
 import React, { Component, ReactNode } from 'react'
 const axios = require('axios');
+import { toast } from 'react-toastify';
 import UserCommon from './UserCommon'
 export default class OtherUserComponent extends Component<any,  State> {
   constructor(props : any) {
@@ -12,7 +13,7 @@ export default class OtherUserComponent extends Component<any,  State> {
       bio : "",
       proLink : "",
       skills : [],
-      hasEndorsedSkill : []
+      hasEndorsedSkills : []
     };
     console.log('ddddddd', this.props.userId)
     var linktmp = 'http://localhost:8080/user?id='
@@ -27,16 +28,11 @@ export default class OtherUserComponent extends Component<any,  State> {
       this.setState({bio: obj["bio"]});
       this.setState({proLink: obj["proLink"]});
       this.setState({skills : obj["skills"]});
-      var len= obj["skills"].length
-      for(var j = 0; j < len; j++){
-        var joined = this.state.hasEndorsedSkill.concat(false);
-        this.setState({ hasEndorsedSkill : joined })      
-      }
+      this.setState({hasEndorsedSkills : []});
+      
     })
     .catch(function (error : any) {
-    // handle error
-    console.log(error);
-
+      toast.error('اتصال با سرور با خطا مواجه شد');
     })
     .then(function () {
     // always executed
@@ -53,18 +49,48 @@ export default class OtherUserComponent extends Component<any,  State> {
       keys.push(test)
     });
   }
-  const skillsJSX = (keys).map( key =>{
-      return(
-        <button type="button" className="btn skill-btn">
-        {key.split(',')[0]} 
-        <span className="badge badge-blue"> 
-        {key.split(',')[1]} </span>
-        </button>
-      )
-    });
-      return skillsJSX;
+  var skillsJSX : JSX.Element[] = [];
+  var num = keys.length;
+  console.log(num);
+  for(var i = 0; i < keys.length; i ++) {
+    var key = keys[i];
+    var tkn : string = "skillBtn" + (i + 1).toString();
+    skillsJSX.push(<button type="button" onClick = {this.endorse} value = 
+    { key.split(',')[0]} id = {tkn} className="btn skill-btn">
+    {key.split(',')[0]} <div className="badge badge-blue"  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
+    </button>)
+   
+ }
+    return skillsJSX;
   }
   
+  endorse = (event : any) : any => {
+    console.log(event.target.value);
+    var linktmp = 'http://localhost:8080/user/endorse?id='
+    var  link = linktmp.concat(this.props.userId, '&name=')
+    var selectedSkill = event.target.value;
+    var finalLink = link.concat(selectedSkill);
+    console.log(finalLink)
+    axios.post(finalLink)
+    .then((response : any) => {
+        var array : any[] = [...this.state.hasEndorsedSkills]; // make a separate copy of the array
+        array.push(selectedSkill);
+        this.setState({hasEndorsedSkills: array});  
+        var mySkills : any[] = [...this.state.skills]; // make a separate copy of the array
+        for(var i  = 0; i < mySkills.length; i ++){
+          if(mySkills[i].hasOwnProperty(selectedSkill)){
+            mySkills[i][selectedSkill] =  (Number(mySkills[i][selectedSkill]) + 1).toString();
+            this.setState({skills: mySkills});
+          }  
+        }
+        toast.success('مهارت با موفقیت تشویق شد');
+        }
+      )
+      .catch(function (error : any) {
+          toast.error('خطا در تشویق مهارت');
+      })
+
+  }
 
   render() {
     document.body.classList.add('htmlBodyStyle');
@@ -93,7 +119,7 @@ interface State{
   job : "",
   bio : "",
   proLink : "",
-  skills : [],
-  hasEndorsedSkill : boolean[]
+  skills : any[],
+  hasEndorsedSkills : any[]
 }
 

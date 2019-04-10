@@ -52,9 +52,9 @@ export default class UserComponentLogged extends Component<any,  State> {
     for(var i = 0; i < keys.length; i ++) {
       var key = keys[i];
       var tkn : string = "skillBtn" + (i + 1).toString();
-      skillsJSX.push(<button type="button" id = {tkn}  onClick = {this.delSkill} value = 
-      { key.split(',')[0]}  className="btn skill-btn">
-      {key.split(',')[0]} <span className="badge badge-blue" > {key.split(',')[1]}</span>
+      skillsJSX.push(<button type="button" onClick = {this.delSkill} value = 
+      { key.split(',')[0]} id = {tkn} className="btn skill-btn">
+      {key.split(',')[0]} <div className="badge badge-blue"  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
       </button>)
      
    }
@@ -77,13 +77,14 @@ export default class UserComponentLogged extends Component<any,  State> {
             this.setState({skills: mySkills});
           }
         }
-  
         var array : any[] = [...this.state.possibleSkills]; // make a separate copy of the array
         array.push(selectedSkill);
-        this.setState({possibleSkills: array});
+        this.setState({possibleSkills: array});    
+        toast.success('مهارت با موفقیت حذف شد');
         })
-      
-      toast.success('مهارت با موفقیت حذف شد')
+      .catch(function (error : any) {
+          toast.error('خطا در حذف مهارت');
+      })
   }
 
   addPossibleSkills = () : any => {
