@@ -5,9 +5,9 @@ class Footer extends Component{
     render(){
         return(
             <div className = "row">
-                <div className = "col-sm-12">
-                    <div className = "footer">
-                        <div className = "container">
+                <div className = "footer">
+                    <div className = "container">
+                        <div className = "col-sm-12">
                             <p> تمامی حقوق این سایت متعلق به جاب اونجا می باشد © </p>
                         </div>
                     </div>

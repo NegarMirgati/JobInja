@@ -2,6 +2,24 @@
 @import url("../Assets/fonts/iransans-fonts/fonts.scss");
 @import url("../Assets/fonts/vazir-font-v19.2.0/vazir-fonts.scss");
 
+html{
+ height : 100%;
+}
+
+
+body, #root{
+  width: 100%;
+  position: relative;
+  background-color: rgb(246, 246, 246);
+  margin: 0;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+#fill-view-port{
+  height: 100%;
+}
+
 .htmlBodyStyle{
   height: 100%;
   width: 100%;
@@ -13,9 +31,13 @@
 
 .site-header {
   background-color: white;
-  height: 7%;
+  height: 60px;
   margin-top : 0%;
   padding-left : 8%;
+}
+
+#test {
+  float: right;
 }
 
 #homelogo a {
@@ -24,11 +46,12 @@
 }
 
 .header-img {
-  width: 12%;
-  height: 100%;
+  height: 45px;
   margin-right: 9%;
   margin-top : -1%;
+  width : 12%;
   float:right;
+
 }
 
 .site-header a {
@@ -64,27 +87,34 @@
 .overflow-hidden { overflow: hidden; }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  height: 7%;
+  height: 65px;
   width: 100%;
   background-color: rgb(54,54,54);
   color: white;
   text-align: center;
-  padding-top: 15px;
+  padding-top: 20px;
   font-family: 'Vazir';
   color: rgb(128, 128, 128);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
   .main {
     width: 100%;
+    min-height: 100%;
     padding-top: 0%;
     padding-left: 0%;
     padding-right: 0%;
     background-color: rgb(246, 246,246);
-    height: calc(100vh - 7% - 6%);
-    
+    overflow-y : scroll;
+    overflow-x : hidden;   
+
+    margin: 0 auto;
   }
+
+  .spacer { height: 65px; }
 
   .sticky {
     position: fixed;
@@ -178,7 +208,7 @@
 
   .profile-name
   {
-    top : 75%;
+    top : 85%;
     right : 29.5%;
     padding-top: 2%;
     display: inline-block;
@@ -190,7 +220,7 @@
 
   .profile-job
   {
-    top : 135%;
+    top : 150%;
     right : 29.5%;
     z-index: 10;
     font-family: Vazir;
@@ -211,6 +241,36 @@
   .skill-btn{
     background-color: white;
   }
+
+  .skill-btn .badge:before,
+  .skill-btn .badge:after {
+    content: '';
+    opacity: 0;
+}
+   
+  .skill-btn .badge:before {
+    display:inline;
+    content: attr(data-hover);
+  }
+
+  .skill-btn .badge:after {
+    display:inline;
+    content: attr(data-active);
+  }
+
+  .skill-btn .badge:hover span,
+  .skill-btn .badge:active span {
+    opacity: 0;
+}
+
+.skill-btn .badge:hover:before,
+.skill-btn .badge:active:after {
+    opacity: 1;
+}
+
+  .skill-btn:hover{
+    background-color: rgb(212, 11, 36);
+  }
    
   .badge-green{
     background-color: rgb(26,177,30);
@@ -218,6 +278,7 @@
   }
   .badge-blue{
     background-color: rgb(187,239,241);
+    text-align: center;
     
   }
   .badge-red{
@@ -239,10 +300,13 @@
     padding-left : 12%;
     overflow: scroll;
     margin-bottom : 7%;
+    padding-right: 13%;
+    padding-left: 13%;
   }
   .skills button{
-    padding : 0.5%;
+    margin : 0.5%;
     margin-right: 0.5%;
+    
   }
 
   .skills button:hover{
@@ -250,7 +314,10 @@
   }
 
   .skills button .badge{
-    padding : 5px;
+    padding-top : 4px;
+    padding-bottom : 4px;
+    padding-right : 1px;
+    padding-left : 1px;
   }
 
   .add-skill-form-container{
@@ -296,7 +363,6 @@
     background-color: rgb(23, 153, 164);
     font-family: Vazir-100;
     font-size: 80%;
-    color: white;
     border-radius: 4px;
     width: 30%;
     height : 40px;
@@ -316,13 +382,11 @@
 }
 
   .add-skill-button:hover{
-
-    background-color: #1bb5c2;
+    background-color: #ddd;
   }
 
   .rtl-text{
     direction : rtl;
-    overflow: scroll;
     text-align : right;
     font-family: Vazir;
     font-size: 90%;
@@ -332,6 +396,10 @@
     padding-top: 10%;
     margin-bottom: 0%;
     
+  }
+
+  #khar{
+    overflow-x: hidden;
   }
 
   .row-100{
@@ -382,7 +450,7 @@
 
   .slide-img{
     width: 40%;
-    height: 100%;
+    height: 300px;
   }
   
   @media screen and (max-width: 767px) {#slider {overflow: hidden; width: 100%; margin: 0 auto;}}
