@@ -8,8 +8,8 @@ class Header extends Component{
             <nav className="site-header sticky-top py-1">
                 <div className="container d-flex flex-column flex-md-row">  
                     <a className="d-inline-block h-100 p-1 "  href="#">خروج </a>
-                    <a id = "account" className="d-inline-block h-100 p-1 " href="#">حساب کاربری</a>
-                    <div className="d-inline h-100 p-1">
+                    <a id = "account" className="d-inline-block h-100 p-1 " href="my-profile">حساب کاربری</a>
+                    <div className="d-inline h-100 p-1" id = "test"> 
                         <div id = "homelogo"> <a href="home.html"><img className = "header-img" src = {logo} alt = "image"/> </a> </div>
                     </div>
                 </div>
