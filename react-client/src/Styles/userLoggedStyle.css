@@ -5,10 +5,12 @@
   .badge-blue{
     background-color: rgb(187,239,241);
     text-align: center;    
+    color : rgb(22, 106, 108);
   }
 
   .skill-btn:hover .badge-blue{
     background-color:rgb(236, 12, 40);
+    color : white;
     text-align: center;    
   }
 

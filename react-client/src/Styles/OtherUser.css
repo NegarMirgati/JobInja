@@ -4,15 +4,17 @@
    
   .badge-blue1{
     background-color: rgb(187,239,241);
+    color : rgb(22, 106, 108);
     text-align: center;    
   }
 
   .badge-green1{
       background-color:  rgb(26,177,30);
+      color : white;
   }
 
   .skill-btn1:hover .badge-green1 span {
-    display:none
+    display:none;
   }
   .skill-btn1:hover .badge-green1:before {
     content:"+";
