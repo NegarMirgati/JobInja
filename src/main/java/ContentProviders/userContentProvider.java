@@ -17,8 +17,19 @@ import java.util.HashMap;
 
 public class userContentProvider {
     public static JSONObject getHTMLContentsForUser(String uID) throws UserNotFoundException {
-        User u = UserRepo.findItemInUserList(uID);
-        return getUserContent(u);
+        User u = UserRepo.getUserById(uID);
+        JSONObject contentMap = new JSONObject();
+        contentMap.put("id", u.getUsername());
+        contentMap.put("name", u.getFirstName());
+        contentMap.put("lastname", u.getLastName());
+        contentMap.put("jobTitle", u.getJobTitle());
+        contentMap.put("bio", u.getBio());
+        contentMap.put("proLink", u.getProfilePictureURL());
+        contentMap.put("skills",getUserSkills(u.getUsername()));
+        contentMap.put("possibleSkills", getUserPossibleSkills(u.getUsername()));
+        contentMap.put("endorsedSkills", getUserEndorsedSkills(uID));
+        System.out.println(getUserEndorsedSkills(uID));
+        return contentMap;
     }
 
     public static JSONArray getUserSkills(String uID) throws UserNotFoundException {
@@ -66,19 +77,19 @@ public class userContentProvider {
         return contentMap;
     }
 
-    private static JSONObject getUserContent(User u) throws UserNotFoundException {
-        JSONObject contentMap = new JSONObject();
-        contentMap.put("id", u.getUsername());
-        contentMap.put("name", u.getFirstName());
-        contentMap.put("lastname", u.getLastName());
-        contentMap.put("jobTitle", u.getJobTitle());
-        contentMap.put("bio", u.getBio());
-        contentMap.put("proLink", u.getProfilePictureURL());
-        contentMap.put("skills",getUserSkills(u.getUsername()));
-        contentMap.put("possibleSkills", getUserPossibleSkills(u.getUsername()));
-        System.out.println(getUserPossibleSkills(u.getUsername()));
-        return contentMap;
-
+    private static JSONArray getUserEndorsedSkills(String thatUser){
+        JSONArray content = new JSONArray();
+        System.out.println("xxxx" + thatUser);
+        try {
+            ArrayList<String> skills = UserRepo.getAllSkillsEndorsedByUser("1", thatUser);
+            for (int i  = 0; i < skills.size(); i++) {
+                System.out.println("kkkkkkkk");
+                content.put(skills.get(i));
+            }
+        }catch(UserNotFoundException e){
+            e.printStackTrace();
+        }
+        return content;
     }
 
     private static JSONObject getShortUserContent(User u) {

@@ -4,6 +4,7 @@ import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
+import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -105,14 +106,14 @@ public class UserRepo {
         UserRepo.addUser(u);
     }
 
-    public static void endorse(String id, String skill) throws UserNotFoundException, EndorseAlreadyDoneException, SkillNotFoundException {
+    public static void endorse(String id, String endorserId, String skill) throws UserNotFoundException, EndorseAlreadyDoneException, SkillNotFoundException {
         User u = findItemInUserList(id);
         if(!(u.getSkills().containsKey(skill)))
             throw new SkillNotFoundException("Skill not found");
 
-        if ( !(u.getSkills().get(skill).hasEndorsed(id))){
+        if ( !(u.getSkills().get(skill).hasEndorsed(endorserId))){
             u.endorse(skill);
-            u.getSkills().get(skill).addEndorser(id);
+            u.getSkills().get(skill).addEndorser(endorserId);
         }
         else{
             throw new EndorseAlreadyDoneException("Conflict");
@@ -131,6 +132,18 @@ public class UserRepo {
             u.addSkill(skillName, s);
         }
         else throw new AddSkillAlreadyDoneException("skill is already in skill list");
+    }
+
+    public static ArrayList<String> getAllSkillsEndorsedByUser(String mainUser, String uId) throws UserNotFoundException {
+        ArrayList<String> endorsedSkills = new ArrayList<String>();
+        User u = findItemInUserList(uId);
+        HashMap<String, Skill> skills = new HashMap<>(u.getSkills());
+        for (HashMap.Entry<String, Skill> entry : skills.entrySet()) {
+            if (entry.getValue().hasEndorsed(mainUser)) {
+                endorsedSkills.add(entry.getKey());
+            }
+        }
+        return endorsedSkills;
     }
 
 }

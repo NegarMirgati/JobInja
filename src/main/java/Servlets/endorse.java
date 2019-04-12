@@ -29,10 +29,11 @@ public class endorse extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String userID = request.getParameter("id");
         String name = request.getParameter("name");
+        String endrorserID = "1";
         System.out.println("id: " +userID);
         System.out.println("name: " +name);
 
-        EndorseCommand command = new EndorseCommand(userID, name);
+        EndorseCommand command = new EndorseCommand(userID, endrorserID, name);
         try {
             if(userID != null && userID.equals("1"))
                 throw new UserAccessForbidden("Forbidden endorse");
