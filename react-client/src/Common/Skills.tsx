@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 const axios = require('axios');
 import { toast } from 'react-toastify';
 import $ from 'jquery'; 
+import 'src/Styles/OtherUser.css'
 
 export default class Skills extends Component<Props, State> {
 
@@ -35,9 +36,10 @@ export default class Skills extends Component<Props, State> {
         for(var i = 0; i < keys.length; i ++) {
           var key = keys[i];
           var tkn : string = "skillBtn" + (i + 1).toString();
-          skillsJSX.push(<button type="button" onMouseEnter = {this.handleHoverOnSKill} onMouseLeave = {this.handleHoverOver} onClick = {this.endorse} value = 
-          { key.split(',')[0]} id = {tkn} className="btn skill-btn">
-          {key.split(',')[0]} <div className="badge badge-blue"  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
+          var hasEndorsed = this.state.endorsedSkills.includes(key.split(',')[0]);
+          skillsJSX.push(<button type="button" onClick = {this.endorse} value = 
+          { key.split(',')[0]} id = {tkn} className="btn skill-btn1">
+          {key.split(',')[0]} <div className = {hasEndorsed == false ? "badge badge-green1" : "badge badge-blue1"}  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
           </button>)
          
        }
@@ -71,25 +73,7 @@ export default class Skills extends Component<Props, State> {
               toast.error('خطا در تشویق مهارت');
           })
       }
-    
-    handleHoverOnSKill = (event : any) => {
-        console.log('hover', this.state.endorsedSkills)
-        for(var i = 0; i < this.state.endorsedSkills.length; i ++){
-          if (this.state.endorsedSkills[i] == event.target.value){
-            this.injectStyles('.skill-btn:hover .badge', 'rgb(187,239,241)');
-            return;
-          }
-        }
-        this.injectStyles('.skill-btn:hover .badge', 'rgb(26,177,30)');
-    }
-
-    handleHoverOver = (event : any) => {
-      this.injectStyles('.skill-btn .badge', 'rgb(187, 239, 241)');
-    }
-
-    injectStyles(name : any, color : any) {
-      $(name).css("background-color", color);  
-    }
+  
       
   render() {
     return (

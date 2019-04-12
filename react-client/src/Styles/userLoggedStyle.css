@@ -1,0 +1,20 @@
+.skill-btn{
+    background-color: white;
+  }
+   
+  .badge-blue{
+    background-color: rgb(187,239,241);
+    text-align: center;    
+  }
+
+  .skill-btn:hover .badge-blue{
+    background-color:rgb(236, 12, 40);
+    text-align: center;    
+  }
+
+  .skill-btn:hover .badge span {
+    display:none
+  }
+  .skill-btn:hover .badge:before {
+    content:"-";
+  }

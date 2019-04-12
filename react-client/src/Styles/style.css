@@ -237,15 +237,6 @@ body, #root{
   .skill{
     padding-right : 2px;
   }
-
-  .skill-btn{
-    background-color: white;
-  }
-   
-  .badge-blue{
-    background-color: rgb(187,239,241);
-    text-align: center;    
-  }
  
   .blue-box{
     background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
@@ -276,10 +267,10 @@ body, #root{
   }
 
   .skills button .badge{
-    padding-top : 4px;
-    padding-bottom : 4px;
-    padding-right : 4px;
-    padding-left : 4px;
+    padding-top : 5px;
+    padding-bottom : 5px;
+    padding-right : 5px;
+    padding-left : 5px;
   }
 
   .add-skill-form-container{
@@ -378,7 +369,7 @@ body, #root{
 }
 
   .add-skill-button:hover{
-    background-color: #ddd;
+    background-color: rgb(0, 204, 204);
   }
 
   .row-100{

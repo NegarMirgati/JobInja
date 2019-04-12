@@ -3,6 +3,10 @@ const axios = require('axios');
 import UserCommon from './UserCommon'
 import { toast } from 'react-toastify';
 import $ from 'jquery'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'src/Styles/style.css'
+import 'src/Styles/userLoggedStyle.css'
+
 export default class UserComponentLogged extends Component<any,  State> {
 
   constructor(props : any) {
@@ -64,7 +68,8 @@ export default class UserComponentLogged extends Component<any,  State> {
 
   handleButtonHover = (event : any) => {
     console.log('test')
-    this.injectStyles('.skill-btn:hover .badge ', 'background-color: rgb(212, 11, 36);');
+    this.injectStyles('button:hover .badge', 'background-color: red;');
+    this.injectStyles('button:hover .badge', 'content: "-";');
   }
 
   injectStyles(name : any, color : any) {
@@ -76,7 +81,8 @@ export default class UserComponentLogged extends Component<any,  State> {
     var linktmp = 'http://localhost:8080/user/delSkill?id='
     var  link = linktmp.concat(this.props.userId, '&name=')
     var selectedSkill = event.target.value;
-    var finalLink = link.concat(selectedSkill);
+    var toDelete = selectedSkill.replace(/\+/g, "%2B");
+    var finalLink = link.concat(toDelete);
     console.log(finalLink)
     axios.post(finalLink)
     .then((response : any) => {
@@ -112,8 +118,8 @@ export default class UserComponentLogged extends Component<any,  State> {
     var  link = linktmp.concat(this.props.userId, '&name=')
     var e = document.getElementById("addSkill") as  HTMLSelectElement;
     var selectedSkill = e.options[e.selectedIndex].value;
-    var finalLink = link.concat(selectedSkill)
-    console.log(finalLink)
+    var toAdd = selectedSkill.replace(/\+/g, "%2B");
+    var finalLink = link.concat(toAdd);
     axios.put(finalLink)
     .then((response : any) => {
         var array : any[] = [...this.state.possibleSkills]; // make a separate copy of the array
