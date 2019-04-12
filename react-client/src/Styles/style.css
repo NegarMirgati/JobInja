@@ -235,56 +235,18 @@ body, #root{
 }
 
   .skill{
-    padding-right : 1%;
+    padding-right : 2px;
   }
 
   .skill-btn{
     background-color: white;
   }
-
-  .skill-btn .badge:before,
-  .skill-btn .badge:after {
-    content: '';
-    opacity: 0;
-}
    
-  .skill-btn .badge:before {
-    display:inline;
-    content: attr(data-hover);
-  }
-
-  .skill-btn .badge:after {
-    display:inline;
-    content: attr(data-active);
-  }
-
-  .skill-btn .badge:hover span,
-  .skill-btn .badge:active span {
-    opacity: 0;
-}
-
-.skill-btn .badge:hover:before,
-.skill-btn .badge:active:after {
-    opacity: 1;
-}
-
-  .skill-btn:hover{
-    background-color: rgb(212, 11, 36);
-  }
-   
-  .badge-green{
-    background-color: rgb(26,177,30);
-    
-  }
   .badge-blue{
     background-color: rgb(187,239,241);
-    text-align: center;
-    
+    text-align: center;    
   }
-  .badge-red{
-    background-color: rgb(212, 11, 36);
-  }
-
+ 
   .blue-box{
     background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
     height: 100%;
@@ -316,8 +278,8 @@ body, #root{
   .skills button .badge{
     padding-top : 4px;
     padding-bottom : 4px;
-    padding-right : 1px;
-    padding-left : 1px;
+    padding-right : 4px;
+    padding-left : 4px;
   }
 
   .add-skill-form-container{

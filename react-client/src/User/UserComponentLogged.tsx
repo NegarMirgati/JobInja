@@ -2,6 +2,7 @@ import React, { Component, ReactNode } from 'react'
 const axios = require('axios');
 import UserCommon from './UserCommon'
 import { toast } from 'react-toastify';
+import $ from 'jquery'; 
 export default class UserComponentLogged extends Component<any,  State> {
 
   constructor(props : any) {
@@ -52,13 +53,22 @@ export default class UserComponentLogged extends Component<any,  State> {
     for(var i = 0; i < keys.length; i ++) {
       var key = keys[i];
       var tkn : string = "skillBtn" + (i + 1).toString();
-      skillsJSX.push(<button type="button" onClick = {this.delSkill} value = 
+      skillsJSX.push(<button type="button" onClick = {this.delSkill} onMouseEnter = {this.handleButtonHover} value = 
       { key.split(',')[0]} id = {tkn} className="btn skill-btn">
       {key.split(',')[0]} <div className="badge badge-blue"  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
       </button>)
      
    }
       return skillsJSX;
+  }
+
+  handleButtonHover = (event : any) => {
+    console.log('test')
+    this.injectStyles('.skill-btn:hover .badge ', 'background-color: rgb(212, 11, 36);');
+  }
+
+  injectStyles(name : any, color : any) {
+    $(name).css("background-color", color);  
   }
 
   delSkill = (event : any) => {

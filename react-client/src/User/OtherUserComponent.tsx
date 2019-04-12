@@ -15,22 +15,22 @@ export default class OtherUserComponent extends Component<any,  State> {
       bio : "",
       proLink : "",
       skills : [],
-      hasEndorsedSkills : []
+      endorsedSkills : []
     };
     var linktmp = 'http://localhost:8080/user?id='
     var  link = linktmp.concat(this.props.userId)
     axios.get(link)
     .then((response : any) => {
       let obj: any = JSON.parse(JSON.stringify(response.data));
+      console.log(obj)
       this.setState({name: obj["name"]});
       this.setState({lastname: obj["lastname"]});
       this.setState({id: obj["id"]});
       this.setState({job: obj["jobTitle"]});
       this.setState({bio: obj["bio"]});
+      this.setState({skills : obj["skills"]}); 
       this.setState({proLink: obj["proLink"]});
-      this.setState({skills : obj["skills"]});
-      this.setState({hasEndorsedSkills : []});
-      
+      this.setState({endorsedSkills : obj["endorsedSkills"]});
     })
     .catch(function (error : any) {
       toast.error('اتصال با سرور با خطا مواجه شد');
@@ -61,6 +61,6 @@ interface State{
   bio : "",
   proLink : "",
   skills : any[],
-  hasEndorsedSkills : any[]
+  endorsedSkills : any[]
 }
 

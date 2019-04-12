@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 const axios = require('axios');
 import { toast } from 'react-toastify';
+import $ from 'jquery'; 
 
 export default class Skills extends Component<Props, State> {
 
@@ -9,16 +10,15 @@ export default class Skills extends Component<Props, State> {
         this.state = {
             id : "",
             skills : [],
-            hasEndorsedSkills : []
+            endorsedSkills : []
         };
     }
 
-    componentWillReceiveProps() {
-        console.log('name', this.props.name);
-        console.log(this.props);
-        this.setState({id: this.props.id});
-        this.setState({skills : this.props.skills});
-        this.setState({hasEndorsedSkills : []});
+    componentWillReceiveProps(nextProps : Props) {
+        console.log('props', nextProps)
+        this.setState({id: nextProps.id});
+        this.setState({skills : nextProps.skills});
+        this.setState({endorsedSkills : nextProps.endorsedSkills});
     }
 
     createSkills = () : any => {
@@ -27,17 +27,15 @@ export default class Skills extends Component<Props, State> {
           Object.keys(this.state.skills[i]).map((key) => {
             const value = this.state.skills[i][key];
             var test = key.concat(", ",value)
-            console.log(test)
             keys.push(test)
           });
         }
         var skillsJSX : JSX.Element[] = [];
         var num = keys.length;
-        console.log(num);
         for(var i = 0; i < keys.length; i ++) {
           var key = keys[i];
           var tkn : string = "skillBtn" + (i + 1).toString();
-          skillsJSX.push(<button type="button" onClick = {this.endorse} value = 
+          skillsJSX.push(<button type="button" onMouseEnter = {this.handleHoverOnSKill} onMouseLeave = {this.handleHoverOver} onClick = {this.endorse} value = 
           { key.split(',')[0]} id = {tkn} className="btn skill-btn">
           {key.split(',')[0]} <div className="badge badge-blue"  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
           </button>)
@@ -47,17 +45,18 @@ export default class Skills extends Component<Props, State> {
     }
 
     endorse = (event : any) : any => {
-        console.log(event.target.value);
+        if(this.state.endorsedSkills.includes(event.target.value))
+          return;
+
         var linktmp = 'http://localhost:8080/user/endorse?id='
         var  link = linktmp.concat(this.state.id, '&name=')
         var selectedSkill = event.target.value;
         var finalLink = link.concat(selectedSkill);
-        console.log(finalLink)
         axios.post(finalLink)
         .then((response : any) => {
-            var array : any[] = [...this.state.hasEndorsedSkills]; // make a separate copy of the array
+            var array : any[] = [...this.state.endorsedSkills]; // make a separate copy of the array
             array.push(selectedSkill);
-            this.setState({hasEndorsedSkills: array});  
+            this.setState({endorsedSkills: array}); 
             var mySkills : any[] = [...this.state.skills]; // make a separate copy of the array
             for(var i  = 0; i < mySkills.length; i ++){
               if(mySkills[i].hasOwnProperty(selectedSkill)){
@@ -72,6 +71,25 @@ export default class Skills extends Component<Props, State> {
               toast.error('خطا در تشویق مهارت');
           })
       }
+    
+    handleHoverOnSKill = (event : any) => {
+        console.log('hover', this.state.endorsedSkills)
+        for(var i = 0; i < this.state.endorsedSkills.length; i ++){
+          if (this.state.endorsedSkills[i] == event.target.value){
+            this.injectStyles('.skill-btn:hover .badge', 'rgb(187,239,241)');
+            return;
+          }
+        }
+        this.injectStyles('.skill-btn:hover .badge', 'rgb(26,177,30)');
+    }
+
+    handleHoverOver = (event : any) => {
+      this.injectStyles('.skill-btn .badge', 'rgb(187, 239, 241)');
+    }
+
+    injectStyles(name : any, color : any) {
+      $(name).css("background-color", color);  
+    }
       
   render() {
     return (
@@ -90,7 +108,7 @@ export default class Skills extends Component<Props, State> {
 interface State{
     id : "",
     skills : any[],
-    hasEndorsedSkills : any[]
+    endorsedSkills : any[]
   }
 
 interface Props{
@@ -101,7 +119,7 @@ interface Props{
     bio : "",
     proLink : "",
     skills : any[],
-    hasEndorsedSkills : any[]
+    endorsedSkills : any[]
   }
 
 
