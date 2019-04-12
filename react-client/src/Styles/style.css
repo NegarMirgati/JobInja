@@ -188,8 +188,8 @@ body, #root{
 
 .profile-photo
   {
-    height : 140%; 
-    width : 15%; 
+    height : 160px; 
+    width : 160px; 
     top : 38%;
     left : 71.9%;
     z-index : 12;
@@ -283,13 +283,15 @@ body, #root{
   }
 
   .add-skill-form-container{
-    padding: 0.3%;
+    padding: 3px;
     margin-bottom: 1rem;
     background-color: white;
     border-radius: 3px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 27%;
     float: right;
+    position : relative;
+    right : 0%;
 
   }
 
@@ -300,10 +302,10 @@ body, #root{
 
   #add-skill-name{
     padding-top : 1%;
-    padding-right: 10%;
+    padding-right: 12%;
     font-family: Vazir-Bold;
     text-align: right;
-    width: 16.2%;
+    width: 18.2%;
     margin : 0%;
     float : right;
   }
@@ -332,6 +334,38 @@ body, #root{
     padding-top: 5px;
   }
 
+  .rtl-text{
+    direction : rtl;
+    text-align : right;
+    font-family: Vazir;
+    font-size: 90%;
+    background-color: rgb(246, 246, 246);
+    padding-right: 13%;
+    padding-left: 13%;
+    padding-top: 10%;
+    margin-bottom: 0%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .add-skill-button {
+      font-size : 60%;
+    }
+    #add-skill-name{
+      padding-right : 7%;
+      width : 25%;
+    }
+    .add-skill-form-container{
+      right : -8%;
+    }
+    .rtl-text{
+      padding-top : 13%;
+      padding-right: 7%;
+      padding-left: 7%;
+    }
+
+
+  }
+
   .login-button{
     margin-top: 10%;
     font-size: 100%;
@@ -345,23 +379,6 @@ body, #root{
 
   .add-skill-button:hover{
     background-color: #ddd;
-  }
-
-  .rtl-text{
-    direction : rtl;
-    text-align : right;
-    font-family: Vazir;
-    font-size: 90%;
-    background-color: rgb(246, 246, 246);
-    padding-right: 13%;
-    padding-left: 13%;
-    padding-top: 10%;
-    margin-bottom: 0%;
-    
-  }
-
-  #khar{
-    overflow-x: hidden;
   }
 
   .row-100{
