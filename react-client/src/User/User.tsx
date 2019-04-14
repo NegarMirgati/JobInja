@@ -22,22 +22,16 @@ export default class User extends Component<RouteComponentProps<any>,  State> {
     if(thisId == '1') 
       this.setState({isLoggedInUser: 'true'});
     else 
-      this.setState({isLoggedInUser: 'false'});
-
-    console.log('whhhatt', thisId)
-    this.setState({userId: thisId}) 
-  
+      this.setState({isLoggedInUser: 'false'});  
   }
 
   render() {
     return (
       <div>
-           <Header/>
+          <Header/>
            { this.state.isLoggedInUser == 'true'? <UserComponentLogged {...this.state}/> : null}
-            {this.state.isLoggedInUser == 'false'? <OtherUserComponent{...this.state}/> : null}
-           
-           <Footer/>
-        
+            {this.state.isLoggedInUser == 'false'? <OtherUserComponent {...this.state}/> : null}
+          <Footer/>
       </div>
     )
   }

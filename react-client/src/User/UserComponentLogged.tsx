@@ -1,8 +1,10 @@
 import React, { Component, ReactNode } from 'react'
 const axios = require('axios');
-import UserCommon from './UserCommon'
+import LoadingOverlay from 'react-loading-overlay';
 import { toast } from 'react-toastify';
 import $ from 'jquery'; 
+import UserCommon from './UserCommon'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
 import 'src/Styles/userLoggedStyle.css'
@@ -19,21 +21,26 @@ export default class UserComponentLogged extends Component<any,  State> {
       bio : "",
       proLink : "",
       skills : [],
-      possibleSkills : []
+      possibleSkills : [],
+      loading : true
     };
+  }
+  componentDidMount(){
     var linktmp = 'http://localhost:8080/user?id='
     var  link = linktmp.concat(this.props.userId)
     axios.get(link)
     .then((response : any) => {
       let obj: any = JSON.parse(JSON.stringify(response.data));
-      this.setState({name: obj["name"]});
-      this.setState({lastname: obj["lastname"]});
-      this.setState({id: obj["id"]});
-      this.setState({job: obj["jobTitle"]});
-      this.setState({bio: obj["bio"]});
-      this.setState({proLink: obj["proLink"]});
+      this.setState({name : obj["name"]});
+      this.setState({lastname : obj["lastname"]});
+      this.setState({id : obj["id"]});
+      this.setState({job : obj["jobTitle"]});
+      this.setState({bio : obj["bio"]});
+      this.setState({proLink : obj["proLink"]});
       this.setState({skills : obj["skills"]});
-      this.setState({possibleSkills: obj["possibleSkills"]});
+      this.setState({possibleSkills : obj["possibleSkills"]});
+      this.setState({loading : false});
+   
     })
     .catch(function (error : any) {
     // handle error
@@ -141,39 +148,44 @@ export default class UserComponentLogged extends Component<any,  State> {
     })
 
   }
+
+  getMainElements(){
+    return(
+      <div>
+      <UserCommon {...this.state} />
+      <div className = "row justify-content" id = "skill-row">
+        <div className = "col-sm-12">
+          <div id = "add-skill-name">
+            <p>  :مهارت ها </p>
+          </div>
+          <div className = "add-skill-form-container">
+            <form className = "add-skill-form">
+              <button onClick= {this.addSkill} type = "button" className = "add-skill-button" > افزودن مهارت </button>
+                <select className =  "add-skill-input" placeholder ="--انتخاب مهارت--" id = "addSkill">
+                  <option selected disabled>  --انتخاب مهارت--  </option>
+                  {this.addPossibleSkills()}
+                </select>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div className = "row justify-content-end skills">
+        <div className = "col">
+          <div>{this.createSkills()} </div>
+          <div className = "col"></div></div>
+      </div>
+    </div>
+    )
+  }
   
 
   render() {
     document.body.classList.add('htmlBodyStyle');
 
     return (
-      <div>
-        <UserCommon {...this.state} />
-        <div className = "row justify-content" id = "skill-row">
-            <div className = "col-sm-12">
-              <div id = "add-skill-name">
-                <p>  :مهارت ها </p>
-              </div>
-              <div className = "add-skill-form-container">
-                <form className = "add-skill-form">
-                  <button onClick= {this.addSkill} type = "button" className = "add-skill-button" > افزودن مهارت </button>
-                    <select className =  "add-skill-input" placeholder ="--انتخاب مهارت--" id = "addSkill">
-                      <option selected disabled>  --انتخاب مهارت--  </option>
-                      {this.addPossibleSkills()}
-                    </select>
-                </form>
-              </div>
-            </div>
-          </div>
-
-        <div className = "row justify-content-end skills">
-          <div className = "col">
-          <div>{this.createSkills()} </div>
-          <div className = "col"></div>
-        </div>
-      </div>
-
-    </div>   
+      <LoadingOverlay className = "loading" active={this.state.loading} spinner text='در حال بارگذاری اطلاعات'>
+        {this.getMainElements()}
+        </LoadingOverlay>
     )
   }
 }
@@ -186,6 +198,7 @@ interface State{
   bio : "",
   proLink : "",
   skills : any[],
-  possibleSkills : any[]
+  possibleSkills : any[],
+  loading : boolean
 }
 
