@@ -7,11 +7,13 @@ import RegisterForm from "./RegisterForm"
 class Register extends React.Component {
     render(){
         return(
-            <div>
-                <Header/>
-                <RegisterForm/>
-                <Footer/>
+            <div className = "page-container">
+            <Header/>
+            <div id="content-wrap">
+            <RegisterForm/>
             </div>
+            <Footer/>
+        </div>
         );
     }
 }

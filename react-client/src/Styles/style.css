@@ -2,6 +2,14 @@
 @import url("../Assets/fonts/iransans-fonts/fonts.scss");
 @import url("../Assets/fonts/vazir-font-v19.2.0/vazir-fonts.scss");
 
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+#content-wrap {
+  padding-bottom: 65px;    /* Footer height */
+}
+
 html{
  height : 100%;
 }
@@ -29,7 +37,6 @@ body, #root{
   font-family: Vazir;
 }
 .container-fluid {
-  height: 100%;
 }
 
 .site-header {
@@ -98,13 +105,10 @@ body, #root{
   padding-top: 20px;
   font-family: 'Vazir';
   color: rgb(128, 128, 128);
-  position: absolute;
   right: 0;
-  bottom: 0;
   left: 0;
-  clear : both;
-  position : relative;
-  margin-top: -65px;
+  position: absolute;
+  bottom: 0;
 }
 
   .main {
@@ -118,7 +122,6 @@ body, #root{
     overflow-x : hidden;   
     margin: 0 auto;
     overflow:auto;
-    padding-bottom:65px;
   }
 
   .spacer { height: 65px; }
@@ -195,12 +198,12 @@ body, #root{
 
 .profile-photo
   {
-    height : 160px; 
-    width : 160px; 
+    height : 140%; 
+    width : 15%; 
     top : 38%;
     left : 71.9%;
     z-index : 12;
-    border-radius: 11%;
+    border-radius: 10%;
     border: 8px solid white;
     z-index: 2;
     position: absolute;
@@ -344,7 +347,7 @@ body, #root{
     margin-bottom: 0%;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 780px) {
     .add-skill-button {
       font-size : 60%;
     }
@@ -361,7 +364,9 @@ body, #root{
       padding-left: 7%;
     }
 
-
+    .profile-photo{
+      width: 20%;
+    }
   }
 
   .login-button{
