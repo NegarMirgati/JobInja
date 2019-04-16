@@ -27,7 +27,7 @@ export default class User extends Component<RouteComponentProps<any>,  State> {
 
   render() {
     return (
-      <div>
+      <div id = "fill-view-port">
           <Header/>
            { this.state.isLoggedInUser == 'true'? <UserComponentLogged {...this.state}/> : null}
             {this.state.isLoggedInUser == 'false'? <OtherUserComponent {...this.state}/> : null}

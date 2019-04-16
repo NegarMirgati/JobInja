@@ -40,11 +40,9 @@ export default class UserComponentLogged extends Component<any,  State> {
       this.setState({skills : obj["skills"]});
       this.setState({possibleSkills : obj["possibleSkills"]});
       this.setState({loading : false});
-   
     })
     .catch(function (error : any) {
-    // handle error
-    console.log(error);
+      toast.error('خطا در برقراری ارتباط با سرور');
     })
   }
 

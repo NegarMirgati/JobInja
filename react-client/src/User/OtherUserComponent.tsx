@@ -43,8 +43,8 @@ export default class OtherUserComponent extends Component<any,  State> {
     .catch(function (error : any) {
       toast.error('اتصال با سرور با خطا مواجه شد');
     })
-    .then(function () {
-    // always executed
+    .then(() => {
+      this.setState({loading : false});
     });
   }
 
