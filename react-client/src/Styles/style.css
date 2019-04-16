@@ -252,6 +252,8 @@ body, #root{
     background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
     height: 100%;
     top : 0%;
+    overflow-x : hidden;
+    width : 100%;
   }
 
   .reg-blue-box{
@@ -664,4 +666,27 @@ body, #root{
 
 .resultNeg {
   color: red;
+}
+
+#home-header{
+  font-family: Vazir-Bold;
+  text-align: right;
+  color : rgb(22, 106, 108);
+  font-size: 150%;
+  right : 10%;
+  position : relative;
+}
+
+#home-subheader{
+  font-family: Vazir;
+  position : relative;
+  right : 12%;
+  text-align: right;
+  font-size : 80%;
+}
+
+.search-container{
+  float: center;
+  position: relative;
+  left : 50%;
 }
