@@ -3,7 +3,7 @@ const axios = require('axios');
 import LoadingOverlay from 'react-loading-overlay';
 import { toast } from 'react-toastify';
 import UserCommon from './UserCommon';
-import Skills from '../Common/Skills';
+import Skills from './Skills';
 
 
 export default class OtherUserComponent extends Component<any,  State> {

@@ -39,7 +39,8 @@ export default class Skills extends Component<Props, State> {
           var hasEndorsed = this.state.endorsedSkills.includes(key.split(',')[0]);
           skillsJSX.push(<button type="button" onClick = {this.endorse} value = 
           { key.split(',')[0]} id = {tkn} className="btn skill-btn1">
-          {key.split(',')[0]} <div className = {hasEndorsed == false ? "badge badge-green1" : "badge badge-blue1"}  data-hover="-" data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
+          {key.split(',')[0]} <div  className = {hasEndorsed == false ? "badge badge-green1" : "badge badge-blue1"} 
+          data-hover="-"  data-active = {key.split(',')[1]}> <span>{key.split(',')[1]}</span> </div>
           </button>)
          
        }
@@ -49,7 +50,9 @@ export default class Skills extends Component<Props, State> {
     endorse = (event : any) : any => {
         if(this.state.endorsedSkills.includes(event.target.value))
           return;
-
+        if(event.target != event.currentTarget) {
+          return;
+        }
         var linktmp = 'http://localhost:8080/user/endorse?id='
         var  link = linktmp.concat(this.state.id, '&name=')
         var selectedSkill = event.target.value;

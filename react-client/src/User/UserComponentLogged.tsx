@@ -122,6 +122,8 @@ export default class UserComponentLogged extends Component<any,  State> {
     var linktmp = 'http://localhost:8080/user/addSkill?id='
     var  link = linktmp.concat(this.props.userId, '&name=')
     var e = document.getElementById("addSkill") as  HTMLSelectElement;
+    if(e.options[e.selectedIndex] === undefined)
+      return;
     var selectedSkill = e.options[e.selectedIndex].value;
     var toAdd = selectedSkill.replace(/\+/g, "%2B");
     var finalLink = link.concat(toAdd);

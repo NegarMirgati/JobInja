@@ -279,12 +279,7 @@ body, #root{
     background-color: #ddd;
   }
 
-  .skills button .badge{
-    padding-top : 5px;
-    padding-bottom : 5px;
-    padding-right : 5px;
-    padding-left : 5px;
-  }
+
 
   .add-skill-form-container{
     padding: 3px;
