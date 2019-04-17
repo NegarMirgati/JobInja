@@ -1,10 +1,11 @@
 import React, { Component, ReactNode } from 'react'
 const axios = require('axios');
-import LoadingOverlay from 'react-loading-overlay';
 import { toast } from 'react-toastify';
 import UserCommon from './UserCommon';
-import Skills from './Skills';
-
+import Skills from './SkillsOther';
+import Loader from '../Common/Loader'
+import Footer from "../Common/Footer";
+import Header from "../Common/Header";
 
 export default class OtherUserComponent extends Component<any,  State> {
   constructor(props : any) {
@@ -22,13 +23,12 @@ export default class OtherUserComponent extends Component<any,  State> {
     };
   }
 
-  componentDidMount() {
-    var linktmp = 'http://localhost:8080/user?id='
-    var  link = linktmp.concat(this.props.userId)
+  componentDidMount(){
+    var link = 'http://localhost:8080/user?id='.concat(this.props.userId as string) ;
+    console.log(link);
     axios.get(link)
     .then((response : any) => {
       let obj: any = JSON.parse(JSON.stringify(response.data));
-      console.log(obj)
       this.setState({name: obj["name"]});
       this.setState({lastname: obj["lastname"]});
       this.setState({id: obj["id"]});
@@ -36,19 +36,24 @@ export default class OtherUserComponent extends Component<any,  State> {
       this.setState({bio: obj["bio"]});
       this.setState({skills : obj["skills"]}); 
       this.setState({proLink: obj["proLink"]});
-      this.setState({endorsedSkills : obj["endorsedSkills"]});
-      this.setState({loading : false});
-
+      this.setState({endorsedSkills : obj["endorsedSkills"]})
     })
     .catch(function (error : any) {
       toast.error('اتصال با سرور با خطا مواجه شد');
     })
     .then(() => {
       this.setState({loading : false});
+      console.log('state', this.state)
     });
   }
 
   getMainElements(){
+    console.log('sss', this.state)
+    if(this.state.loading)
+    return(
+      <Loader/>
+    )
+    else
     return (      
       <div className= "container-fluid main">
       <UserCommon {...this.state} />
@@ -60,9 +65,11 @@ export default class OtherUserComponent extends Component<any,  State> {
   render() {
     document.body.classList.add('htmlBodyStyle');
     return (
-      <LoadingOverlay className = "loading" active={this.state.loading} spinner text='در حال بارگذاری اطلاعات'>
-        {this.getMainElements()}
-        </LoadingOverlay>
+        <div id = "fill-view-point">
+            <Header/>
+            {this.getMainElements()}
+            <Footer/>
+        </div>
     )
   }
 }

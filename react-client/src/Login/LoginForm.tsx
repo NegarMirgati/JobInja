@@ -59,6 +59,7 @@ class LoginForm extends Component{
                                     <input onChange = {this.handlePasswordchange} type="password" id="password" placeholder= "رمز عبور"/><br/>
                                     <button onClick = {this.handleSubmit} type = "button" className = "add-skill-button login-button" > ورود </button>
                                 </form>
+                                <a id = "enter-account-login" href = "register">ساخت حساب کاربری جدید</a> 
                             </div>
                         </div>
                     </div>

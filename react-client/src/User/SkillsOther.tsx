@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import $ from 'jquery'; 
 import 'src/Styles/OtherUser.css'
 
-export default class Skills extends Component<Props, State> {
+export default class SkillsOther extends Component<Props, State> {
 
     constructor(props : Props) {
         super(props);
@@ -15,11 +15,11 @@ export default class Skills extends Component<Props, State> {
         };
     }
 
-    componentWillReceiveProps(nextProps : Props) {
-        console.log('props', nextProps)
-        this.setState({id: nextProps.id});
-        this.setState({skills : nextProps.skills});
-        this.setState({endorsedSkills : nextProps.endorsedSkills});
+    componentDidMount() {
+        console.log('props', this.props)
+        this.setState({id: this.props.id});
+        this.setState({skills : this.props.skills});
+        this.setState({endorsedSkills : this.props.endorsedSkills});
     }
 
     createSkills = () : any => {

@@ -125,6 +125,8 @@ class RegisterForm extends Component<Props, State>{
                                     <input onChange = {this.handleInputChange} type="text" id="proLink" placeholder = "لینک تصویر پروفایل"/><br/><br/>
                                     <button onClick = {this.handleSubmit } type = "button" className = "add-skill-button" > ثبت نام </button>
                                 </form>
+                                
+                                <a id = "enter-account-login" href = "login">ورود به حساب کاربری</a> 
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,7 @@ body, #root{
   position: relative;
   background-color: rgb(246, 246, 246);
   margin: 0;
-  min-height: 100%;
+  min-height : 100%;
   box-sizing: border-box;
 }
 
@@ -59,10 +59,9 @@ body, #root{
 .header-img {
   height: 45px;
   margin-right: 9%;
-  margin-top : -1%;
+  margin-top : 0%;
   width : 12%;
   float:right;
-
 }
 
 .site-header a {
@@ -76,6 +75,7 @@ body, #root{
   width : 13%;
   display: inline-block;
   padding: 12px;
+  margin-top : 7px;
   line-height: 25px;
 }
 .site-header a:hover {
@@ -122,7 +122,6 @@ body, #root{
     overflow-y : scroll;
     overflow-x : hidden;   
     margin: 0 auto;
-    overflow:auto;
   }
 
   .spacer { height: 65px; }
@@ -368,7 +367,7 @@ body, #root{
   }
 
   .login-button{
-    margin-top: 10%;
+    margin-top: 7%;
     font-size: 100%;
 }
 
@@ -419,6 +418,7 @@ body, #root{
     width:20%;
     float:left;
   }
+
   #slider figure{
     position:relative;
     width:500%;
@@ -456,14 +456,11 @@ body, #root{
     padding-bottom: 5%;
     margin-bottom: 10%;
     margin-top : -3%;
-    
   }
 
   .register-container{
-
     position: relative;
     margin-top: 30px;
-
   }
 
   .register-form input[type=text],  input[type=password]{
@@ -491,12 +488,18 @@ body, #root{
     width : 40%;
   }
 
+  #enter-account-login{
+    font-family: Vazir;
+    position : relative;
+    top : 30px;
+    color :  rgb(35, 209, 220);
+  }
+
   .Bluebar {
   position: relative;
   padding: 156px 0 10px;
   background : rgb(186, 239, 241);
   z-index: -1;
-
 }
 
 .position {
