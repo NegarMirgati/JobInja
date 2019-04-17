@@ -8,6 +8,7 @@ import Login from './Login/Login'
 import Register from './Register/Register';
 import User from './User/User';
 import Home from './Home/Home';
+import Project from "./Project/Project";
 
 ReactDOM.render( 
     <Router>
@@ -15,6 +16,7 @@ ReactDOM.render(
       <Route exact path = "/register" component={Register} />
       <Route exact path = "/user" component={User} />
       <Route exact path = "/home" component={Home} />
+      <Route exact path="/project" component={Project} />
     </Router>,
   document.getElementById('root'));
 
