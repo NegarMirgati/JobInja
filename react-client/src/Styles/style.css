@@ -491,13 +491,6 @@ body, #root{
     width : 40%;
   }
 
-  .Bluebar {
-  position: relative;
-  padding: 156px 0 10px;
-  background : rgb(186, 239, 241);
-  z-index: -1;
-
-}
 
 .position {
   position: absolute;
@@ -510,6 +503,10 @@ body, #root{
   background-color: snow;
 }
 
+.button-margin {
+  margin-left: 3px;
+  margin-right: 3px;
+}
 
 .project-photo
   {

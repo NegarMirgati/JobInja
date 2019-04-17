@@ -1,6 +1,7 @@
 package Commands;
 
 import Auctioneer.*;
+import Exceptions.ProjectNotFoundException;
 import Exceptions.UserNotFoundException;
 
 public class AuctionCommand implements Command {
