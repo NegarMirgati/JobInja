@@ -513,6 +513,10 @@ body, #root{
   background-color: snow;
 }
 
+.button-margin {
+  margin-left: 3px;
+  margin-right: 3px;
+}
 
 .project-photo
   {

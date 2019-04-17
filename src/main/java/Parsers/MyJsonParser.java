@@ -107,7 +107,7 @@ public class MyJsonParser {
                         skillsMap.put(skillName, s);
                         currentKey = skillName;
                     }
-                    else if (key.equals("points")) {
+                    else if (key.equals("point")) {
                         Skill s = new Skill(currentKey, f.getValue().getAsInt());
                         skillsMap.put(currentKey, s);
                     }
