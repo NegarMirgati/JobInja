@@ -504,8 +504,8 @@ body, #root{
 
 .position {
   position: absolute;
-  padding-left: 240px;
-  padding-right: 50px;
+  padding-left: 20%;
+  padding-right: 10%;
   top: 110px;
 }
 
