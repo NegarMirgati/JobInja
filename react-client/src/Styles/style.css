@@ -1,4 +1,3 @@
-
 @import url("../Assets/fonts/iransans-fonts/fonts.scss");
 @import url("../Assets/fonts/vazir-font-v19.2.0/vazir-fonts.scss");
 
@@ -7,27 +6,28 @@
   min-height: 100vh;
 }
 #content-wrap {
-  padding-bottom: 65px;    /* Footer height */
+  padding-bottom: 65px; /* Footer height */
 }
 
-html{
- height : 100%;
+html {
+  height: 100%;
 }
 
-body, #root{
+body,
+#root {
   width: 100%;
   position: relative;
   background-color: rgb(246, 246, 246);
   margin: 0;
-  min-height : 100%;
+  min-height: 100%;
   box-sizing: border-box;
 }
 
-#fill-view-port{
+#fill-view-port {
   height: 100%;
 }
 
-.htmlBodyStyle{
+.htmlBodyStyle {
   height: 100%;
   width: 100%;
   background-color: rgb(246, 246, 246);
@@ -37,14 +37,14 @@ body, #root{
   font-family: Vazir;
 }
 .container-fluid {
-  overflow-x : hidden;
+  overflow-x: hidden;
 }
 
 .site-header {
   background-color: white;
   height: 60px;
-  margin-top : 0%;
-  padding-left : 8%;
+  margin-top: 0%;
+  padding-left: 8%;
 }
 
 #test {
@@ -59,9 +59,9 @@ body, #root{
 .header-img {
   height: 45px;
   margin-right: 9%;
-  margin-top : 0%;
-  width : 12%;
-  float:right;
+  margin-top: 0%;
+  width: 12%;
+  float: right;
 }
 
 .site-header a {
@@ -71,11 +71,11 @@ body, #root{
   text-align: center;
   padding-right: 15px;
   text-decoration: none;
-  font-size: 17px; 
-  width : 13%;
+  font-size: 17px;
+  width: 13%;
   display: inline-block;
   padding: 12px;
-  margin-top : 7px;
+  margin-top: 7px;
   line-height: 25px;
 }
 .site-header a:hover {
@@ -95,16 +95,18 @@ body, #root{
   }
 }
 
-.overflow-hidden { overflow: hidden; }
+.overflow-hidden {
+  overflow: hidden;
+}
 
 .footer {
   height: 65px;
   width: 100%;
-  background-color: rgb(54,54,54);
+  background-color: rgb(54, 54, 54);
   color: white;
   text-align: center;
   padding-top: 20px;
-  font-family: 'Vazir';
+  font-family: "Vazir";
   color: rgb(128, 128, 128);
   right: 0;
   left: 0;
@@ -112,393 +114,413 @@ body, #root{
   bottom: 0;
 }
 
-  .main {
-    width: 100%;
-    min-height: 100%;
-    padding-top: 0%;
-    padding-left: 0%;
-    padding-right: 0%;
-    background-color: rgb(246, 246,246);
-    overflow-y : scroll;
-    overflow-x : hidden;   
-    margin: 0 auto;
-  }
+.main {
+  width: 100%;
+  min-height: 100%;
+  padding-top: 0%;
+  padding-left: 0%;
+  padding-right: 0%;
+  background-color: rgb(246, 246, 246);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 0 auto;
+}
 
-  .spacer { height: 65px; }
+.spacer {
+  height: 65px;
+}
 
-  .sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-  
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.rectangle {
+  display: inline-block;
+  z-index: 20;
+  height: 20%;
+  width: 0.7%;
+  background: rgb(137, 210, 210);
+  top: 80%;
+  left: 71.85%;
+  position: absolute;
+}
+
+.rectangle-2 {
+  display: inline-block;
+  z-index: 20;
+  height: 20%;
+  width: 10%;
+  background: rgb(108, 197, 201);
+  top: 80%;
+  left: 62%;
+  position: absolute;
+}
+
+.rectangle-3 {
+  display: inline-block;
+  z-index: 15;
+  height: 20%;
+  width: 4%;
+  background: rgb(130, 218, 222);
+  top: 80%;
+  left: 61%;
+  position: absolute;
+}
+
+#parallelogram-2 {
+  width: 10.5%;
+  height: 19.8%;
+  transform: skew(-30deg);
+  background: rgb(108, 197, 201);
+  top: 80%;
+  left: 60.5%;
+  position: absolute;
+  z-index: 15;
+}
+
+#parallelogram-1 {
+  width: 10.9%;
+  height: 19.8%;
+  transform: skew(-30deg);
+  background: rgb(130, 218, 222);
+  top: 80%;
+  left: 59.6%;
+  position: absolute;
+}
+
+.profile {
+  background-color: rgb(246, 246, 246);
+  width: 100%;
+}
+
+#picRow {
+  height: 30%;
+}
+
+.profile-photo {
+  height: 140%;
+  width: 15%;
+  top: 38%;
+  left: 71.9%;
+  z-index: 12;
+  border-radius: 10%;
+  border: 8px solid white;
+  z-index: 2;
+  position: absolute;
+  display: inline-block;
+}
+
+@media (max-width: 1087px) {
   .rectangle {
-    display: inline-block;
-    z-index: 20;
-    height: 20%;
-    width: 0.7%;
-    background:rgb(137, 210, 210);
-    top : 80%;
-    left : 71.85%;
-    position: absolute;
+    left: 72%;
   }
+}
 
-  .rectangle-2 {
-    display: inline-block;
-    z-index: 20;
-    height: 20%;
-    width: 10%;
-    background : rgb(108, 197, 201);
-    top : 80%;
-    left : 62%;
-    position: absolute;
-  }
+.profile-name {
+  top: 85%;
+  right: 29.5%;
+  padding-top: 2%;
+  display: inline-block;
+  z-index: 10;
+  font-family: Vazir-Bold;
+  font-size: 200%;
+  position: absolute;
+}
 
-  .rectangle-3 {
-    display: inline-block;
-    z-index: 15;
-    height: 20%;
-    width: 4%;
-    background : rgb(130, 218, 222);
-    top : 80%;
-    left : 61%;
-    position: absolute;
-  }
+.profile-job {
+  top: 150%;
+  right: 29.5%;
+  z-index: 10;
+  font-family: Vazir;
+  font-size: 100%;
+  background-color: rgb(246, 246, 246);
+  position: absolute;
+}
 
-
-  #parallelogram-2 {
-    width: 10.5%;
-    height: 19.8%;
-    transform: skew(-30deg);
-    background: rgb(108, 197, 201);
-    top : 80%;
-    left : 60.5%;
-    position: absolute;
-    z-index: 15;
-  }
-
-  #parallelogram-1 {
-    width: 10.9%;
-    height: 19.8%;
-    transform: skew(-30deg);
-    background: rgb(130, 218, 222);
-    top : 80%;
-    left : 59.6%;
-    position: absolute;
-  }
-
-  .profile{
-    background-color: rgb(246, 246, 246);
-    width:100%;
-  }
-
-  #picRow{
-      height: 30%;
-  }
-
-.profile-photo
-  {
-    height : 140%; 
-    width : 15%; 
-    top : 38%;
-    left : 71.9%;
-    z-index : 12;
-    border-radius: 10%;
-    border: 8px solid white;
-    z-index: 2;
-    position: absolute;
-    display: inline-block;
-    }
-
-    @media (max-width: 1087px) {
-      .rectangle{
-        left : 72%;
-      }
-    }
-
-  .profile-name
-  {
-    top : 85%;
-    right : 29.5%;
-    padding-top: 2%;
-    display: inline-block;
-    z-index: 10;
-    font-family: Vazir-Bold;
-    font-size: 200%;
-    position: absolute;
-  }
-
-  .profile-job
-  {
-    top : 150%;
-    right : 29.5%;
-    z-index: 10;
-    font-family: Vazir;
-    font-size: 100%;
-    background-color: rgb(246, 246, 246);
-    position: absolute;
-  }
-
-
-.site-header #account{
+.site-header #account {
   width: 40%;
 }
 
-  .skill{
-    padding-right : 2px;
-  }
- 
-  .blue-box{
-    background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
-    height: 100%;
-    top : 0%;
-    overflow-x : hidden;
-    width : 100%;
-  }
-
-  .reg-blue-box{
-    position: relative;
-    z-index: -1;
-  }
-
-  .skills{
-    padding-left : 12%;
-    overflow: scroll;
-    margin-bottom : 7%;
-    padding-right: 13%;
-    padding-left: 13%;
-  }
-  .skills button{
-    margin : 0.5%;
-    margin-right: 0.5%;
-    
-  }
-
-  .skills button:hover{
-    background-color: #ddd;
-  }
-
-
-
-  .add-skill-form-container{
-    padding: 3px;
-    margin-bottom: 1rem;
-    background-color: white;
-    border-radius: 3px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 27%;
-    float: right;
-    position : relative;
-    right : 0%;
-  }
-
-  #skill-row{
-    height: 16%;
-    padding-top : 2%;
-  }
-
-  #add-skill-name{
-    padding-top : 1%;
-    padding-right: 12%;
-    font-family: Vazir-Bold;
-    text-align: right;
-    width: 18.2%;
-    margin : 0%;
-    float : right;
-  }
-
-  .add-skill-form-container .add-skill-form .add-skill-input{
-    background: #f9f9f9;
-    border : 1px solid #eeeeee;
-    width : 70%;
-    padding : 3px;
-    text-align: right;
-    direction : rtl;
-    height : 40px; 
-    font-family: Vazir-100;
-    overflow-y: scroll;
-    overflow-x: hidden;
-  }
-  
-  .add-skill-button{
-    background-color: rgb(23, 153, 164);
-    font-family: Vazir-100;
-    font-size: 80%;
-    border-radius: 4px;
-    width: 30%;
-    height : 40px;
-    padding: 3px;
-    padding-top: 5px;
-  }
-
-  .rtl-text{
-    direction : rtl;
-    text-align : right;
-    font-family: Vazir;
-    font-size: 90%;
-    background-color: rgb(246, 246, 246);
-    padding-right: 13%;
-    padding-left: 13%;
-    padding-top: 10%;
-    margin-bottom: 0%;
-    overflow-x: hidden;
-  }
-
-  @media only screen and (max-width: 780px) {
-    .add-skill-button {
-      font-size : 60%;
-    }
-    #add-skill-name{
-      padding-right : 7%;
-      width : 25%;
-    }
-    .add-skill-form-container{
-      right : -8%;
-    }
-    .rtl-text{
-      padding-top : 13%;
-      padding-right: 7%;
-      padding-left: 7%;
-    }
-
-    .profile-photo{
-      width: 20%;
-    }
-  }
-
-  .login-button{
-    margin-top: 7%;
-    font-size: 100%;
+.skill {
+  padding-right: 2px;
 }
 
-  @-moz-document url-prefix() {
-
-    .add-skill-button { padding-top: 6px;}
-
+.blue-box {
+  background-image: linear-gradient(rgb(177, 227, 229), rgb(186, 239, 241));
+  height: 100%;
+  top: 0%;
+  overflow-x: hidden;
+  width: 100%;
 }
 
-  .add-skill-button:hover{
-    background-color: rgb(0, 204, 204);
+.reg-blue-box {
+  position: relative;
+  z-index: -1;
+}
+
+.skills {
+  padding-left: 12%;
+  overflow: scroll;
+  margin-bottom: 7%;
+  padding-right: 13%;
+  padding-left: 13%;
+}
+.skills button {
+  margin: 0.5%;
+  margin-right: 0.5%;
+}
+
+.skills button:hover {
+  background-color: #ddd;
+}
+
+.add-skill-form-container {
+  padding: 3px;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 27%;
+  float: right;
+  position: relative;
+  right: 0%;
+}
+
+#skill-row {
+  height: 16%;
+  padding-top: 2%;
+}
+
+#add-skill-name {
+  padding-top: 1%;
+  padding-right: 12%;
+  font-family: Vazir-Bold;
+  text-align: right;
+  width: 18.2%;
+  margin: 0%;
+  float: right;
+}
+
+.add-skill-form-container .add-skill-form .add-skill-input {
+  background: #f9f9f9;
+  border: 1px solid #eeeeee;
+  width: 70%;
+  padding: 3px;
+  text-align: right;
+  direction: rtl;
+  height: 40px;
+  font-family: Vazir-100;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.add-skill-button {
+  background-color: rgb(23, 153, 164);
+  font-family: Vazir-100;
+  font-size: 80%;
+  border-radius: 4px;
+  width: 30%;
+  height: 40px;
+  padding: 3px;
+  padding-top: 5px;
+}
+
+.rtl-text {
+  direction: rtl;
+  text-align: right;
+  font-family: Vazir;
+  font-size: 90%;
+  background-color: rgb(246, 246, 246);
+  padding-right: 13%;
+  padding-left: 13%;
+  padding-top: 10%;
+  margin-bottom: 0%;
+  overflow-x: hidden;
+}
+
+@media only screen and (max-width: 780px) {
+  .add-skill-button {
+    font-size: 60%;
+  }
+  #add-skill-name {
+    padding-right: 7%;
+    width: 25%;
+  }
+  .add-skill-form-container {
+    right: -8%;
+  }
+  .rtl-text {
+    padding-top: 13%;
+    padding-right: 7%;
+    padding-left: 7%;
   }
 
-  .row-100{
-    height: 24%;
+  .profile-photo {
+    width: 20%;
   }
+}
 
-  .main-background{
-    background-color: rgb(246, 246, 246);
-  }
+.login-button {
+  margin-top: 7%;
+  font-size: 100%;
+}
 
-  @keyframes slideshow {
-    10% {left: 0;}
-    20% {left: 0;}
-    30% {left: -100%;}
-    40% {left: -100%;}
-    50% {left: -200%;}
-    60% {left: -200%;}
-    70% {left: -300%;}
-    80% {left: -300%;}
-    90% {left: -400%;}
-    100% {left: -400%}
+@-moz-document url-prefix() {
+  .add-skill-button {
+    padding-top: 6px;
   }
-  
-  
-  #slider{
-    z-index: 10;
-    overflow:hidden;
-    width:40%;
-    height: 300px;
-    margin:1% auto;
-    margin-top: -5%;
-    border-radius: 3%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+}
 
-  #slider figure img{
-    width:20%;
-    float:left;
-  }
+.add-skill-button:hover {
+  background-color: rgb(0, 204, 204);
+}
 
-  #slider figure{
-    position:relative;
-    width:500%;
-    margin:0;
-    left:0;
-    text-align:left;
-    animation:20s slideshow infinite
-  }
+.row-100 {
+  height: 24%;
+}
 
-  .slide-img{
-    width: 40%;
-    height: 300px;
-  }
-  
-  @media screen and (max-width: 767px) {#slider {overflow: hidden; width: 100%; margin: 0 auto;}}
+.main-background {
+  background-color: rgb(246, 246, 246);
+}
 
-  #registerlogin{
-    font-family: Vazir-Bold;
-    font-size: 110%;
+@keyframes slideshow {
+  10% {
+    left: 0;
   }
-
-  .registerlogin-container{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-style: dashed;
-    border-color: rgb(35, 209, 220);
-    padding-right : 5%;
-    padding-left : 5%;
-    text-align: center;
-    padding-top: 1%;
-    border-radius: 2%;
-    width: 40%;
-    margin-left: 30%;
-    overflow : scroll;
-    background-color : white;
-    padding-bottom: 5%;
-    margin-bottom: 10%;
-    margin-top : -3%;
+  20% {
+    left: 0;
   }
-
-  .register-container{
-    position: relative;
-    margin-top: 30px;
+  30% {
+    left: -100%;
   }
+  40% {
+    left: -100%;
+  }
+  50% {
+    left: -200%;
+  }
+  60% {
+    left: -200%;
+  }
+  70% {
+    left: -300%;
+  }
+  80% {
+    left: -300%;
+  }
+  90% {
+    left: -400%;
+  }
+  100% {
+    left: -400%;
+  }
+}
 
-  .register-form input[type=text],  input[type=password]{
+#slider {
+  z-index: 10;
+  overflow: hidden;
+  width: 40%;
+  height: 300px;
+  margin: 1% auto;
+  margin-top: -5%;
+  border-radius: 3%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#slider figure img {
+  width: 20%;
+  float: left;
+}
+
+#slider figure {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  animation: 20s slideshow infinite;
+}
+
+.slide-img {
+  width: 40%;
+  height: 300px;
+}
+
+@media screen and (max-width: 767px) {
+  #slider {
+    overflow: hidden;
     width: 100%;
-    padding: 2% 4%;
-    margin: 4px 0;
-    display: inline-block;
-    border-radius: 5%;
-    box-sizing: border-box;
-    font-size: 80%;
-    direction: rtl;
-    text-align: right;
+    margin: 0 auto;
   }
-  
-  .register-form label{
-    direction: rtl;
-    text-align: right;
-  }
+}
 
-  .registerlogin-container .register-form{
-    font-family: Vazir-100;
-  }
+#registerlogin {
+  font-family: Vazir-Bold;
+  font-size: 110%;
+}
 
-  .registerlogin-container .register-form input{
-    width : 40%;
-  }
+.registerlogin-container {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-style: dashed;
+  border-color: rgb(35, 209, 220);
+  padding-right: 5%;
+  padding-left: 5%;
+  text-align: center;
+  padding-top: 1%;
+  border-radius: 2%;
+  width: 40%;
+  margin-left: 30%;
+  overflow: scroll;
+  background-color: white;
+  padding-bottom: 5%;
+  margin-bottom: 10%;
+  margin-top: -3%;
+}
 
-  #enter-account-login{
-    font-family: Vazir;
-    position : relative;
-    top : 30px;
-    color :  rgb(35, 209, 220);
-  }
+.register-container {
+  position: relative;
+  margin-top: 30px;
+}
 
-  .Bluebar {
+.register-form input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 2% 4%;
+  margin: 4px 0;
+  display: inline-block;
+  border-radius: 5%;
+  box-sizing: border-box;
+  font-size: 80%;
+  direction: rtl;
+  text-align: right;
+}
+
+.register-form label {
+  direction: rtl;
+  text-align: right;
+}
+
+.registerlogin-container .register-form {
+  font-family: Vazir-100;
+}
+
+.registerlogin-container .register-form input {
+  width: 40%;
+}
+
+#enter-account-login {
+  font-family: Vazir;
+  position: relative;
+  top: 30px;
+  color: rgb(35, 209, 220);
+}
+
+.Bluebar {
   position: relative;
   padding: 156px 0 10px;
-  background : rgb(186, 239, 241);
+  background: rgb(186, 239, 241);
   z-index: -1;
 }
 
@@ -518,63 +540,61 @@ body, #root{
   margin-right: 3px;
 }
 
-.project-photo
-  {
-    position: absolute;
-    top: 20px;
-    left: 80%;
-    width: 17%;
-    height: 75%;
-    border: 8px solid white;
-    }
+.project-photo {
+  position: absolute;
+  top: 20px;
+  left: 80%;
+  width: 17%;
+  height: 75%;
+  border: 8px solid white;
+}
 
 .insideRowPos {
-   right: 200px;
+  right: 200px;
 }
 
 .projectTitle {
   color: #0a0a0a;
-  text-align:center ;
+  text-align: center;
   top: 10px;
-  font-weight:bold;
+  font-weight: bold;
   padding-left: 190px;
 }
 
 .timePos {
   color: rgb(99, 99, 99);
   top: 15px;
-  font-weight:bold;
+  font-weight: bold;
   padding-left: 190px;
 }
 .timeNeg {
   color: red;
   top: 15px;
-  font-weight:bold;
+  font-weight: bold;
   padding-left: 190px;
 }
-.winner{
-  color: rgb(28, 147,75);
+.winner {
+  color: rgb(28, 147, 75);
   top: 2%;
-  font-weight:bold;
+  font-weight: bold;
   padding-left: 190px;
 }
 .budget {
   color: rgb(17, 132, 139);
-  top:5px;
-  font-weight:bold;
+  top: 5px;
+  font-weight: bold;
   padding-left: 190px;
 }
-.descriptionTitle{
+.descriptionTitle {
   color: black;
   top: 3px;
-  font-weight:bold;
+  font-weight: bold;
   padding-left: 190px;
 }
-.description{
+.description {
   color: black;
   top: 3px;
   padding-left: 190px;
-
 }
 
 .projectBorder {
@@ -592,10 +612,9 @@ body, #root{
   display: inline-block;
   height: 10%;
   margin-top: 0px;
-  background-color: rgb(246, 246,246);
+  background-color: rgb(246, 246, 246);
   padding-bottom: 2%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
-
 }
 
 .resultsBorder {
@@ -607,18 +626,16 @@ body, #root{
   margin-bottom: 10%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
   border-radius: 0px 0px 5px 5px;
-
-
 }
 .textPosition {
-  position:relative;
-  direction:rtl;
-  text-align:right;
+  position: relative;
+  direction: rtl;
+  text-align: right;
   font-family: Vazir;
 }
 .text {
   color: rgb(17, 132, 139);
-  font-weight:bold;
+  font-weight: bold;
   top: 10px;
   right: 7px;
 }
@@ -630,16 +647,16 @@ body, #root{
 }
 
 .bodyColor {
-  background-color: rgb(246, 246,246);
+  background-color: rgb(246, 246, 246);
 }
 
-.bidFormTitle{
+.bidFormTitle {
   font-weight: bold;
   color: black;
-  top:5px;
+  top: 5px;
 }
 
-.bidForm{
+.bidForm {
   margin-top: 7px;
   margin-bottom: 5px;
 }
@@ -651,45 +668,129 @@ body, #root{
 
 .bidColor {
   background-color: white;
-  color:darkturquoise;
+  color: darkturquoise;
 }
-.bidBorder{
-  border:1px solid darkturquoise;
+.bidBorder {
+  border: 1px solid darkturquoise;
 }
 
 .result {
-  font-weight:bold;
+  font-weight: bold;
   top: 10px;
   right: 7px;
   display: inline;
 }
 .resultPos {
-  color: rgb(28, 147,75);
+  color: rgb(28, 147, 75);
 }
 
 .resultNeg {
   color: red;
 }
 
-#home-header{
+#home-header {
   font-family: Vazir-Bold;
   text-align: right;
-  color : rgb(22, 106, 108);
+  color: rgb(22, 106, 108);
   font-size: 180%;
-  right : 10%;
-  position : relative;
-  padding-top : 2%;
+  right: 10%;
+  position: relative;
+  padding-top: 2%;
 }
 
-#home-subheader{
+#home-subheader {
   font-family: Vazir;
-  position : relative;
-  right : 11%;
+  position: relative;
+  right: 11%;
   text-align: right;
-  font-size : 80%;
+  font-size: 80%;
 }
 
-.search-container{
+.project-box {
+  padding: 3px;
+  margin-right: 40%;
+  margin-bottom: 0.5rem;
+  background-color: rgb(249, 249, 249);
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  width: 75%;
+  float: left;
+  position: relative;
+  left: 5%;
+  top: -20%;
+  z-index: 2;
+  height: 200px;
+  padding-top: 0.5%;
+  padding-bottom: 0.1%;
+}
+.project-box .project-title {
+  margin-right: 0%;
+  margin-left: 10%;
+  margin-top: -15px;
+  font-family: Vazir-Bold;
+  font-size: 110%;
+  text-align: right;
+  color: black;
+}
+.project-box .project-time {
+  margin-right: 0%;
+  margin-left: 10px;
+  margin-top: 1px;
+  color: darkslategray;
+  font-family: Vazir-Bold;
+  font-size: 70%;
+  text-align: left;
+}
+.project-box .project-description {
+  margin-top: -15px;
+  margin-right: 0%;
+  font-family: Vazir;
+  font-size: 90%;
+  text-align: right;
+  color: black;
+}
+.project-box .project-budget {
+  margin-top: -15px;
+  margin-right: 0%;
+  font-family: Vazir-Bold;
+  font-size: 90%;
+  text-align: right;
+  color: rgb(17, 132, 139);
+}
+.project-box .project-skills {
+  margin-top: -15px;
+  margin-right: 0%;
+  margin-bottom: 1px;
+  color: darkslategray;
+  font-family: Vazir-Bold;
+  font-size: 70%;
+  text-align: right;
+  direction: rtl;
+}
+.project-box .button-style {
+  background-color: lightgrey;
+  color: darkslategray;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.project-box .button-style-time-out {
+  background-color: lightseagreen;
+  color: white;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.project-box .project-image {
+  height: 175px;
+  width: 20%;
+  border-radius: 8%;
+  float: right;
+  margin-left: 2%;
+  margin-right: 1%;
+}
+
+.search-container {
   padding: 3px;
   margin-bottom: 1rem;
   background-color: rgb(216, 248, 249);
@@ -698,62 +799,61 @@ body, #root{
   border-bottom: 2.5px solid rgb(27, 174, 190);
   width: 50%;
   float: right;
-  position : relative;
-  right : 25%;
+  position: relative;
+  right: 25%;
 }
-.search-container input{
+.search-container input {
   font-family: Vazir;
-  color : rgb(104, 168, 170);
+  color: rgb(104, 168, 170);
   text-align: right;
-  height : 40px;
-  border : 1px solid rgb(216, 248, 249);;
-  width : 85%;
-  padding : 3px;
-  background-color : rgb(216, 248, 249);
+  height: 40px;
+  border: 1px solid rgb(216, 248, 249);
+  width: 85%;
+  padding: 3px;
+  background-color: rgb(216, 248, 249);
 }
 
-.search-container button{
+.search-container button {
   background-color: rgb(23, 153, 164);
   font-family: Vazir;
   font-size: 110%;
   border-radius: 4px;
   width: 15%;
-  height : 40px;
+  height: 40px;
   padding: 3px;
   padding-top: 5px;
-  color : white;
+  color: white;
 }
 
-.search-container button:hover{
+.search-container button:hover {
   background-color: rgb(0, 204, 204);
 }
 
-
-.search-container-user{
+.search-container-user {
   padding: 3px;
   margin-bottom: 1rem;
   background-color: rgb(249, 249, 249);
   border-radius: 3px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 20%;
-  position : relative;
-  left : 73%;
+  position: relative;
+  left: 73%;
   margin-top: -25px;
-  z-index: 2; 
-  height : 40px;
+  z-index: 2;
+  height: 40px;
 }
-.search-container-user input{
+.search-container-user input {
   font-family: Vazir;
-  color : rgb(104, 168, 170);
+  color: rgb(104, 168, 170);
   text-align: right;
-  height : 100%;
-  border : 1px solid white;
-  width : 100%;
-  padding : 3px;
-  background-color : rgb(249, 249, 249);
+  height: 100%;
+  border: 1px solid white;
+  width: 100%;
+  padding: 3px;
+  background-color: rgb(249, 249, 249);
 }
 
-.search-user{
+.search-user {
   padding: 3px;
   margin-bottom: 0.5rem;
   background-color: rgb(249, 249, 249);
@@ -761,52 +861,51 @@ body, #root{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
   width: 20%;
   float: right;
-  position : relative;
-  left : 73%;
-  top : -20%;
-  height : 60px;
-  padding-top : 0.5%;
+  position: relative;
+  left: 73%;
+  top: -20%;
+  height: 60px;
+  padding-top: 0.5%;
   padding-bottom: 0.1%;
 }
 
-.search-user .search-image{
-  height : 50px;
-  width : 50px;
+.search-user .search-image {
+  height: 50px;
+  width: 50px;
   border-radius: 8%;
-  float : right;
+  float: right;
   margin-left: 10%;
-  margin-right : -2%;
+  margin-right: -2%;
 }
 
-.search-user .search-user-name{
- padding : 2%;
+.search-user .search-user-name {
+  padding: 2%;
   margin-right: 5%;
   font-family: Vazir;
-  font-size : 100%;
+  font-size: 100%;
   text-align: right;
-  color : black;
+  color: black;
 }
 
-.search-user .search-user-job{
+.search-user .search-user-job {
   font-family: Vazir;
-  font-size : 80%;
+  font-size: 80%;
   text-align: right;
-  margin-top : -8%;
-  color : rgb(124, 124, 124);
+  margin-top: -8%;
+  color: rgb(124, 124, 124);
 }
 
-#userCard-a{
+#userCard-a {
   text-decoration: none;
 }
 
 @media only screen and (max-width: 780px) {
   .search-user {
-    width  : 24%;
+    width: 24%;
     margin-left: -5%;
   }
-  .search-container-user{
-    width  : 24%;
+  .search-container-user {
+    width: 24%;
     margin-left: -5%;
   }
 }
-
