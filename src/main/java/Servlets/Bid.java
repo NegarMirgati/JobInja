@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import Commands.*;
-import ContentProviders.projectContentProvider;
+import ContentProviders.ProjectContentProvider;
 import Exceptions.BidAlreadyDoneException;
 import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
@@ -36,8 +36,8 @@ public class Bid extends HttpServlet {
         try {
             BidCommand bidCommand = new BidCommand(projectID, Integer.valueOf(bidAmount), "1");
             response.setContentType("application/json;charset=UTF-8");
-            projectContentProvider.hasBadeForProject("1", projectID);
-            projectContentProvider.checkAccess("1", projectID);
+            ProjectContentProvider.hasBadeForProject("1", projectID);
+            ProjectContentProvider.checkAccess("1", projectID);
 
             if(!bidCommand.bidIsPossible()){
                 response.setStatus(response.SC_BAD_REQUEST);

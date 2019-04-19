@@ -40,8 +40,8 @@ public class ProjectServlet extends HttpServlet {
         boolean hasBade = false;
 
         try {
-            JSONObject map = projectContentProvider.getHTMLContentsForProject("1", projectID);
-            projectContentProvider.checkAccess("1",projectID);
+            JSONObject map = ProjectContentProvider.getHTMLContentsForProject("1", projectID);
+            ProjectContentProvider.checkAccess("1",projectID);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);

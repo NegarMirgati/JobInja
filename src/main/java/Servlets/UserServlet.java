@@ -1,6 +1,6 @@
 package Servlets;
 
-import ContentProviders.userContentProvider;
+import ContentProviders.UserContentProvider;
 import Exceptions.UserNotFoundException;
 
 import javax.servlet.RequestDispatcher;
@@ -35,14 +35,13 @@ public class UserServlet extends HttpServlet {
         request.setAttribute("userID", userId);
 
         try {
-            JSONObject map = userContentProvider.getHTMLContentsForUser(userId);
-            //JSONArray skills = userContentProvider.getUserSkills(userId);
+            JSONObject map = UserContentProvider.getHTMLContentsForUser(userId);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
-            //out.println(skills);
         }
         catch (UserNotFoundException e){
+            System.out.println("LSLSLL");
             response.setStatus(response.SC_NOT_FOUND);
             JSONObject instance = new JSONObject();
             instance.put("status", 404);

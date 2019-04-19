@@ -1,6 +1,6 @@
 package Servlets;
 
-import ContentProviders.projectContentProvider;
+import ContentProviders.ProjectContentProvider;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class ProjectsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(response.SC_OK);
-        JSONArray map = projectContentProvider.getHTMLContentsForAllProjects("1");
+        JSONArray map = ProjectContentProvider.getHTMLContentsForAllProjects("1");
         PrintWriter out = response.getWriter();
         out.println(map);
     }

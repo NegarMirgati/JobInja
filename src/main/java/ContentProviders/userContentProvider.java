@@ -15,7 +15,7 @@ import Repositories.UserRepo;
 import java.util.HashMap;
 
 
-public class userContentProvider {
+public class UserContentProvider {
     public static JSONObject getHTMLContentsForUser(String uID) throws UserNotFoundException {
         User u = UserRepo.getUserById(uID);
         JSONObject contentMap = new JSONObject();

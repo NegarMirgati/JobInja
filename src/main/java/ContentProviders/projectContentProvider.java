@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 
-public class projectContentProvider {
+public class ProjectContentProvider {
     public static JSONObject getHTMLContentsForProject(String userID, String projectID) throws ProjectNotFoundException {
         System.out.println("here1");
         System.out.println("projectId: "+ projectID);

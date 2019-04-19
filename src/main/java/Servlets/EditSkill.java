@@ -2,7 +2,7 @@ package Servlets;
 
 import Commands.AddSkillToUserCommand;
 import Commands.EndorseCommand;
-import ContentProviders.userContentProvider;
+import ContentProviders.UserContentProvider;
 import Commands.DeleteSkillOfUserCommand;
 import Exceptions.*;
 
@@ -38,7 +38,7 @@ public class EditSkill extends HttpServlet {
             else if(name == null)
                 throw new SkillNotFoundException("skill not found");
 
-            userContentProvider.checkCurrentUser(userID);
+            UserContentProvider.checkCurrentUser(userID);
             DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
             command.execute();
             JSONObject status = new JSONObject();
@@ -63,8 +63,8 @@ public class EditSkill extends HttpServlet {
         System.out.println("name:" + selectedSkill);
 
         try {
-            userContentProvider.validateSkill(selectedSkill);
-            userContentProvider.checkCurrentUser(userID);
+            UserContentProvider.validateSkill(selectedSkill);
+            UserContentProvider.checkCurrentUser(userID);
             AddSkillToUserCommand command = new AddSkillToUserCommand(userID, selectedSkill);
             command.execute();
             JSONObject status = new JSONObject();
@@ -102,7 +102,7 @@ public class EditSkill extends HttpServlet {
             if(userID != null && userID.equals("1"))
                 throw new UserAccessForbidden("Forbidden endorse");
 
-            userContentProvider.validateSkill(name);
+            UserContentProvider.validateSkill(name);
             command.execute();
             response.setStatus(response.SC_OK);
             JSONObject instance = new JSONObject();
