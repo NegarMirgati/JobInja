@@ -36,11 +36,9 @@ export default class ProjectsList extends Component<any, State> {
 
   render() {
     return (
-      <div>
-        <div className="row">
+        <div className="row" id = "projects">
           <div className="col">{this.getProjectsInfo()}</div>
         </div>
-      </div>
     );
   }
 }

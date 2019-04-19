@@ -26,7 +26,15 @@ export default class HomeMain extends Component {
               <br />
             </div>
           </div>
-          <SearchUsers /> <ProjectsList />
+
+          <div className = "row">
+            <div className = "col-sm-9">
+              <ProjectsList />
+            </div>
+            <div className = "col-sm-3">
+              <SearchUsers /> 
+            </div>
+          </div>
         </div>
       </div>
     );

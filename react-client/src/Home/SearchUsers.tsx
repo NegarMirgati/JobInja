@@ -37,9 +37,7 @@ export default class SearchUsers extends Component<any, State> {
 
   render() {
     return (
-      <div>
-        <div className = "row">
-          <div className = "col">
+          <div>
             <div className = "row">
               <div className = "search-container-user">
                 <form action = "">
@@ -48,10 +46,7 @@ export default class SearchUsers extends Component<any, State> {
               </div>
             </div>
           {this.getUserCards()}
-
         </div>
-      </div>
-    </div>
     )
   }
 }
