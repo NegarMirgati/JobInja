@@ -79,11 +79,9 @@ public class userContentProvider {
 
     private static JSONArray getUserEndorsedSkills(String thatUser){
         JSONArray content = new JSONArray();
-        System.out.println("xxxx" + thatUser);
         try {
             ArrayList<String> skills = UserRepo.getAllSkillsEndorsedByUser("1", thatUser);
             for (int i  = 0; i < skills.size(); i++) {
-                System.out.println("kkkkkkkk");
                 content.put(skills.get(i));
             }
         }catch(UserNotFoundException e){
@@ -97,6 +95,7 @@ public class userContentProvider {
         contentMap.put("id", u.getUsername());
         contentMap.put("name", u.getFirstName() + " " + u.getLastName());
         contentMap.put("jobTitle", u.getJobTitle());
+        contentMap.put("proLink", u.getProfilePictureURL());
         return contentMap;
 
     }
