@@ -710,7 +710,7 @@ input[type="password"] {
   padding: 3px;
   margin-right: 40%;
   margin-bottom: 0.5rem;
-  background-color: rgb(249, 249, 249);
+  background-color: rgb(255, 255, 255);
   border-radius: 3px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
   width: 75%;
@@ -768,17 +768,23 @@ input[type="password"] {
   direction: rtl;
 }
 .project-box .button-style {
-  background-color: lightgrey;
-  color: darkslategray;
+  background-color: rgb(249, 249, 249);
+  color: rgb(119, 119, 119);
   margin-left: 3px;
   margin-right: 3px;
+  border-radius: 4px;
+  padding-top : 0.3%;
+  padding-right: 1%;
+  padding-left: 1%;
+  border-color: rgb(241, 241, 241);
 }
 
 .project-box .button-style-time-out {
-  background-color: lightseagreen;
+  background-color: rgb(64, 135, 135);
   color: white;
   margin-left: 3px;
   margin-right: 3px;
+  border-radius: 4px;
 }
 
 .project-box .project-image {
