@@ -53,7 +53,7 @@ export default class SkillsOther extends Component<Props, State> {
         if(event.target != event.currentTarget) {
           return;
         }
-        var linktmp = 'http://localhost:8080/user/endorse?id='
+        var linktmp = 'http://localhost:8080/user/skill?id=';
         var  link = linktmp.concat(this.state.id, '&name=')
         var selectedSkill = event.target.value;
         var finalLink = link.concat(selectedSkill);
