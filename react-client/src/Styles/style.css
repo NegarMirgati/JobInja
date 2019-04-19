@@ -865,8 +865,8 @@ input[type="password"] {
   left: -10%;
   top: -20%;
   height: 60px;
-  padding-top: 0.5%;
-  padding-bottom: 0.1%;
+  padding-top: 2%;
+
 }
 
 .search-user .search-image {
