@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import "src/Styles/flaticon.css";
+
 export default class ProjectDeadlineReached extends Component {
   render() {
     return (
