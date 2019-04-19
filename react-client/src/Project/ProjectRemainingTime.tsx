@@ -49,9 +49,9 @@ export default class ProjectRemainingTime extends Component<any, State> {
 
     var arr = new Array();
 
-    if (day == 0) {
+    if (day == 0 && hour != 0) {
       arr.push(hour + " ساعت و ", min + " دقیقه و ", sec + " ثانیه  ");
-    } else if (day == 0 && hour == 0) {
+    } else if (day == 0 && hour == 0 && min != 0) {
       arr.push(min + " دقیقه و ", sec + " ثانیه  ");
     } else if (day == 0 && hour == 0 && min == 0) {
       arr.push(sec + " ثانیه  ");
