@@ -784,6 +784,7 @@ body, #root{
   font-family: Vazir;
   font-size : 100%;
   text-align: right;
+  color : black;
 }
 
 .search-user .search-user-job{
@@ -792,6 +793,10 @@ body, #root{
   text-align: right;
   margin-top : -8%;
   color : rgb(124, 124, 124);
+}
+
+#userCard-a{
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 780px) {

@@ -1,7 +1,40 @@
 import React, { Component } from 'react'
-import slide5 from 'src/Assets/images/slide5.jpg';
+const axios = require('axios');
+import { toast } from 'react-toastify';
+import UserCard from './UserCard';
 
-export default class SearchUsers extends Component {
+export default class SearchUsers extends Component<any, State> {
+  constructor(props : any) {
+    super(props);
+    this.state = {
+      users :  [],
+      id : ""
+    };
+  }
+  componentDidMount(){
+    var link = 'http://localhost:8080/users'
+    axios.get(link)
+    .then((response : any) => {
+        this.setState({users : response.data});
+        }
+      )
+      .catch(function (error : any) {
+        console.log(error)
+          toast.error('خطا در دریافت کاربران');
+      })
+  }
+
+  getUserCards = () => {
+    var userCardsJSX : JSX.Element[] = [];
+    var numUsers = this.state.users.length;
+    console.log(numUsers);
+
+    for(var i = 0; i < numUsers ; i = i + 1){
+      userCardsJSX.push(<UserCard {...this.state.users[i]}/>);
+    }
+    return userCardsJSX;
+  }
+
   render() {
     return (
       <div>
@@ -14,42 +47,18 @@ export default class SearchUsers extends Component {
                 </form>
               </div>
             </div>
-            <div className = "row">
-              <div className = "search-user">
-                <div className = "col">
-                  <img className="img-rounded  search-image img-rounded img-responsive" src={slide5} alt = "image" />
-                </div>
-                <div className = "col">
-                  <p className = "search-user-name"> آقای مجری</p>
-                  <p className = "search-user-job">مجری</p>
-                </div>
-            </div>
-          </div>
-          <div className = "row">
-              <div className = "search-user">
-                <div className = "col">
-                  <img className="img-rounded  search-image img-rounded img-responsive" src={slide5} alt = "image" />
-                </div>
-                <div className = "col">
-                  <p className = "search-user-name">داداش گلم</p>
-                  <p className = "search-user-job">نوازنده</p>
-                </div>
-            </div>
-          </div>
-          <div className = "row">
-              <div className = "search-user">
-                <div className = "col">
-                  <img className="img-rounded  search-image img-rounded img-responsive" src={slide5} alt = "image" />
-                </div>
-                <div className = "col">
-                <p className = "search-user-name">جیگر</p>
-                  <p className = "search-user-job">اسب</p>
-                </div>
-            </div>
-          </div>
+          {this.getUserCards()}
+
         </div>
       </div>
     </div>
     )
   }
 }
+
+interface State{
+  users : any[],
+  id : ""
+}
+
+
