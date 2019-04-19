@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ProjectTime from "./ProjectTime";
+import Blur from "react-css-blur";
 
 export default class ProjectInfo extends Component<any, State> {
   constructor(props: any) {
@@ -18,7 +19,6 @@ export default class ProjectInfo extends Component<any, State> {
 
   componentDidMount() {
     var key = Object.keys(this.props)[0];
-    console.log("here", this.props[key]);
     this.setState({ projectId: this.props[key].id });
     this.setState({ title: this.props[key].title });
     this.setState({ description: this.props[key].description });
@@ -56,46 +56,53 @@ export default class ProjectInfo extends Component<any, State> {
   render() {
     return (
       <div className="row">
-        <div className="project-box">
-          <a id="project" href={this.state.linkToProPage}>
-            <div className="col">
-              <img
-                className="img-rounded project-image img-rounded img-responsive"
-                src={this.state.imageURL}
-                alt="image"
-              />
-            </div>
-            <div className="col">
-              <p className="project-time">
-                {" "}
-                {this.state.deadline > Date.now() ? (
-                  <button
-                    id="btnT"
-                    type="button"
-                    className="btn-xs button-style"
-                  >
-                    <ProjectTime {...this.state} />
-                  </button>
-                ) : (
-                  <button
-                    id="btnT"
-                    type="button"
-                    className="btn-xs button-style-time-out"
-                  >
-                    <ProjectTime {...this.state} />
-                  </button>
-                )}
-              </p>
-              <p className="project-title"> {this.state.title}</p>
+        <Blur radius={this.state.deadline < Date.now() ? "0.8px" : "0"}>
+          <div className="project-box">
+            <a id="project" href={this.state.linkToProPage}>
+              <div className="col">
+                <img
+                  className="img-rounded project-image img-rounded img-responsive"
+                  src={this.state.imageURL}
+                  alt="image"
+                />
+              </div>
+              <div className="col">
+                <p className="project-time">
+                  {" "}
+                  {this.state.deadline > Date.now() ? (
+                    <button
+                      id="btnT"
+                      type="button"
+                      className="btn-xs button-style"
+                    >
+                      <ProjectTime {...this.state} />
+                    </button>
+                  ) : (
+                    <button
+                      id="btnT"
+                      type="button"
+                      className="btn-xs button-style-time-out"
+                    >
+                      <ProjectTime {...this.state} />
+                    </button>
+                  )}
+                </p>
+                <p className="project-title"> {this.state.title}</p>
 
-              <p className="project-description "> {this.state.description}</p>
-              <p className="project-budget ">
-                بودجه: {this.state.budget} تومان{" "}
-              </p>
-              <p className="project-skills ">مهارت ها: {this.createSkills()}</p>
-            </div>
-          </a>
-        </div>
+                <p className="project-description ">
+                  {" "}
+                  {this.state.description}
+                </p>
+                <p className="project-budget ">
+                  بودجه: {this.state.budget} تومان{" "}
+                </p>
+                <p className="project-skills ">
+                  مهارت ها: {this.createSkills()}
+                </p>
+              </div>
+            </a>
+          </div>
+        </Blur>
       </div>
     );
   }
