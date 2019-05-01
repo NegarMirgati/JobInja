@@ -24,35 +24,32 @@ public class DataBaseConnection {
         }
     }
 
-    public static void addToTable(String tableName, ArrayList<String> attrs, ArrayList<String> values){
-        String sqlCommand = prepareInitialCommand(tableName, attrs);
+    public static void addToTable(String tableName, ArrayList<String> attributes, ArrayList<String> values){
+        String sqlCommand = insertCommand(tableName, attributes);
         try {
-            addValuesToInsert(sqlCommand, values);
+            PreparedStatement prp = conn.prepareStatement(sqlCommand);
+            for(int i = 1; i <= values.size(); i++)
+                prp.setString(i, values.get(i-1));
+            prp.executeUpdate();
+            System.out.println("Insertion done successfully.");
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
     }
 
-    private static String prepareInitialCommand(String tableName, ArrayList<String> attrs){
+    private static String insertCommand(String tableName, ArrayList<String> attributes){
         String sqlCommand = "INSERT INTO " + tableName + "(";
-        for(String attr: attrs)
+        for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
         sqlCommand += ") VALUES(";
-        for(int i = 0; i < attrs.size(); i++)
+        for(int i = 0; i < attributes.size(); i++)
             sqlCommand += "?,";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
         sqlCommand += ");";
         return sqlCommand;
     }
 
-    private static void addValuesToInsert(String sqlCommand, ArrayList<String> values)throws SQLException{
-        PreparedStatement prp = conn.prepareStatement(sqlCommand);
-        for(int i = 1; i <= values.size(); i++)
-            prp.setString(i, values.get(i-1));
-        prp.executeUpdate();
-        System.out.println("Insertion done successfully.");
-    }
 
 
 }
