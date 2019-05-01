@@ -1,7 +1,6 @@
 package Servlets;
 import DataBaseHandler.DataBaseConnection;
 import DataBaseHandler.SkillsHandler;
-import Repositories.*;
 import javax.servlet.*;
 import java.sql.SQLException;
 
@@ -18,7 +17,7 @@ public class MyServletContextListener implements ServletContextListener {
         System.out.println("ServletContextListener started");
         try {
             DataBaseConnection.connectToDB();
-            SkillsHandler.createSkillsTable();
+            SkillsHandler.addSkills();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
