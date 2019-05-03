@@ -1,7 +1,8 @@
 package Servlets;
-import DataBaseHandler.DataBaseConnection;
-import DataBaseHandler.SkillsHandler;
+import DataLayer.DataMappers.Skill.SkillMapper;
+
 import javax.servlet.*;
+import java.io.IOException;
 import java.sql.SQLException;
 
 
@@ -16,12 +17,10 @@ public class MyServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent arg0) {
         System.out.println("ServletContextListener started");
         try {
-            DataBaseConnection.connectToDB();
-            SkillsHandler.addSkills();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            SkillMapper sm = new SkillMapper();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 //        ProjectRepo.addProjects();
