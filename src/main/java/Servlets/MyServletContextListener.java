@@ -1,4 +1,5 @@
 package Servlets;
+import DataLayer.DataMappers.Project.ProjectMapper;
 import DataLayer.DataMappers.Skill.SkillMapper;
 
 import javax.servlet.*;
@@ -18,6 +19,7 @@ public class MyServletContextListener implements ServletContextListener {
         System.out.println("ServletContextListener started");
         try {
             SkillMapper sm = new SkillMapper();
+            ProjectMapper pm = new ProjectMapper();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
