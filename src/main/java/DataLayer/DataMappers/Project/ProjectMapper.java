@@ -29,7 +29,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 //    private int budget;
 //    private long deadline;
     private static final String COLUMNS = " id, title, description, imageURL, budget, deadline, creationDate";
-    private static String creationDate = "0";
+    private static String creationDate;
 
 
     public ProjectMapper(boolean init) throws SQLException, IOException {
@@ -43,6 +43,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER)");
             ProjectSkillMapper psm = new ProjectSkillMapper();
             try {
+                creationDate = "0";
                 fillTable(con, true);
             } catch (SQLException e) {
                 // Logger.getLogger(SQLiteJDBCLoader.class.getName()).log(Level.SEVERE, null, e);
@@ -94,35 +95,67 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         // loadedMap
         //  insert skills
         ArrayList<Integer>toBeAdded = new ArrayList<>();
+        boolean anythingAdded = false;
         for (int i = 0; i < values_list.size(); i++) {
-            String creationDateTemp = values_list.get(i).get(6);
-            if ( init == true && Long.parseLong(creationDateTemp) > Long.parseLong(creationDate) ){
-                System.out.println(values_list.get(i));
-                addToTable(con,"project", attrs, values_list.get(i));
-                creationDate = creationDateTemp;
+            String creationDateTemp = new String(values_list.get(i).get(6));
+            System.out.println("");
+            if ( init == true ){
+                //System.out.println(values_list.get(i));
+                System.out.println("creationDateTemp");
+                System.out.println(creationDateTemp);
+                if (Long.parseLong(creationDateTemp) > Long.parseLong(creationDate) ) {
+                    creationDate = creationDateTemp;
+                    System.out.println("creationDate");
+                    System.out.println(creationDate);
+                }
+                try {
+                    addToTable(con,"project", attrs, values_list.get(i));
+                }catch (SQLException e){}
+
             }
             else if ( init == false) {
                 if (Long.parseLong(creationDateTemp) > Long.parseLong(creationDate)) {
+                    System.out.println("found new project");
+                    anythingAdded =true;
                     creationDateUpdate = creationDateTemp;
-                    System.out.println(values_list.get(i));
-                    addToTable(con, "project", attrs, values_list.get(i));
+                    //System.out.println(values_list.get(i));
                     toBeAdded.add(i);
-                }
-            }
-        }
-        for (int j = 0; j < allProjectsSkill.size(); j++) {
-            System.out.println("hereeeeeeeeeeeeeeerererrer");
-            System.out.println(allProjectsSkill.size());
-            System.out.println(allProjectsSkill.get(j));
-            ArrayList<String> attr = ProjectSkillMapper.createAttribute();
-            for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
-                if ( (init == false && toBeAdded.contains(k)) || (init == true) ){
-                    ProjectSkillMapper.addToTable(con, "projectSkill", attr, allProjectsSkill.get(j).get(k));
-                }
-            }
-        }
+                    try {
+                        addToTable(con, "project", attrs, values_list.get(i));
+                    } catch (SQLException e) {
+                    }
 
-        creationDate = creationDateUpdate;
+                }
+            }
+
+        }
+        ArrayList<String> attr = ProjectSkillMapper.createAttribute();
+        for (int j = 0; j < allProjectsSkill.size(); j++) {
+
+            //System.out.println(allProjectsSkill.size());
+            //System.out.println(allProjectsSkill.get(j));
+            if ( (init == false && toBeAdded.contains(j)) || (init == true) ){
+                System.out.println("add new project");
+            for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
+
+                    try {
+                        ProjectSkillMapper.addToTable(con, "projectSkill", attr, allProjectsSkill.get(j).get(k));
+                    }catch (SQLException e){}
+                }
+            }
+
+        }
+        if (init == false && anythingAdded == true) {
+            creationDate = creationDateUpdate;
+            System.out.println("creationDate");
+            System.out.println(creationDate);
+        }
+        if (init == true){
+            System.out.println("init");
+            System.out.println(init);
+            System.out.println("creationDate");
+            System.out.println(creationDate);
+        }
     }
 
 
