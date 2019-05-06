@@ -11,24 +11,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper {
 
     private static final String COLUMNS = "name";
 
-
-    public SkillMapper() throws SQLException, IOException {
+    public void initialize() throws SQLException{
         Connection con = DBCPDBConnectionPool.getConnection();
-
-            Statement st =
-                    con.createStatement();
-            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name TEXT PRIMARY KEY)");
+        Statement st = con.createStatement();
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name TEXT PRIMARY KEY)");
         try {
             fillTable(con);
-        } catch (SQLException e){
-                // Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException| IOException e ){
+            // Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
         }
         st.close();
         con.close();
@@ -46,7 +42,6 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
    // loadedMap
 
         for (int i = 0; i < values_list.size(); i++) {
-            System.out.println(values_list.get(i));
             ArrayList<String> values = new ArrayList<String>();
             values.add(values_list.get(i));
             addToTable(con,"skill", attrs, values);
@@ -59,12 +54,50 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
                 " FROM skill" +
-                " WHERE id = ?";
+                " WHERE name = ?";
+    }
+
+
+    public boolean hasSkill(String skillName) {
+        try {
+            Connection con = DBCPDBConnectionPool.getConnection();
+            String sqlCommand = "SELECT " + "COUNT(*)" +
+                    " FROM skill" +
+                    " WHERE name = ?";
+
+            PreparedStatement prp = con.prepareStatement(sqlCommand);
+            prp.setString(1, skillName);
+            ResultSet rs = prp.executeQuery();
+            prp.close();
+            con.close();
+            int count = covertCountResultToInt(rs);
+            if(count > 0)
+                return true;
+            else
+                return false;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    protected int covertCountResultToInt(ResultSet rs){
+        try {
+            while (rs.next()) {
+                String count = rs.getString(1);
+                return Integer.valueOf(count);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     @Override
     protected Skill convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        Long id = new Long(rs.getString(1));
+        String id = new String(rs.getString(1));
         if (loadedMap.containsKey(id)) return (Skill) loadedMap.get(id);
         return  new Skill(
                 rs.getString(1),
@@ -72,13 +105,47 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
         );
     }
 
+    protected ArrayList<Skill> loadAll(ResultSet rs) throws SQLException{
+        ArrayList<Skill> result = new ArrayList<>();
+        while(rs.next()) {
+            Skill s = convertResultSetToDomainModel(rs);
+            result.add(s);
+        }
+        return result;
+    }
 
+    private static String findPossibleSkillsCommand(String tableName, int numOfExistingSkills){
+        String sqlCommand = "SELECT name FROM " + tableName + " WHERE name NOT IN (" ;
+        String substring = "";
+        for(int i = 0; i < numOfExistingSkills; i++){
+            if(i != numOfExistingSkills -1)
+                substring += "?,";
+            else
+                substring += "?";
+        }
+        sqlCommand += substring + ");";
+        return sqlCommand;
+    }
 
-//    @Override
-//    public List<Skill> findWithGPA(float minGPA, float maxGPA) {
-//        //todo: implement
-//        return null;
-//    }
+    public  ArrayList<Skill> getPossibleSkills(ArrayList<String> values){
+        ResultSet rs = null;
+        try{
+            Connection con = DBCPDBConnectionPool.getConnection();
+            String sqlCommand = findPossibleSkillsCommand("skill", values.size());
+            PreparedStatement prp = con.prepareStatement(sqlCommand);
+            for(int i = 0; i < values.size(); i++){
+                prp.setString(i + 1, values.get(i));
+            }
+            rs = prp.executeQuery();
+            ArrayList<Skill> retval = loadAll(rs);
+            prp.close();
+            con.close();
+            return retval;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
         String sqlCommand = "INSERT INTO " + tableName + "(";

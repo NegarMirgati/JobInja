@@ -10,7 +10,7 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
 
     private static final String COLUMNS = "username, skillName, point";
 
-    public UserSkillMapper() throws SQLException {
+    public void initialize() throws SQLException{
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
         st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "userSkills" + " " + "(username TEXT," +
@@ -42,8 +42,13 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
             String query = getFindStatement();
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, userId);
+
             rs = pstmt.executeQuery();
-            return loadAll(rs);
+            HashMap<String, Skill> retval = loadAll(rs);
+            pstmt.close();
+            con.close();
+            return retval;
+
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -51,7 +56,7 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         return null;
     }
 
-    public static void addToTable(Connection con,String tableName,ArrayList<String> attrs,ArrayList<String> values) throws SQLException {
+    public static void addToTable(Connection con, String tableName,ArrayList<String> attrs,ArrayList<String> values) throws SQLException {
         String sqlCommand = insertCommand(tableName,attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
         for(int j = 1; j <= values.size(); j++)
@@ -59,6 +64,8 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         prp.executeUpdate();
         prp.close();
     }
+
+
 
     public static ArrayList<String> createAttribute() {
         ArrayList<String>attr = new ArrayList<>();
@@ -80,6 +87,8 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         sqlCommand += ");";
         return sqlCommand;
     }
+
+
 
     @Override
     protected String getFindStatement() {

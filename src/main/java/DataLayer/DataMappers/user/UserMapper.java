@@ -11,14 +11,12 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     private static final String COLUMNS = "username, firstName, lastName, jobTitle, profilePictureURL, bio";
 
-    public UserMapper() throws SQLException {
+    public void initialize() throws SQLException{
         System.out.println("here for user Table!!");
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
         st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username TEXT PRIMARY KEY, firstName TEXT," +
                 " lastName TEXT, jobTitle TEXT, profilePictureURL TEXT, bio TEXT)");
-
-
         try {
             fillTable(con);
         } catch (SQLException e){
@@ -27,7 +25,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
         st.close();
         con.close();
-        System.out.println("End!!");
     }
 
     private static User getUser1Data(){
@@ -95,6 +92,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             userData.put("profilePictureURL", users.get(i).getProfilePictureURL());
             userData.put("bio", users.get(i).getBio());
             addToTable(con, "user", userData, attrs);
+
             ArrayList<String> attr = UserSkillMapper.createAttribute();
             User u = users.get(i);
             HashMap<String, Skill> skills = u.getSkills();
@@ -123,7 +121,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     public static void addToTable(Connection con,String tableName, HashMap<String, String> userData, ArrayList<String> attrs) throws SQLException {
         String sqlCommand = insertCommand(tableName, attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
-        System.out.println("size" + attrs.size());
         for(int j = 0; j < attrs.size(); j++) {
             prp.setString(j + 1, userData.get(attrs.get(j)));
         }
@@ -142,14 +139,12 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             sqlCommand += "?,";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
         sqlCommand += ");";
-        System.out.println("sql cmd is: " + sqlCommand);
         return sqlCommand;
     }
 
     @Override
     protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException{
         UserSkillMapper u = new UserSkillMapper();
-
         return new User(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -157,7 +152,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                         rs.getString(5),
                         u.findUserSkillsById(rs.getString(1)),
                         rs.getString(6)
-                );
+        );
     }
 
     @Override
