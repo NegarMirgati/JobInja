@@ -15,6 +15,7 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
     abstract protected T convertResultSetToDomainModel(ResultSet rs) throws SQLException;
 
 
+
     public T find(I id) throws SQLException {
         T result = loadedMap.get(id);
         if (result != null)
