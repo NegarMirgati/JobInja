@@ -11,12 +11,12 @@ import java.sql.SQLException;
 public class DBCPDBConnectionPool {
 
     private static BasicDataSource ds = new BasicDataSource();
-    private final static String dbURL = "jdbc:sqlite:C:\\D-drive-21015\\UT\\Spring98\\IE\\CA\\CA3 TA Session\\jobKhar\\src\\main\\data\\JobInja.db";
+    private final static String dbURL = "jdbc:sqlite:/Users/negar/Desktop/CA7/test.db";
 
     static {
         ds.setUrl(dbURL);
         ds.setMinIdle(1);
-        ds.setMaxIdle(2);
+        ds.setMaxIdle(4);
         ds.setDriverClassName("org.sqlite.JDBC");
     }
 

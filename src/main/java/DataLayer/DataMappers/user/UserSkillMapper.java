@@ -13,8 +13,8 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
     public UserSkillMapper() throws SQLException {
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "userSkills" + " " + "username TEXT, (FOREIGN KEY(username) REFERENCES user(username)," +
-                "skillName TEXT, FOREIGNKEY(skillName) REFERENCES skill(name), PRIMARY KEY(username, skillName), point INTEGER)");
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "userSkills" + " " + "(username TEXT," +
+                " skillName TEXT, point INTEGER, PRIMARY KEY (username, skillName), FOREIGN KEY (skillName) references skill(name), FOREIGN KEY (username) references user(username))");
 
         st.close();
         con.close();
@@ -49,6 +49,36 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void addToTable(Connection con,String tableName,ArrayList<String> attrs,ArrayList<String> values) throws SQLException {
+        String sqlCommand = insertCommand(tableName,attrs);
+        PreparedStatement prp = con.prepareStatement(sqlCommand);
+        for(int j = 1; j <= values.size(); j++)
+            prp.setString(j, values.get(j-1));
+        prp.executeUpdate();
+        prp.close();
+    }
+
+    public static ArrayList<String> createAttribute() {
+        ArrayList<String>attr = new ArrayList<>();
+        attr.add("username");
+        attr.add("skillName");
+        attr.add("point");
+        return attr;
+    }
+
+    private static String insertCommand(String tableName, ArrayList<String> attributes){
+        String sqlCommand = "INSERT INTO " + tableName + "(";
+        for(String attr: attributes)
+            sqlCommand += attr + ",";
+        sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
+        sqlCommand += ") VALUES(";
+        for(int i = 0; i < attributes.size(); i++)
+            sqlCommand += "?,";
+        sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
+        sqlCommand += ");";
+        return sqlCommand;
     }
 
     @Override

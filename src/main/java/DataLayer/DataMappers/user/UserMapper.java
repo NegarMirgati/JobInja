@@ -5,6 +5,7 @@ import DataLayer.DataMappers.Mapper;
 import java.sql.*;
 import DataLayer.*;
 import java.util.*;
+import java.util.Map;
 
 public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
@@ -13,10 +14,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     public UserMapper() throws SQLException {
         System.out.println("here for user Table!!");
         Connection con = DBCPDBConnectionPool.getConnection();
-        Statement st =
-                con.createStatement();
+        Statement st = con.createStatement();
         st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username TEXT PRIMARY KEY, firstName TEXT," +
                 " lastName TEXT, jobTitle TEXT, profilePictureURL TEXT, bio TEXT)");
+
 
         try {
             fillTable(con);
@@ -82,7 +83,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         users.add(getUser1Data());
         users.add(getUser2Data());
         users.add(getUser3Data());
-        System.out.println("adding userssssssss");
+        System.out.println("adding users...");
         ArrayList<String> attrs = getAttrs();
         for (int i = 0; i < users.size(); i++){
             HashMap<String, String> userData = new HashMap<>();
@@ -94,10 +95,19 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             userData.put("profilePictureURL", users.get(i).getProfilePictureURL());
             userData.put("bio", users.get(i).getBio());
             addToTable(con, "user", userData, attrs);
-
+            ArrayList<String> attr = UserSkillMapper.createAttribute();
+            User u = users.get(i);
+            HashMap<String, Skill> skills = u.getSkills();
+            for (Map.Entry<String, Skill> entry : skills.entrySet()) {
+                Skill s = entry.getValue();
+                ArrayList<String> values = new ArrayList<>();
+                values.add(u.getUsername());
+                values.add(entry.getKey());
+                values.add(Integer.toString(s.getPoint()));
+                UserSkillMapper.addToTable(con,"userSkills",attr, values);
+                }
+            }
         }
-
-    }
 
     private static ArrayList<String> getAttrs(){
         ArrayList<String> attrs = new ArrayList<String>(
@@ -113,8 +123,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     public static void addToTable(Connection con,String tableName, HashMap<String, String> userData, ArrayList<String> attrs) throws SQLException {
         String sqlCommand = insertCommand(tableName, attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
-        for(int j = 1; j <= attrs.size(); j++)
-            prp.setString(j, userData.get(attrs.get(j)));
+        System.out.println("size" + attrs.size());
+        for(int j = 0; j < attrs.size(); j++) {
+            prp.setString(j + 1, userData.get(attrs.get(j)));
+        }
         prp.executeUpdate();
         prp.close();
     }
