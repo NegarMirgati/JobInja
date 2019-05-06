@@ -25,6 +25,7 @@ public class MyServletContextListener implements ServletContextListener {
             UserMapper um = new UserMapper();
             um.initialize();
             EndorsementMapper em = new EndorsementMapper();
+            em.initialize();
             User u = um.find("1");
             System.out.println(u.getJobTitle());
         } catch (SQLException e) {

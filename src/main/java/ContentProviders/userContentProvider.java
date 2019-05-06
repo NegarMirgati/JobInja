@@ -1,5 +1,6 @@
 package ContentProviders;
 
+import DataLayer.DataMappers.user.EndorsementMapper;
 import DataLayer.DataMappers.user.UserMapper;
 import DataLayer.DataMappers.Skill.SkillMapper;
 import Exceptions.InvalidSkillException;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 public class UserContentProvider {
     private static UserMapper um = new UserMapper();
     private static SkillMapper sm = new SkillMapper();
+    private static EndorsementMapper em = new EndorsementMapper();
 
     public static JSONObject getHTMLContentsForUser(String uID) throws UserNotFoundException {
         JSONObject contentMap = new JSONObject();
@@ -103,13 +105,12 @@ public class UserContentProvider {
 
     private static JSONArray getUserEndorsedSkills(String thatUser){
         JSONArray content = new JSONArray();
-        try {
-            ArrayList<String> skills = UserRepo.getAllSkillsEndorsedByUser("1", thatUser);
-            for (int i  = 0; i < skills.size(); i++) {
-                content.put(skills.get(i));
-            }
-        }catch(UserNotFoundException e){
-            e.printStackTrace();
+        ArrayList<String> values = new ArrayList<>();
+        values.add("1");
+        values.add(thatUser);
+        ArrayList<String> skills= em.getEndorsedSkills(values);
+        for (int i  = 0; i < skills.size(); i++) {
+            content.put(skills.get(i));
         }
         return content;
     }
