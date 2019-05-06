@@ -102,7 +102,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 values.add(u.getUsername());
                 values.add(entry.getKey());
                 values.add(Integer.toString(s.getPoint()));
-                UserSkillMapper.addToTable(con,"userSkills",attr, values);
+                UserSkillMapper.addToTable("userSkills",attr, values);
                 }
             }
         }

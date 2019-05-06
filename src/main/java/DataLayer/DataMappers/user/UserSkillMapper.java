@@ -56,15 +56,16 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         return null;
     }
 
-    public static void addToTable(Connection con, String tableName,ArrayList<String> attrs,ArrayList<String> values) throws SQLException {
+    public static void addToTable(String tableName,ArrayList<String> attrs,ArrayList<String> values) throws SQLException {
+        Connection con = DBCPDBConnectionPool.getConnection();
         String sqlCommand = insertCommand(tableName,attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
         for(int j = 1; j <= values.size(); j++)
             prp.setString(j, values.get(j-1));
         prp.executeUpdate();
         prp.close();
+        con.close();
     }
-
 
 
     public static ArrayList<String> createAttribute() {
