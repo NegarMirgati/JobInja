@@ -74,8 +74,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 rs.getString(3),
                 rs.getString(4),
                 rs.getInt(5),
-                rs.getInt(6),
-                rs.getInt(7),
+                rs.getLong(6),
+                rs.getLong(7),
                 pm.findProjectSkillsById(rs.getString(1))
         );
     }
