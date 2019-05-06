@@ -106,9 +106,11 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     }
 
     protected ArrayList<Skill> loadAll(ResultSet rs) throws SQLException{
+        System.out.println("here MXMMXMXM:DKS:KS:KFKFPKSFPKPKFS");
         ArrayList<Skill> result = new ArrayList<>();
         while(rs.next()) {
             Skill s = convertResultSetToDomainModel(rs);
+            System.out.println("here " + s.getName());
             result.add(s);
         }
         return result;
@@ -130,13 +132,16 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     public  ArrayList<Skill> getPossibleSkills(ArrayList<String> values){
         ResultSet rs = null;
         try{
+            System.out.println("salam");
             Connection con = DBCPDBConnectionPool.getConnection();
+            System.out.println("salam1");
             String sqlCommand = findPossibleSkillsCommand("skill", values.size());
             PreparedStatement prp = con.prepareStatement(sqlCommand);
             for(int i = 0; i < values.size(); i++){
                 prp.setString(i + 1, values.get(i));
             }
             rs = prp.executeQuery();
+            System.out.println("salam2");
             ArrayList<Skill> retval = loadAll(rs);
             prp.close();
             con.close();

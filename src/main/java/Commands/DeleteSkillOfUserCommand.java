@@ -1,12 +1,15 @@
 package Commands;
+import DataLayer.DataMappers.user.UserSkillMapper;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
-import Repositories.*;
-import Entities.*;
+
+import java.sql.SQLException;
+import java.util.*;
 
 public class DeleteSkillOfUserCommand implements Command{
     private String userID;
     private String skillName;
+    UserSkillMapper um = new UserSkillMapper();
 
     public DeleteSkillOfUserCommand(String username, String name) {
         this.userID = username;
@@ -15,7 +18,14 @@ public class DeleteSkillOfUserCommand implements Command{
 
     @Override
     public void execute() throws UserNotFoundException, SkillNotFoundException {
-        UserRepo.delSkill(userID, skillName);
+        ArrayList<String> values = new ArrayList<>();
+        values.add(userID);
+        values.add(skillName);
+        try {
+            um.deleteFromTable(values);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }

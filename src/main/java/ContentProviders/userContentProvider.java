@@ -68,6 +68,7 @@ public class UserContentProvider {
 
     public static JSONArray getUserPossibleSkills(String uID) throws UserNotFoundException {
         try {
+            System.out.println("OOOOO: ");
             User u = um.find(uID);
             System.out.println("number of khars : " + u.getLastName());
             JSONArray content = new JSONArray();

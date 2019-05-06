@@ -30,6 +30,7 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         HashMap<String, Skill> result = new HashMap<>();
         while(rs.next()) {
             Skill s = convertResultSetToDomainModel(rs);
+            System.out.println("ssss" + s.getName());
             result.put(s.getName(), s);
         }
         return result;
@@ -67,12 +68,31 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         con.close();
     }
 
+    public static void deleteFromTable(ArrayList<String> values) throws SQLException {
+        ArrayList<String> attrs = createDelAttribute();
+        Connection con = DBCPDBConnectionPool.getConnection();
+        String sqlCommand = deleteCommand("userSkills", attrs);
+        PreparedStatement prp = con.prepareStatement(sqlCommand);
+        for(int j = 1; j <= values.size(); j++)
+            prp.setString(j, values.get(j-1));
+        prp.executeUpdate();
+        prp.close();
+        con.close();
+    }
+
 
     public static ArrayList<String> createAttribute() {
         ArrayList<String>attr = new ArrayList<>();
         attr.add("username");
         attr.add("skillName");
         attr.add("point");
+        return attr;
+    }
+
+    public static ArrayList<String> createDelAttribute() {
+        ArrayList<String>attr = new ArrayList<>();
+        attr.add("username");
+        attr.add("skillName");
         return attr;
     }
 
@@ -87,6 +107,20 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
         sqlCommand += ");";
         return sqlCommand;
+    }
+
+    private static String deleteCommand(String tableName, ArrayList<String> attributes){
+        String sqlCommand = "DELETE FROM " + tableName + " WHERE ";
+        for(int i = 0; i < attributes.size(); i++) {
+            if(i != attributes.size() - 1)
+            sqlCommand += attributes.get(i) + "= ? AND ";
+            else
+                sqlCommand +=  attributes.get(i) + "= ?";
+        }
+        sqlCommand += ";" ;
+        System.out.println("this is delete" + sqlCommand);
+        return sqlCommand;
+
     }
 
 
