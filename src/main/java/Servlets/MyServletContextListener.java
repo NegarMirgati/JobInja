@@ -19,7 +19,7 @@ public class MyServletContextListener implements ServletContextListener {
         try {
             SkillMapper sm = new SkillMapper();
             sm.initialize();
-            ProjectMapper pm = new ProjectMapper();
+            ProjectMapper pm = new ProjectMapper(true);
             UserSkillMapper usm = new UserSkillMapper();
             usm.initialize();
             UserMapper um = new UserMapper();

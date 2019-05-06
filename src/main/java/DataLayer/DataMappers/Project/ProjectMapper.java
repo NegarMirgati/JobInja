@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class ProjectMapper extends Mapper<Project, Integer> implements IProjectMapper {
+public class ProjectMapper extends Mapper<Project, String> implements IProjectMapper {
 //    String id;
 //    private String title;
 //    private String description;
@@ -29,41 +29,43 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
 //    private int budget;
 //    private long deadline;
     private static final String COLUMNS = " id, title, description, imageURL, budget, deadline, creationDate";
+    private static String creationDate = "0";
 
 
-    public ProjectMapper() throws SQLException, IOException {
-        System.out.println("hereeeeeeeeeeeee");
-        Connection con = DBCPDBConnectionPool.getConnection();
-        Statement st =
-                con.createStatement();
-        System.out.println("hetee");
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY, title TEXT," +
-                " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER)");
-        ProjectSkillMapper psm = new ProjectSkillMapper();
-        try {
-            fillTable(con);
-        } catch (SQLException e){
-           // Logger.getLogger(SQLiteJDBCLoader.class.getName()).log(Level.SEVERE, null, e);
+    public ProjectMapper(boolean init) throws SQLException, IOException {
+        if ( init == true ) {
+            System.out.println("hereeeeeeeeeeeee");
+            Connection con = DBCPDBConnectionPool.getConnection();
+            Statement st =
+                    con.createStatement();
+            System.out.println("hetee");
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY, title TEXT," +
+                    " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER)");
+            ProjectSkillMapper psm = new ProjectSkillMapper();
+            try {
+                fillTable(con, true);
+            } catch (SQLException e) {
+                // Logger.getLogger(SQLiteJDBCLoader.class.getName()).log(Level.SEVERE, null, e);
+            }
+            st.close();
+            con.close();
         }
-        st.close();
-        con.close();
-
-
     }
 
 
     @Override
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
-                " FROM skill" +
+                " FROM project" +
                 " WHERE id = ?";
     }
 
     @Override
     protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        Long id = new Long(rs.getString(1));
+       String id = (rs.getString(1));
         if (loadedMap.containsKey(id)) return (Project) loadedMap.get(id);
-        HashMap<String, Skill> alaki = new HashMap<String, Skill>();
+        //HashMap<String, Skill> alaki = new HashMap<String, Skill>();
+        ProjectSkillMapper pm = new ProjectSkillMapper();
 //Project(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills)
         return  new Project(
                 rs.getString(1),
@@ -73,13 +75,13 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
                 rs.getInt(5),
                 rs.getInt(6),
                 rs.getInt(7),
-                alaki
+                pm.findProjectSkillsById(rs.getString(1))
         );
     }
 
 
-    private static void fillTable(Connection con) throws IOException, SQLException {
-
+    public static void fillTable(Connection con, boolean init) throws IOException, SQLException {
+        String creationDateUpdate = "0";
         System.out.println("adding projects");
         HttpConnection connection = new HttpConnection();
 //        try {
@@ -91,21 +93,36 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
         ArrayList<String> attrs = createAttribute();
         // loadedMap
         //  insert skills
+        ArrayList<Integer>toBeAdded = new ArrayList<>();
         for (int i = 0; i < values_list.size(); i++) {
-            System.out.println(values_list.get(i));
-            addToTable(con,"project", attrs, values_list.get(i));
-
+            String creationDateTemp = values_list.get(i).get(6);
+            if ( init == true && Long.parseLong(creationDateTemp) > Long.parseLong(creationDate) ){
+                System.out.println(values_list.get(i));
+                addToTable(con,"project", attrs, values_list.get(i));
+                creationDate = creationDateTemp;
+            }
+            else if ( init == false) {
+                if (Long.parseLong(creationDateTemp) > Long.parseLong(creationDate)) {
+                    creationDateUpdate = creationDateTemp;
+                    System.out.println(values_list.get(i));
+                    addToTable(con, "project", attrs, values_list.get(i));
+                    toBeAdded.add(i);
+                }
+            }
         }
-        for (int j = 0; j < allProjectsSkill.size(); j++){
+        for (int j = 0; j < allProjectsSkill.size(); j++) {
             System.out.println("hereeeeeeeeeeeeeeerererrer");
             System.out.println(allProjectsSkill.size());
             System.out.println(allProjectsSkill.get(j));
             ArrayList<String> attr = ProjectSkillMapper.createAttribute();
-            for (int k = 0; k< allProjectsSkill.get(j).size(); k++){
-                ProjectSkillMapper.addToTable(con,"projectSkill",attr, allProjectsSkill.get(j).get(k));
+            for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
+                if ( (init == false && toBeAdded.contains(k)) || (init == true) ){
+                    ProjectSkillMapper.addToTable(con, "projectSkill", attr, allProjectsSkill.get(j).get(k));
+                }
             }
-
         }
+
+        creationDate = creationDateUpdate;
     }
 
 

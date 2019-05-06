@@ -1,4 +1,6 @@
 package Servlets;
+import DataLayer.DataMappers.Project.ProjectMapper;
+import Entities.Project;
 import Exceptions.*;
 import ContentProviders.*;
 
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.StringTokenizer;
 import javax.servlet.RequestDispatcher;
 import org.json.JSONObject;
@@ -40,8 +43,11 @@ public class ProjectServlet extends HttpServlet {
         boolean hasBade = false;
 
         try {
-            JSONObject map = ProjectContentProvider.getHTMLContentsForProject("1", projectID);
-            ProjectContentProvider.checkAccess("1",projectID);
+            //JSONObject map = projectContentProvider.getHTMLContentsForProject("1", projectID);
+            ProjectMapper pm = new ProjectMapper(false);
+            Project p = pm.find(projectID);
+            JSONObject map = ProjectContentProvider.getProjectContent(p);
+            //ProjectContentProvider.checkAccess("1",projectID);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
@@ -50,8 +56,11 @@ public class ProjectServlet extends HttpServlet {
             printApiOutputError(e, 404,response);
         }
 
-        catch (ProjectAccessForbiddenException e){
-            printApiOutputError(e, 403,response);
+//        catch (ProjectAccessForbiddenException e){
+//            printApiOutputError(e, 403,response);
+//        }
+        catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
