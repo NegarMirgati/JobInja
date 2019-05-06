@@ -66,9 +66,15 @@ export default class ProjectBidding extends Component<Props, State> {
   submitForm(e: React.FormEvent<HTMLFormElement>): void {
     const { inputValue } = this.state;
     e.preventDefault();
-  //  toast.success(this.state.inputValue);
-  //  toast.success(this.state.projectId);
-    this.postBid();
+    //  toast.success(this.state.inputValue);
+    //  toast.success(this.state.projectId);
+
+    var isnum = /^\d+$/.test(this.state.inputValue);
+    if (isnum == true) {
+      this.postBid();
+    } else {
+      toast.error("invalid input");
+    }
   }
   handleInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     this.setState({ inputValue: e.target.value });
