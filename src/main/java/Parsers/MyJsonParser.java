@@ -85,6 +85,8 @@ public class MyJsonParser {
             data.add(String.valueOf(budget));
             long deadline = jsonObject.get("deadline").getAsLong();
             data.add(String.valueOf(deadline));
+            long creationDate = jsonObject.get("creationDate").getAsLong();
+            data.add(String.valueOf(creationDate));
             JsonElement skills = jsonObject.get("skills");
             ArrayList<ArrayList<String>> skillsMap = parseSkills(id, skills);
             //Command addProjectCommand = new AddProjectCommand(id, title, description, imageURL, budget, deadline, skillsMap);

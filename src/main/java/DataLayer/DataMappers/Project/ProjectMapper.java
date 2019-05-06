@@ -28,7 +28,7 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
 //    private HashMap<String, Bid> bids;
 //    private int budget;
 //    private long deadline;
-    private static final String COLUMNS = " id, title, description, imageURL, budget, deadline";
+    private static final String COLUMNS = " id, title, description, imageURL, budget, deadline, creationDate";
 
 
     public ProjectMapper() throws SQLException, IOException {
@@ -38,7 +38,7 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
                 con.createStatement();
         System.out.println("hetee");
         st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY, title TEXT," +
-                " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER)");
+                " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER)");
         ProjectSkillMapper psm = new ProjectSkillMapper();
         try {
             fillTable(con);
@@ -72,6 +72,7 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
                 rs.getString(4),
                 rs.getInt(5),
                 rs.getInt(6),
+                rs.getInt(7),
                 alaki
         );
     }
@@ -116,6 +117,7 @@ public class ProjectMapper extends Mapper<Project, Integer> implements IProjectM
         attrs.add("imageURL");
         attrs.add("budget");
         attrs.add("deadline");
+        attrs.add("creationDate");
         return attrs;
     }
 
