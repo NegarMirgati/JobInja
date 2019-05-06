@@ -32,11 +32,17 @@ public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProje
 
     }
 
+    protected String getFindStatementByProjectId() {
+        return "SELECT " + COLUMNS +
+                " FROM projectSkill" +
+                " WHERE ProjectId = ?";
+    }
+
 
     @Override
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
-                " FROM skill" +
+                " FROM projectSkill" +
                 " WHERE id = ?";
     }
 
@@ -80,6 +86,33 @@ public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProje
         attr.add("point");
         return attr;
     }
+
+    protected  HashMap<String, Skill> loadAll(ResultSet rs) throws SQLException{
+        HashMap<String, Skill> result = new HashMap<>();
+        while(rs.next()) {
+            Skill s = convertResultSetToDomainModel(rs);
+            result.put(s.getName(), s);
+        }
+        return result;
+    }
+
+    public  HashMap<String, Skill> findProjectSkillsById( String ProjectId){
+        ResultSet rs = null;
+        try{
+            Connection con = DBCPDBConnectionPool.getConnection();
+            String query = getFindStatementByProjectId();
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, ProjectId);
+            rs = pstmt.executeQuery();
+            con.close();
+            return loadAll(rs);
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 //
 //

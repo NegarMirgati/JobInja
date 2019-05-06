@@ -6,9 +6,9 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Mapper<T, I> implements IMapper<T, I> {
+public abstract class Mapper<T, S> implements IMapper<T, S> {
 
-    protected Map<I, T> loadedMap = new HashMap<>();
+    protected Map<S, T> loadedMap = new HashMap<>();
 
     abstract protected String getFindStatement();
 
@@ -16,7 +16,7 @@ public abstract class Mapper<T, I> implements IMapper<T, I> {
 
 
 
-    public T find(I id) throws SQLException {
+    public T find(S id) throws SQLException {
         T result = loadedMap.get(id);
         if (result != null)
             return result;

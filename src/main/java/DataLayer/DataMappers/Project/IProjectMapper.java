@@ -5,7 +5,7 @@ import DataLayer.DataMappers.IMapper;
 
 import java.util.List;
 
-public interface IProjectMapper extends IMapper<Project, Integer> {
+public interface IProjectMapper extends IMapper<Project, String> {
 
     // other methods
 
