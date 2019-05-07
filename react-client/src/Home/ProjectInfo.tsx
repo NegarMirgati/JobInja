@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Props } from "react";
 import ProjectTime from "./ProjectTime";
 import Blur from "react-css-blur";
 
@@ -30,6 +30,26 @@ export default class ProjectInfo extends Component<any, State> {
     this.setState({ linkToProPage: link });
     console.log(this.state);
   }
+
+  // static getDerivedStateFromProps(nextProps: any, prevState: State) {
+  //   console.log(" in gdsfp");
+  //   console.log(nextProps.skills);
+  //   if (
+  //     nextProps.skills !== prevState.skills ||
+  //     nextProps.projectId !== prevState.projectId ||
+  //     nextProps.deadline !== prevState.deadline ||
+  //     nextProps.title !== prevState.title
+  //   ) {
+  //     return {
+  //       skills: nextProps.skills,
+  //       projectId: nextProps.projectId,
+  //       deadline: nextProps.deadline,
+  //       title: nextProps.title
+  //     };
+  //   }
+  //   // Return null if the state hasn't changed
+  //   return null;
+  // }
 
   createSkills = (): any => {
     var keys: string[] = [];

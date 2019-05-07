@@ -19,7 +19,6 @@ export default class HomeMain extends Component {
                 لورم ایپسوم متنی ساختگی با تولید سادگی نا مفهوم در صنعت چاپ و با
                 استفاده از طراحان گرافیک است. چاپگر ها و متون
               </p>
-              <MainSearch />
               <br />
               <br />
               <br />
@@ -27,12 +26,12 @@ export default class HomeMain extends Component {
             </div>
           </div>
 
-          <div className = "row">
-            <div className = "col-sm-9">
+          <div className="row">
+            <div className="col-sm-9">
               <ProjectsList />
             </div>
-            <div className = "col-sm-3">
-              <SearchUsers /> 
+            <div className="col-sm-3">
+              <SearchUsers />
             </div>
           </div>
         </div>
