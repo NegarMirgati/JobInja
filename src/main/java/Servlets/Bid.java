@@ -40,7 +40,7 @@ public class Bid extends HttpServlet {
             response.setContentType("application/json;charset=UTF-8");
            // ProjectContentProvider.hasBadeForProject("1", projectID);
             BidMapper bm = new BidMapper();
-            bm.initialize();
+            //bm.initialize();
             if ( bm.hasBade(projectID,"1")){
                 throw new BidAlreadyDoneException("bid already done");
             }

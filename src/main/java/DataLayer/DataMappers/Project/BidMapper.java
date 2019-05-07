@@ -27,12 +27,6 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
 
 
     public BidMapper() throws SQLException, IOException {
-
-
-    }
-
-
-    public void initialize() throws SQLException {
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st =
                 con.createStatement();
@@ -41,7 +35,10 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
 
         st.close();
         con.close();
+
     }
+
+
     @Override
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
