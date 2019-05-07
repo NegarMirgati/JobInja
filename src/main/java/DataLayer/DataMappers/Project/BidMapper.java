@@ -28,18 +28,20 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
 
     public BidMapper() throws SQLException, IOException {
 
-            Connection con = DBCPDBConnectionPool.getConnection();
-            Statement st =
-                    con.createStatement();
-            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "bid" + " " + "(ProjectId TEXT," +
-                " userId TEXT, amount INTEGER, PRIMARY KEY (ProjectId, userId), FOREIGN KEY (userId) references user(username), FOREIGN KEY (ProjectId) references project(id))");
-
-            st.close();
-            con.close();
 
     }
 
 
+    public void initialize() throws SQLException {
+        Connection con = DBCPDBConnectionPool.getConnection();
+        Statement st =
+                con.createStatement();
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "bid" + " " + "(ProjectId TEXT," +
+                " userId TEXT, amount INTEGER, PRIMARY KEY (ProjectId, userId), FOREIGN KEY (userId) references user(username), FOREIGN KEY (ProjectId) references project(id))");
+
+        st.close();
+        con.close();
+    }
     @Override
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
@@ -61,11 +63,12 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
 
     public boolean hasBade(String projectId, String userId) throws SQLException {
             // select the number of rows in the table
+            Connection conn = null;
             ResultSet rs = null;
             PreparedStatement prp = null;
             int rowCount = -1;
             try {
-                Connection conn = DBCPDBConnectionPool.getConnection();
+                 conn = DBCPDBConnectionPool.getConnection();
                 String sqlCommand = "SELECT COUNT(*) FROM bid WHERE projectId = ?"+
                         "AND userId = ?";
                 prp = conn.prepareStatement(sqlCommand);
@@ -80,6 +83,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
             } finally {
                 rs.close();
                 prp.close();
+                conn.close();
             }
             return (rowCount > 0) ? true:false;
 

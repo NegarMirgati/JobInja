@@ -60,9 +60,9 @@ public class ProjectContentProvider {
         instance.put("budget", Integer.toString(p.getBudget()));
         instance.put("deadline", Long.toString(p.getDeadline()));
         instance.put("creationDate", Long.toString(p.getDeadline()));
-        System.out.println("here1");
+        //System.out.println("here1");
         boolean hasbade = bm.hasBade(p.getId(),"1");
-        System.out.println("here2");
+        //System.out.println("here2");
         instance.put("hasBade", hasbade);
         return instance;
 

@@ -199,14 +199,12 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             Connection con = DBCPDBConnectionPool.getConnection();
             PreparedStatement prps = con.prepareStatement(sqlCommand);
             ResultSet rs = prps.executeQuery();
-            System.out.println("here 01");
             ArrayList<Project> projects = loadAll(rs);
-            System.out.println("here 011");
+            rs.close();
             prps.close();
             con.close();
             return projects;
         }catch(SQLException e){
-            System.out.println("error in findAllOrderBycreationDate");
             e.printStackTrace();
         }
         return null;
