@@ -13,7 +13,7 @@ public class Project {
     private long deadline;
     private User winner;
 
-    public Project(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills) {
+    public Project(String id, String title, String description, String imageURL, int budget, long aLong, long deadline, HashMap<String, Skill> skills) {
         this.id = id;
         this.title = title;
         this.description = description;

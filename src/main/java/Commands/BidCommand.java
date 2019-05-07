@@ -1,4 +1,5 @@
 package Commands;
+/*
 import Entities.*;
 import Exceptions.ProjectNotFoundException;
 import Exceptions.UserNotFoundException;
@@ -44,3 +45,4 @@ public class BidCommand implements Command {
         return false;
     }
 }
+*/

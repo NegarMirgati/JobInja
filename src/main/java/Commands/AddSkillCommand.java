@@ -1,5 +1,5 @@
 package Commands;
-
+/*
 import Repositories.*;
 
 public class AddSkillCommand implements Command {
@@ -15,3 +15,4 @@ public class AddSkillCommand implements Command {
         SkillRepo.addSkill(this.name , this.point);
     }
 }
+*/

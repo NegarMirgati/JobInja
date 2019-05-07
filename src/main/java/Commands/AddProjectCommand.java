@@ -1,4 +1,5 @@
 package Commands;
+/*
 import Repositories.ProjectRepo;
 import Entities.*;
 import java.util.HashMap;
@@ -27,3 +28,4 @@ public class AddProjectCommand implements Command{
         ProjectRepo.addProject(this.id, this.title, this.description, this.imageURL, this.budget, this.deadline, this.skills);
     }
 }
+*/

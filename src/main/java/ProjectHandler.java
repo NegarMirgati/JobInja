@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -38,6 +39,7 @@ public class ProjectHandler implements HttpHandler {
                 InvocationTargetException |
                 NoSuchMethodException |
                 SecurityException |
+                SQLException |
                 ProjectNotFoundException e) {
             e.printStackTrace();
             String response =
