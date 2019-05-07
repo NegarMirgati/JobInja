@@ -1,11 +1,14 @@
 package ContentProviders;
 
 import DataLayer.DataMappers.Project.BidMapper;
+import DataLayer.DataMappers.Project.ProjectMapper;
+import DataLayer.DataMappers.user.UserMapper;
 import Exceptions.BidAlreadyDoneException;
 import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
 import Exceptions.UserNotFoundException;
+import Repositories.UserRepo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -108,18 +111,14 @@ public class ProjectContentProvider {
 //            return allProjects;
 //        }
 //
-//    public static void checkAccess(String Uid, String Pid) throws ProjectNotFoundException, ProjectAccessForbiddenException {
-//        Project p = ProjectRepo.getProjectById(Pid);
-//        try {
-//            User u = UserRepo.findItemInUserList(Uid);
-//            if (u.hasRequiredSkills(p.getSkills())) {
-//                return;
-//            } else {
-//                throw new ProjectAccessForbiddenException("Access Forbidden");
-//            }
-//        }catch (UserNotFoundException e){
-//            e.printStackTrace();
-//        }
-//    }
+    public static void checkAccess(String Uid, String Pid) throws ProjectNotFoundException, ProjectAccessForbiddenException, IOException, SQLException {
+        Project p = new ProjectMapper(false).find(Pid);
+        User u = new UserMapper().find(Uid);
+        if (u.hasRequiredSkills(p.getSkills())) {
+            return;
+        } else {
+            throw new ProjectAccessForbiddenException("Access Forbidden");
+        }
+    }
 
 }
