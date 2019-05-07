@@ -141,4 +141,31 @@ public class ProjectContentProvider {
         }
     }
 
+    public static JSONArray getSearchedProjects(String query) {
+        ArrayList<Project> found = new ArrayList<>();
+        try {
+            System.out.println("here23");
+            ProjectMapper pm = new ProjectMapper(false);
+            found = pm.findbyTitleOrDes(query);
+            System.out.println("here24");
+            System.out.println(found.size());
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray contentMap = new JSONArray();
+        JSONObject instance;
+        for (Project p : found) {
+            String id = p.getId();
+            instance = new JSONObject();
+            try {
+                instance.put(id, getProjectContent(p));
+            } catch (ProjectNotFoundException | IOException | SQLException e) {
+                e.printStackTrace();
+            }
+            contentMap.put(instance);
+        }
+        return contentMap;
+    }
+
 }
