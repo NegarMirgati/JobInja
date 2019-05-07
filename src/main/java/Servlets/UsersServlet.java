@@ -23,15 +23,15 @@ public class UsersServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String q = request.getParameter("q");
-        if(q.equals("")) {
+        if(request.getParameter("q") == null) {
             response.setContentType("application/json;charset=UTF-8");
-            JSONArray map = UserContentProvider.getHTMLContentsForAllUsers("1");
+            JSONArray map = UserContentProvider.getHTMLContentsForAllUsers();
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
         }
         else{
+            String q = request.getParameter("q");
             response.setContentType("application/json;charset=UTF-8");
             JSONArray map = UserContentProvider.getSearchedUsers(q);
             response.setStatus(response.SC_OK);

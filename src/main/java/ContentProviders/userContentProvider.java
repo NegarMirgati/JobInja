@@ -84,19 +84,15 @@ public class UserContentProvider {
         }
     }
 
-    public static JSONArray getHTMLContentsForAllUsers(String currentuserID) {
-        HashMap<String, User> allUsers = UserRepo.getUserList();
-        System.out.println(allUsers);
+    public static JSONArray getHTMLContentsForAllUsers() {
+        ArrayList<User> allUsers = um.getNUsers();
         JSONArray contentMap = new JSONArray();
         JSONObject instance;
-        for (HashMap.Entry<String, User> entry : allUsers.entrySet()) {
-            String uid = entry.getKey();
-            if (uid != currentuserID) {
-                instance = new JSONObject();
-                instance.put(uid, getShortUserContent(entry.getValue()));
-                contentMap.put(instance);
-            }
-
+        for (User u : allUsers) {
+            String id = u.getUsername();
+            instance = new JSONObject();
+            instance.put(id, getShortUserContent(u));
+            contentMap.put(instance);
         }
         return contentMap;
     }

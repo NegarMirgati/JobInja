@@ -132,16 +132,13 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     public  ArrayList<Skill> getPossibleSkills(ArrayList<String> values){
         ResultSet rs = null;
         try{
-            System.out.println("salam");
             Connection con = DBCPDBConnectionPool.getConnection();
-            System.out.println("salam1");
             String sqlCommand = findPossibleSkillsCommand("skill", values.size());
             PreparedStatement prp = con.prepareStatement(sqlCommand);
             for(int i = 0; i < values.size(); i++){
                 prp.setString(i + 1, values.get(i));
             }
             rs = prp.executeQuery();
-            System.out.println("salam2");
             ArrayList<Skill> retval = loadAll(rs);
             prp.close();
             con.close();

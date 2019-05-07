@@ -145,6 +145,8 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     @Override
     protected User convertResultSetToDomainModel(ResultSet rs) throws SQLException{
         UserSkillMapper u = new UserSkillMapper();
+        System.out.println("name  : " + rs.getString(2));
+        System.out.println("lastName  : " + rs.getString(3));
         return new User(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -167,8 +169,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             String sqlCommand = getFindByNameStatement(query);
             Connection con = DBCPDBConnectionPool.getConnection();
             PreparedStatement prps = con.prepareStatement(sqlCommand);
-            //prps.setString(1, query);
-            //prps.setString(2, query);
             ResultSet rs = prps.executeQuery();
             ArrayList<User> users = loadAll(rs);
             prps.close();
@@ -180,12 +180,32 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return null;
     }
 
+    public ArrayList<User> getNUsers(){
+        try {
+            String sqlCommand = getNUsersStatement("3");
+            Connection con = DBCPDBConnectionPool.getConnection();
+            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            ResultSet rs = prps.executeQuery();
+            ArrayList<User> users = loadAll(rs);
+            prps.close();
+            con.close();
+            return users;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
     private ArrayList<User> loadAll(ResultSet rs) throws SQLException{
+        int counter = 0;
         ArrayList <User> result = new ArrayList<>();
         while(rs.next()) {
             User u = convertResultSetToDomainModel(rs);
             result.add(u);
+            counter +=1;
         }
+        System.out.println("sending " + Integer.toString(counter));
         return result;
     }
 
@@ -193,6 +213,13 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         String sqlCommand = "SELECT * FROM user WHERE firstName LIKE '%" + query + "%' OR lastName LIKE '%" + query + "%'";
         System.out.println("cmd" + sqlCommand);
         return sqlCommand;
+    }
+
+    protected String getNUsersStatement(String N){
+        String sqlCommand = "SELECT * FROM user LIMIT " + N ;
+        System.out.println("cmdZZZZZZZ" + sqlCommand);
+        return sqlCommand;
+
     }
 
 }
