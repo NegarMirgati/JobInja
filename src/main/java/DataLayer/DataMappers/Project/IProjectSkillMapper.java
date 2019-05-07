@@ -6,7 +6,7 @@ import Entities.Skill;
 
 import java.util.List;
 
-public interface IProjectSkillMapper extends IMapper<Skill, Integer> {
+public interface IProjectSkillMapper extends IMapper<Skill, String> {
 
     // other methods
 

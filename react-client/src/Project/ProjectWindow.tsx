@@ -63,7 +63,8 @@ export default class ProjectWindow extends Component<Props, State> {
       <div className="container align-self-center position">
         <ProjectDescription {...(this.state, this.props)} />
         <ProjectSkills {...this.state} />
-        {this.state.hasBade != true ? (
+        {this.state.hasBade != true &&
+        this.checkIfBidingIsPossible() == true ? (
           <ProjectBidding {...this.state} />
         ) : (
           {

@@ -47,19 +47,21 @@ public class ProjectServlet extends HttpServlet {
             ProjectMapper pm = new ProjectMapper(false);
             Project p = pm.find(projectID);
             JSONObject map = ProjectContentProvider.getProjectContent(p);
-            //ProjectContentProvider.checkAccess("1",projectID);
+            ProjectContentProvider.checkAccess("1",projectID);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
 
-        } catch (ProjectNotFoundException e) {
+        }
+        catch (ProjectNotFoundException e) {
             printApiOutputError(e, 404,response);
         }
 
-//        catch (ProjectAccessForbiddenException e){
-//            printApiOutputError(e, 403,response);
-//        }
+        catch (ProjectAccessForbiddenException e){
+            printApiOutputError(e, 403,response);
+        }
         catch (SQLException e) {
+            printApiOutputError(e, 404,response);
             e.printStackTrace();
         }
     }

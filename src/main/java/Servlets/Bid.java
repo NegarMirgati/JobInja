@@ -40,10 +40,10 @@ public class Bid extends HttpServlet {
             response.setContentType("application/json;charset=UTF-8");
            // ProjectContentProvider.hasBadeForProject("1", projectID);
             BidMapper bm = new BidMapper();
-            if ( bm.hasBade(projectID,"1",Integer.valueOf(bidAmount))){
+            if ( bm.hasBade(projectID,"1")){
                 throw new BidAlreadyDoneException("bid already done");
             }
-            //ProjectContentProvider.checkAccess("1", projectID);
+            ProjectContentProvider.checkAccess("1", projectID);
 
             if(bm.biddingPossible(projectID,Integer.valueOf(bidAmount)) == false){
                 response.setStatus(response.SC_BAD_REQUEST);
@@ -62,16 +62,16 @@ public class Bid extends HttpServlet {
             }
         }
 //        catch (UserNotFoundException | ProjectNotFoundException e) {
-//            printApiOutputError(e, 404,response);
+//
 
      //   }
         catch (BidAlreadyDoneException e) {
             printApiOutputError(e, 409,response);
         }
 
-//        catch (ProjectAccessForbiddenException e){
-//            printApiOutputError(e, 403,response);
-//        }
+        catch (ProjectAccessForbiddenException e){
+            printApiOutputError(e, 403,response);
+        }
 
         catch(NumberFormatException e){
             instance.put("status", 422);
@@ -79,6 +79,10 @@ public class Bid extends HttpServlet {
             response.setStatus(422);
             out.println(instance);
         } catch (SQLException e) {
+            printApiOutputError(e, 404,response);
+            e.printStackTrace();
+        } catch (ProjectNotFoundException e) {
+            printApiOutputError(e, 404,response);
             e.printStackTrace();
         }
 
