@@ -17,8 +17,8 @@ import Exceptions.ProjectNotFoundException;
 import org.json.JSONArray;
 
 
-@WebServlet(name = "ProjectsServlet",  urlPatterns = { "/projects" } )
-
+@WebServlet(name = "ProjectsServlet",  urlPatterns = { "/projects" }, initParams = {
+        @WebInitParam(name = "q" , value = "") })
 public class ProjectsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(response.SC_NOT_IMPLEMENTED);
@@ -26,6 +26,7 @@ public class ProjectsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(request.getParameter("q") == null) {
             response.setContentType("application/json;charset=UTF-8");
             System.out.println("in ProjectsServlet");
             response.setStatus(response.SC_OK);
@@ -39,6 +40,16 @@ public class ProjectsServlet extends HttpServlet {
             }
             PrintWriter out = response.getWriter();
             out.println(map);
+        }
+        else {
+            response.setContentType("application/json;charset=UTF-8");
+            String q = request.getParameter("q");
+            System.out.println(q);
+            JSONArray map = ProjectContentProvider.getSearchedProjects(q);
+            response.setStatus(response.SC_OK);
+            PrintWriter out = response.getWriter();
+            out.println(map);
+        }
 
     }
 }
