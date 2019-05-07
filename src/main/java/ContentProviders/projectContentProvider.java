@@ -15,20 +15,40 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class ProjectContentProvider {
-//    public static JSONObject getHTMLContentsForProject(String userID, String projectID) throws ProjectNotFoundException {
-//        System.out.println("here1");
-//        System.out.println("projectId: "+ projectID);
-//        Project p = ProjectRepo.getProjectById(projectID);
-//        System.out.println("here2");
-//        return getProjectContent(p);
-//
-//    }
 
+    public static JSONArray getContentsForAllProjects() throws ProjectNotFoundException, SQLException {
+        ArrayList<Project> allProjects = new ArrayList<>();
+        try {
+            System.out.println("here0");
+            ProjectMapper pm = new ProjectMapper(false);
+            allProjects = pm.findAllOrderBycreationDate();
+            System.out.println("here00");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray contentMap = new JSONArray();
+        JSONObject instance;
+        for (Project p : allProjects) {
+            String id = p.getId();
+            instance = new JSONObject();
+            try {
+                instance.put(id, getProjectContent(p));
+            } catch (IOException e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+            contentMap.put(instance);
+        }
+        return contentMap;
+    }
     public static JSONObject getProjectContent(Project p) throws ProjectNotFoundException, IOException, SQLException {
+
         BidMapper bm = new BidMapper();
         JSONObject instance = new JSONObject();
         instance.put("id", p.getId());
@@ -40,16 +60,16 @@ public class ProjectContentProvider {
         instance.put("budget", Integer.toString(p.getBudget()));
         instance.put("deadline", Long.toString(p.getDeadline()));
         instance.put("creationDate", Long.toString(p.getDeadline()));
+        System.out.println("here1");
         boolean hasbade = bm.hasBade(p.getId(),"1");
-        System.out.println("hasaasasa");
-        System.out.println(hasbade);
+        System.out.println("here2");
         instance.put("hasBade", hasbade);
         return instance;
 
     }
 
     public static JSONArray getProjectSkills(String pID, Project p) throws ProjectNotFoundException {
-        System.out.println("here3");
+        //System.out.println("here3");
        // Project p = ProjectRepo.getProjectById(pID);
         System.out.println("here4");
         JSONArray content = new JSONArray();

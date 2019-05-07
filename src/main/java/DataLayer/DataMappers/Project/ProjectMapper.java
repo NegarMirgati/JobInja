@@ -63,8 +63,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     @Override
     protected Project convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-       String id = (rs.getString(1));
-        if (loadedMap.containsKey(id)) return (Project) loadedMap.get(id);
+//       String id = (rs.getString(1));
+//        if (loadedMap.containsKey(id)) return (Project) loadedMap.get(id);
         //HashMap<String, Skill> alaki = new HashMap<String, Skill>();
         ProjectSkillMapper pm = new ProjectSkillMapper();
 //Project(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills)
@@ -136,7 +136,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             //System.out.println(allProjectsSkill.get(j));
             if ( (init == false && toBeAdded.contains(j)) || (init == true) ){
                 System.out.println("add new project");
-            for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
+                for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
 
                     try {
                         ProjectSkillMapper.addToTable(con, "projectSkill", attr, allProjectsSkill.get(j).get(k));
@@ -192,6 +192,41 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         sqlCommand += ");";
         return sqlCommand;
     }
+
+    public ArrayList<Project> findAllOrderBycreationDate(){
+        try {
+            String sqlCommand = getFindSortByDateStatement();
+            Connection con = DBCPDBConnectionPool.getConnection();
+            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            ResultSet rs = prps.executeQuery();
+            System.out.println("here 01");
+            ArrayList<Project> projects = loadAll(rs);
+            System.out.println("here 011");
+            prps.close();
+            con.close();
+            return projects;
+        }catch(SQLException e){
+            System.out.println("error in findAllOrderBycreationDate");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected String getFindSortByDateStatement(){
+        String sqlCommand = "SELECT * FROM project ORDER BY creationDate DESC";
+       // String sqlCommand = "SELECT * FROM project";
+        return sqlCommand;
+    }
+
+    private ArrayList<Project> loadAll(ResultSet rs) throws SQLException{
+        ArrayList <Project> result = new ArrayList<>();
+        while(rs.next()) {
+            Project p = convertResultSetToDomainModel(rs);
+            result.add(p);
+        }
+        return result;
+    }
+
 
 //    @Override
 //    public List<Skill> findWithGPA(float minGPA, float maxGPA) {
