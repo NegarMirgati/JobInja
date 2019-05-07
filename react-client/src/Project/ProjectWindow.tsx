@@ -3,6 +3,7 @@ import ProjectDescription from "./ProjectDescription";
 import ProjectSkills from "./ProjectSkills";
 import ProjectBidding from "./ProjectBidding";
 import ProjectDeadlineReached from "./ProjectDeadlineReached";
+import ProjectAlreadyBade from "./ProjectAlreadyBade";
 
 export default class ProjectWindow extends Component<Props, State> {
   constructor(props: Props) {
@@ -11,7 +12,8 @@ export default class ProjectWindow extends Component<Props, State> {
       skills: [],
       projectId: "",
       deadline: 0,
-      time: Date.now()
+      time: Date.now(),
+      hasBade: ""
     };
   }
 
@@ -21,12 +23,14 @@ export default class ProjectWindow extends Component<Props, State> {
     if (
       nextProps.skills !== prevState.skills ||
       nextProps.projectId !== prevState.projectId ||
-      nextProps.deadline !== prevState.deadline
+      nextProps.deadline !== prevState.deadline ||
+      nextProps.hasBade !== prevState.hasBade
     ) {
       return {
         skills: nextProps.skills,
         projectId: nextProps.projectId,
-        deadline: nextProps.deadline
+        deadline: nextProps.deadline,
+        hasBade: nextProps.hasBade
       };
     }
     // Return null if the state hasn't changed
@@ -38,6 +42,7 @@ export default class ProjectWindow extends Component<Props, State> {
     console.log(this.props.deadline);
     if (Date.now() > this.state.deadline) {
       //  if (Date.now() > 1555697826506) {
+      console.log("this.state.deadline");
       console.log("time out");
       return false;
     } else {
@@ -52,14 +57,22 @@ export default class ProjectWindow extends Component<Props, State> {
     console.log(this.state.deadline);
     console.log(new Date(this.state.time));
     console.log(this.state.time);
+    console.log("has bade");
+    console.log(this.state.hasBade);
     return (
       <div className="container align-self-center position">
         <ProjectDescription {...(this.state, this.props)} />
         <ProjectSkills {...this.state} />
-        {this.checkIfBidingIsPossible() == true ? (
+        {this.state.hasBade != true ? (
           <ProjectBidding {...this.state} />
         ) : (
-          <ProjectDeadlineReached />
+          {
+            ...(this.checkIfBidingIsPossible() == true ? (
+              <ProjectAlreadyBade />
+            ) : (
+              <ProjectDeadlineReached />
+            ))
+          }
         )}
       </div>
     );
@@ -70,6 +83,7 @@ interface State {
   skills: any[];
   projectId: any;
   deadline: number;
+  hasBade: any;
   time;
 }
 
@@ -83,4 +97,5 @@ interface Props {
   skills: any[];
   budget: number;
   deadline: number;
+  hasBade: "";
 }

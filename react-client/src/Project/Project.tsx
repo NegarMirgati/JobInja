@@ -26,7 +26,8 @@ export default class Project extends Component<
       imageURL: "",
       skills: [],
       budget: 0,
-      deadline: 0
+      deadline: 0,
+      hasBade: ""
     };
   }
   componentDidMount() {
@@ -55,6 +56,7 @@ export default class Project extends Component<
           console.log(obj["skills"]);
           this.setState({ budget: obj["budget"] });
           this.setState({ deadline: obj["deadline"] });
+          this.setState({ hasBade: obj["hasBade"] });
           //toast.success("اطلاعات با موفقیت کسب شد");
         })
         .catch(function(error: any) {
@@ -101,4 +103,5 @@ interface State {
   skills: any[];
   budget: number;
   deadline: number;
+  hasBade: any;
 }

@@ -1,5 +1,6 @@
 package ContentProviders;
 
+import DataLayer.DataMappers.Project.BidMapper;
 import Exceptions.BidAlreadyDoneException;
 import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
@@ -9,7 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 
@@ -23,8 +25,8 @@ public class ProjectContentProvider {
 //
 //    }
 
-    public static JSONObject getProjectContent(Project p) throws ProjectNotFoundException {
-
+    public static JSONObject getProjectContent(Project p) throws ProjectNotFoundException, IOException, SQLException {
+        BidMapper bm = new BidMapper();
         JSONObject instance = new JSONObject();
         instance.put("id", p.getId());
         instance.put("title", p.getTitle());
@@ -35,6 +37,10 @@ public class ProjectContentProvider {
         instance.put("budget", Integer.toString(p.getBudget()));
         instance.put("deadline", Long.toString(p.getDeadline()));
         instance.put("creationDate", Long.toString(p.getDeadline()));
+        boolean hasbade = bm.hasBade(p.getId(),"1");
+        System.out.println("hasaasasa");
+        System.out.println(hasbade);
+        instance.put("hasBade", hasbade);
         return instance;
 
     }
