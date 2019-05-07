@@ -59,7 +59,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
                 " WHERE userId = ?";
     }
 
-    public boolean hasBade(String projectId, String userId, int amount) throws SQLException {
+    public boolean hasBade(String projectId, String userId) throws SQLException {
             // select the number of rows in the table
             ResultSet rs = null;
             PreparedStatement prp = null;
@@ -153,7 +153,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
-        String sqlCommand = "INSERT INTO " + tableName + "(";
+        String sqlCommand = "INSERT OR IGNORE INTO " + tableName + "(";
         for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);

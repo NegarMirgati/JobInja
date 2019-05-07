@@ -14,7 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProjectSkillMapper {
+public class ProjectSkillMapper extends Mapper<Skill, String> implements IProjectSkillMapper {
 
     private static final String COLUMNS = " ProjectId, name, point";
 
@@ -32,24 +32,24 @@ public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProje
 
     }
 
-    protected String getFindStatementByProjectId() {
-        return "SELECT " + COLUMNS +
-                " FROM projectSkill" +
-                " WHERE ProjectId = ?";
-    }
+//    protected String getFindStatementByProjectId() {
+//        return "SELECT " + COLUMNS +
+//                " FROM projectSkill" +
+//                " WHERE ProjectId = ?";
+//    }
 
 
     @Override
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
                 " FROM projectSkill" +
-                " WHERE id = ?";
+                " WHERE ProjectId = ?";
     }
 
     @Override
     protected Skill convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        Long id = new Long(rs.getString(1));
-        if (loadedMap.containsKey(id)) return (Skill) loadedMap.get(id);
+        //Long id = new Long(rs.getString(1));
+       // if (loadedMap.containsKey(id)) return (Skill) loadedMap.get(id);
         return  new Skill(
                 rs.getString(2),
                 rs.getInt(3)
@@ -67,7 +67,7 @@ public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProje
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
-        String sqlCommand = "INSERT INTO " + tableName + "(";
+        String sqlCommand = "INSERT OR IGNORE INTO " + tableName + "(";
         for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
@@ -87,7 +87,8 @@ public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProje
         return attr;
     }
 
-    protected  HashMap<String, Skill> loadAll(ResultSet rs) throws SQLException{
+
+    protected HashMap<String, Skill> loadAll(ResultSet rs) throws SQLException{
         HashMap<String, Skill> result = new HashMap<>();
         while(rs.next()) {
             Skill s = convertResultSetToDomainModel(rs);
@@ -96,18 +97,20 @@ public class ProjectSkillMapper extends Mapper<Skill, Integer> implements IProje
         return result;
     }
 
-    public  HashMap<String, Skill> findProjectSkillsById( String ProjectId){
+
+    public  HashMap<String, Skill> findProjectSkillsById( String ProjectId) {
         ResultSet rs = null;
-        try{
+        try {
             Connection con = DBCPDBConnectionPool.getConnection();
-            String query = getFindStatementByProjectId();
+            String query = getFindStatement();
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, ProjectId);
             rs = pstmt.executeQuery();
+            HashMap<String, Skill> retval = loadAll(rs);
+            pstmt.close();
             con.close();
-            return loadAll(rs);
-
-        }catch(SQLException e){
+            return retval;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
