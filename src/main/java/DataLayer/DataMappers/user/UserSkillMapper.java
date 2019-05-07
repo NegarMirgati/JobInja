@@ -97,7 +97,7 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
-        String sqlCommand = "INSERT INTO " + tableName + "(";
+        String sqlCommand = "INSERT OR IGNORE INTO " + tableName + "(";
         for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
