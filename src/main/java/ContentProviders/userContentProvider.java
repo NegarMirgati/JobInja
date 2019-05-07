@@ -70,9 +70,7 @@ public class UserContentProvider {
 
     public static JSONArray getUserPossibleSkills(String uID) throws UserNotFoundException {
         try {
-            System.out.println("OOOOO: ");
             User u = um.find(uID);
-            System.out.println("number of khars : " + u.getLastName());
             JSONArray content = new JSONArray();
             ArrayList<String> skillNames = new ArrayList<String>(u.getSkills().keySet());
             ArrayList<Skill> skills = sm.getPossibleSkills(skillNames);
@@ -99,6 +97,19 @@ public class UserContentProvider {
                 contentMap.put(instance);
             }
 
+        }
+        return contentMap;
+    }
+
+    public static JSONArray getSearchedUsers(String query) {
+        ArrayList<User> foundUsers = um.findByName(query);
+        JSONArray contentMap = new JSONArray();
+        JSONObject instance;
+        for (User u : foundUsers) {
+            String id = u.getUsername();
+            instance = new JSONObject();
+            instance.put(id, getShortUserContent(u));
+            contentMap.put(instance);
         }
         return contentMap;
     }
