@@ -803,10 +803,11 @@ input[type="password"] {
   border-radius: 3px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-bottom: 2.5px solid rgb(27, 174, 190);
-  width: 50%;
+  width: 60%;
   float: right;
   position: relative;
-  right: 25%;
+  right: 20%;
+  bottom : 25px;
 }
 .search-container input {
   font-family: Vazir;
@@ -915,4 +916,9 @@ input[type="password"] {
 
 #projects a{
   text-decoration: none;
+}
+
+
+#Toastify{
+  font-family: Vazir;
 }

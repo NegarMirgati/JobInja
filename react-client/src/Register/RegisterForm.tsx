@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+const axios = require('axios');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
 import 'react-toastify/dist/ReactToastify.css';
@@ -78,8 +79,17 @@ class RegisterForm extends Component<Props, State>{
             hasError = true
         } 
         if(hasError == false){
-            toast.success("ثبت نام موفق");
-            // TODO : make API call
+            var link = 'http://localhost:8080/user?id=' + this.state.username + '&firstName=' + this.state.name + '&lastName=' + this.state.lastname +
+                        '&jobTitle=' + this.state.job + '&bio=' + this.state.bio + "&proLink=" + this.state.proLink + "&password=" + this.state.password
+            axios.post(link)
+            .then((response : any) => {
+                console.log(response)
+                toast.success(response.message);
+            })
+              .catch(function (error : any) {
+                console.log(error)
+                  toast.error('عملیات ثبت نام با خطا مواجه شد.');
+              })
         }
     }
 
