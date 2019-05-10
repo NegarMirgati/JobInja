@@ -2,23 +2,27 @@ package DataLayer.DataMappers.user;
 import Entities.Skill;
 import Entities.User;
 import DataLayer.DataMappers.Mapper;
+import utils.HashGenerator;
+
+import org.apache.commons.codec.binary.Hex;
 import java.sql.*;
 import DataLayer.*;
 import java.util.*;
 import java.util.Map;
 
+
 public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
-    private static final String COLUMNS = "username, firstName, lastName, jobTitle, profilePictureURL, bio";
+    private static final String COLUMNS = "username, password, firstName, lastName, jobTitle, profilePictureURL, bio";
 
     public void initialize() throws SQLException{
         System.out.println("here for user Table!!");
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username TEXT PRIMARY KEY, firstName TEXT," +
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username TEXT PRIMARY KEY, password TEXT, firstName TEXT," +
                 " lastName TEXT, jobTitle TEXT, profilePictureURL TEXT, bio TEXT)");
         try {
-            fillTable(con);
+            fillTable();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -75,7 +79,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     }
 
-    private static void fillTable(Connection con) throws SQLException {
+    private void fillTable() throws SQLException {
         ArrayList<User> users = new ArrayList<>();
         users.add(getUser1Data());
         users.add(getUser2Data());
@@ -84,14 +88,14 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         ArrayList<String> attrs = getAttrs();
         for (int i = 0; i < users.size(); i++){
             HashMap<String, String> userData = new HashMap<>();
-
             userData.put("username", users.get(i).getUsername());
+            userData.put("password", "123499234234");
             userData.put("firstName", users.get(i).getFirstName());
             userData.put("lastName", users.get(i).getLastName());
             userData.put("jobTitle", users.get(i).getJobTitle());
             userData.put("profilePictureURL", users.get(i).getProfilePictureURL());
             userData.put("bio", users.get(i).getBio());
-            addToTable(con, "user", userData, attrs);
+            addToTable(userData);
 
             ArrayList<String> attr = UserSkillMapper.createAttribute();
             User u = users.get(i);
@@ -110,6 +114,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     private static ArrayList<String> getAttrs(){
         ArrayList<String> attrs = new ArrayList<String>(
                 Arrays.asList("username",
+                "password",
                 "firstName",
                 "lastName",
                 "jobTitle",
@@ -118,19 +123,44 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return attrs;
     }
 
-    public static void addToTable(Connection con,String tableName, HashMap<String, String> userData, ArrayList<String> attrs) throws SQLException {
-        String sqlCommand = insertCommand(tableName, attrs);
+    public  void addToTable(HashMap<String, String> userData) throws SQLException{
+
+        Connection con = DBCPDBConnectionPool.getConnection();
+        ArrayList<String> attrs = getAttrs();
+        String sqlCommand = insertCommand("user", attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
-        for(int j = 0; j < attrs.size(); j++) {
-            prp.setString(j + 1, userData.get(attrs.get(j)));
-        }
-        prp.executeUpdate();
-        prp.close();
+        for (int j = 0; j < attrs.size(); j++) {
+            if(attrs.get(j) == "password"){
+                String password = userData.get(attrs.get(j));
+                String hashedString = getPasswordHash(password);
+                System.out.println("pass : " + hashedString);
+                prp.setString(j + 1, hashedString);
+            }
+            else
+                prp.setString(j + 1, userData.get(attrs.get(j)));
+            }
+
+         prp.executeUpdate();
+         prp.close();
+         con.close();
+    }
+
+    private String getPasswordHash(String password){
+        int iterations = 10000;
+        int keyLength = 512;
+        String salt = "1234";
+
+        char[] passwordChars = password.toCharArray();
+        byte[] saltBytes = salt.getBytes();
+        byte[] hashedBytes = HashGenerator.hashPassword(passwordChars, saltBytes, iterations, keyLength);
+        String hashedString = Hex.encodeHexString(hashedBytes);
+        return hashedString;
+
     }
 
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
-        String sqlCommand = "INSERT OR IGNORE INTO " + tableName + "(";
+        String sqlCommand = "INSERT INTO " + tableName + "(";
         for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
@@ -148,12 +178,12 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         System.out.println("name  : " + rs.getString(2));
         System.out.println("lastName  : " + rs.getString(3));
         return new User(rs.getString(1),
-                        rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5),
+                        rs.getString(6),
                         u.findUserSkillsById(rs.getString(1)),
-                        rs.getString(6)
+                        rs.getString(7)
         );
     }
 
@@ -205,19 +235,16 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             result.add(u);
             counter +=1;
         }
-        System.out.println("sending " + Integer.toString(counter));
         return result;
     }
 
     protected String getFindByNameStatement(String query){
         String sqlCommand = "SELECT * FROM user WHERE firstName LIKE '%" + query + "%' OR lastName LIKE '%" + query + "%'";
-        System.out.println("cmd" + sqlCommand);
         return sqlCommand;
     }
 
     protected String getNUsersStatement(String N){
         String sqlCommand = "SELECT * FROM user LIMIT " + N ;
-        System.out.println("cmdZZZZZZZ" + sqlCommand);
         return sqlCommand;
 
     }

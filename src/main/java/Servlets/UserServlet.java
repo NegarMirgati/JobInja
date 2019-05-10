@@ -1,5 +1,6 @@
 package Servlets;
 
+import Commands.RegisterCommand;
 import ContentProviders.UserContentProvider;
 import Exceptions.UserNotFoundException;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.StringTokenizer;
 
 import com.google.gson.JsonArray;
@@ -24,8 +26,34 @@ import org.json.JSONArray;
         @WebInitParam(name = "id" , value = "Not provided") } )
 public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("id");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String jobTitle = request.getParameter("jobTitle");
+        String bio = request.getParameter("bio");
+        String proLink= request.getParameter("proLink");
+        String password = request.getParameter("password");
+        RegisterCommand regCmd = new RegisterCommand(userId, password, firstName, lastName, jobTitle,  bio, proLink);
+        try {
+            regCmd.execute();
+            response.setStatus(response.SC_OK);
+            JSONObject instance = new JSONObject();
+            instance.put("status", 200);
+            instance.put("message", "success");
+            PrintWriter out = response.getWriter();
+            out.println(instance);
 
-        response.setStatus(response.SC_NOT_IMPLEMENTED);
+        }catch(SQLException e){
+            response.setStatus(response.SC_CONFLICT);
+            JSONObject instance = new JSONObject();
+            instance.put("status", "200");
+            instance.put("message", e.getMessage());
+            PrintWriter out = response.getWriter();
+            out.println(instance);
+            request.setAttribute("exception", e);
+
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +69,6 @@ public class UserServlet extends HttpServlet {
             out.println(map);
         }
         catch (UserNotFoundException e){
-            System.out.println("LSLSLL");
             response.setStatus(response.SC_NOT_FOUND);
             JSONObject instance = new JSONObject();
             instance.put("status", 404);
