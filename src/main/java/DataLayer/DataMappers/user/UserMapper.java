@@ -5,6 +5,7 @@ import DataLayer.DataMappers.Mapper;
 import utils.HashGenerator;
 
 import org.apache.commons.codec.binary.Hex;
+import java.security.SecureRandom;
 import java.sql.*;
 import DataLayer.*;
 import java.util.*;
@@ -148,14 +149,21 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
     private String getPasswordHash(String password){
         int iterations = 10000;
         int keyLength = 512;
-        String salt = "1234";
+        //String salt = "1234";
 
         char[] passwordChars = password.toCharArray();
-        byte[] saltBytes = salt.getBytes();
+        byte[] saltBytes = generateSalt();
         byte[] hashedBytes = HashGenerator.hashPassword(passwordChars, saltBytes, iterations, keyLength);
         String hashedString = Hex.encodeHexString(hashedBytes);
         return hashedString;
 
+    }
+
+    private byte[] generateSalt(){
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return salt;
     }
 
 
