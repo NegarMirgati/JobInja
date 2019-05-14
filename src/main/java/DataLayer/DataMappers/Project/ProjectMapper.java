@@ -225,9 +225,11 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     public ArrayList<Project> findbyTitleOrDes(String query){
         try {
-            String sqlCommand = getFindByTitleOrDesStatement(query);
+            String sqlCommand = getFindByTitleOrDesStatement();
             Connection con = DBCPDBConnectionPool.getConnection();
             PreparedStatement prps = con.prepareStatement(sqlCommand);
+            prps.setString(1, "%" + query + "%");
+            prps.setString(2, "%" + query + "%");
             ResultSet rs = prps.executeQuery();
             ArrayList<Project> users = loadAll(rs);
             prps.close();
@@ -239,20 +241,11 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return null;
     }
 
-    private String getFindByTitleOrDesStatement(String query) {
-        String sqlCommand = "SELECT * FROM project WHERE title LIKE '%" + query + "%' OR description LIKE '%" + query + "%' ORDER BY creationDate DESC";
+    private String getFindByTitleOrDesStatement() {
+        String sqlCommand = "SELECT * FROM project WHERE title LIKE ? OR description LIKE ? ORDER BY creationDate DESC";
 
         return sqlCommand;
     }
-
-
-//    @Override
-//    public List<Skill> findWithGPA(float minGPA, float maxGPA) {
-//        //todo: implement
-//        return null;
-//    }
-
-
 
 }
 

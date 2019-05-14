@@ -199,9 +199,11 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     public ArrayList<User> findByName(String query){
         try {
-            String sqlCommand = getFindByNameStatement(query);
+            String sqlCommand = getFindByNameStatement();
             Connection con = DBCPDBConnectionPool.getConnection();
             PreparedStatement prps = con.prepareStatement(sqlCommand);
+            prps.setString(1, "%" + query + "%");
+            prps.setString(2, "%" + query + "%");
             ResultSet rs = prps.executeQuery();
             ArrayList<User> users = loadAll(rs);
             prps.close();
@@ -241,8 +243,8 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         return result;
     }
 
-    protected String getFindByNameStatement(String query){
-        String sqlCommand = "SELECT * FROM user WHERE firstName LIKE '%" + query + "%' OR lastName LIKE '%" + query + "%'";
+    protected String getFindByNameStatement(){
+        String sqlCommand = "SELECT * FROM user WHERE firstName LIKE ? OR lastName LIKE ?";
         return sqlCommand;
     }
 
