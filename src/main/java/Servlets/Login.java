@@ -1,6 +1,7 @@
 package Servlets;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,9 @@ import Entities.User;
 import DataLayer.DataMappers.user.UserMapper;
 import utils.HashGenerator;
 
-@WebServlet(name = "Login")
+@WebServlet(  name = "Login",  urlPatterns = { "/login"} , initParams = {
+        @WebInitParam(name = "id" , value = "Not provided"),
+        @WebInitParam(name = "password" , value = "Not provided")} )
 public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
@@ -27,7 +30,8 @@ public class Login extends HttpServlet {
             User u = um.find(id);
             String hashedPassword = u.getHashedPassword();
             String salt = u.getSalt();
-            if(passwordMatches(hashedPassword, password, salt)){
+            if(HashGenerator.passwordMatches(hashedPassword, password, salt)){
+                System.out.println("hahahahahahahahahahahah");
                 String jwt = generateJWTToken(id, password);
                 JSONObject userJWT = new JSONObject();
                 userJWT.put("jwt", jwt);
@@ -44,19 +48,6 @@ public class Login extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-    }
-
-    private boolean passwordMatches(String dbHashedPass, String password, String salt){
-        byte[] saltBytes = salt.getBytes();
-        int iterations = 10000;
-        int keyLength = 512;
-        char[] passwordChars = password.toCharArray();
-        byte[] hashedBytes = HashGenerator.hashPassword(passwordChars, saltBytes, iterations, keyLength);
-        String hashedString = Hex.encodeHexString(hashedBytes);
-        if(dbHashedPass.equals(hashedString))
-            return true;
-        return false;
 
     }
 

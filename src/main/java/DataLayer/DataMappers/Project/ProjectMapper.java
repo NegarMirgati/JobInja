@@ -34,11 +34,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
     public ProjectMapper(boolean init) throws SQLException, IOException {
         if ( init == true ) {
-            System.out.println("hereeeeeeeeeeeee");
             Connection con = DBCPDBConnectionPool.getConnection();
             Statement st =
                     con.createStatement();
-            System.out.println("hetee");
             st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY, title TEXT," +
                     " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER)");
             ProjectSkillMapper psm = new ProjectSkillMapper();

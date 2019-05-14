@@ -11,7 +11,6 @@ public class UpdateProjects implements Runnable {
     @Override
     public void run() {
         // Do your quarterly job here.
-        System.out.println("hellooooooooooooooooooooooooooooooooooooooooooooo");
         try {
             Connection conn = DBCPDBConnectionPool.getConnection();
             ProjectMapper.fillTable(conn,false);

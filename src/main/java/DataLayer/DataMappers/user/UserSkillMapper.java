@@ -30,7 +30,7 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
         HashMap<String, Skill> result = new HashMap<>();
         while(rs.next()) {
             Skill s = convertResultSetToDomainModel(rs);
-            System.out.println("ssss" + s.getName());
+            //System.out.println("ssss" + s.getName());
             result.put(s.getName(), s);
         }
         return result;

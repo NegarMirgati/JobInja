@@ -3,9 +3,6 @@ import Entities.Skill;
 import Entities.User;
 import DataLayer.DataMappers.Mapper;
 import utils.HashGenerator;
-
-import org.apache.commons.codec.binary.Hex;
-import java.security.SecureRandom;
 import java.sql.*;
 import DataLayer.*;
 import java.util.*;
@@ -47,11 +44,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         map.put("C++", s2);
         map.put("Java", s3);
         String password = "123456";
-        String[] passAndSalt = getPasswordHash(password);
-        String hashedPassword = passAndSalt[0];
-        String salt = passAndSalt[1];
+        String salt = "";
 
-        return new User("1",hashedPassword, salt,  "پسر", "عمه زا","خارخاسک", proLink, map, bio);
+        return new User("1", password, salt,  "پسر", "عمه زا","خارخاسک", proLink, map, bio);
 
     }
 
@@ -66,12 +61,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         map.put("SEO", s1);
         map.put("C", s2);
         map.put("Java", s3);
-        String password = "654321";
-        String[] passAndSalt = getPasswordHash(password);
-        String hashedPassword = passAndSalt[0];
-        String salt = passAndSalt[1];
+        String password = "11111111";
 
-        return new User("2", hashedPassword, salt, "فامیل", "دور","پدر نمونه", "http://cdn-tehran.wisgoon.com/dlir-s3/10531477474534427630.jpeg",map, bio);
+
+        return new User("2", password, "", "فامیل", "دور","پدر نمونه", "http://cdn-tehran.wisgoon.com/dlir-s3/10531477474534427630.jpeg",map, bio);
     }
 
     private  User getUser3Data(){
@@ -86,12 +79,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         map.put("C", s1);
         map.put("Photoshop", s2);
 
-        String password = "333333";
-        String[] passAndSalt = getPasswordHash(password);
-        String hashedPassword = passAndSalt[0];
-        String salt = passAndSalt[1];
+        String password = "654321";
+        String salt = "";
 
-        return new User("3", hashedPassword, salt, "پسر", "خاله","نونوا", "http://www.soonami.ir/wp-content/uploads/49384726_617182022059223_729630059174640160_n.jpg",map, bio);
+        return new User("3", password, salt, "پسر", "خاله","نونوا", "http://www.soonami.ir/wp-content/uploads/49384726_617182022059223_729630059174640160_n.jpg",map, bio);
 
     }
 
@@ -150,7 +141,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         for (int j = 0; j < attrs.size(); j++) {
             if(attrs.get(j) == "password"){
                 String password = userData.get(attrs.get(j));
-                String[] passAndSalt = getPasswordHash(password);
+                String[] passAndSalt = HashGenerator.getPasswordHashAndSalt(password);
                 String hashedPassword = passAndSalt[0];
                 String salt = passAndSalt[1];
                 System.out.println("pass : " + hashedPassword + ", salt :" + salt);
@@ -166,26 +157,6 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
          prp.close();
          con.close();
     }
-
-    private String[] getPasswordHash(String password){
-        int iterations = 10000;
-        int keyLength = 512;
-
-        char[] passwordChars = password.toCharArray();
-        byte[] saltBytes = generateSalt();
-        byte[] hashedBytes = HashGenerator.hashPassword(passwordChars, saltBytes, iterations, keyLength);
-        String hashedString = Hex.encodeHexString(hashedBytes);
-        return new String[] {hashedString, new String(saltBytes)};
-
-    }
-
-    private byte[] generateSalt(){
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return salt;
-    }
-
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
         String sqlCommand = "INSERT INTO " + tableName + "(";
