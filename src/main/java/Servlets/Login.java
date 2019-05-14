@@ -31,15 +31,24 @@ public class Login extends HttpServlet {
             String hashedPassword = u.getHashedPassword();
             String salt = u.getSalt();
             if(HashGenerator.passwordMatches(hashedPassword, password, salt)){
-                System.out.println("hahahahahahahahahahahah");
                 String jwt = generateJWTToken(id, password);
-                JSONObject userJWT = new JSONObject();
-                userJWT.put("jwt", jwt);
+                JSONObject instance = new JSONObject();
+                instance.put("jwt", jwt);
+                instance.put("status", 200);
+                instance.put("message", "success");
+                response.setStatus(response.SC_OK);
                 PrintWriter out = response.getWriter();
-                out.println(userJWT);
+                out.println(instance);
             }
-            else
+            else {
                 response.setStatus(response.SC_FORBIDDEN);
+                JSONObject instance = new JSONObject();
+                instance.put("status", 403);
+                instance.put("message", "incorrect username or password");
+                PrintWriter out = response.getWriter();
+                out.println(instance);
+            }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

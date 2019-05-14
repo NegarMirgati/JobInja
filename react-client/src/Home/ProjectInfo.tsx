@@ -121,7 +121,7 @@ export default class ProjectInfo extends Component<any, State> {
                 </p>
               </div>
             </a>
-          </div>
+            </div>
         </Blur>
       </div>
     );

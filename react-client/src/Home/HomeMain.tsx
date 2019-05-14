@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "src/Styles/style.css";
 import "react-toastify/dist/ReactToastify.css";
-
 import SearchUsers from "./SearchUsers";
 import MainSearch from "./MainSearch";
 import ProjectsList from "./ProjectsList";

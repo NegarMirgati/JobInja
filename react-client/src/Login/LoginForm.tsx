@@ -3,8 +3,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
+const axios = require('axios');
 
-class LoginForm extends Component{
+class LoginForm extends Component<Props, State>{
     constructor(props : any) {
         super(props);
         this.state = {
@@ -35,8 +36,19 @@ class LoginForm extends Component{
         }
         });
         if(hasError == false){
-            toast.success("ورود موفق");
-            // TODO : make API call
+            let url = 'http://localhost:8080/login?id=';
+            url += this.state.username +  "&password=" + this.state.password;
+            console.log(url);
+            axios.post(url)
+                .then((response : any) => {
+                    console.log(response)
+                    localStorage.setItem("jwt", response.data.jwt.toString());
+                    toast.success("ورود موفق");
+                })
+                .catch(function (error : any) {
+                    console.log(error)
+                    toast.error('نام کاربری یا رمز عبور اشتباه است');
+            })
         }
     }
 
@@ -70,3 +82,13 @@ class LoginForm extends Component{
     }
 }
 export default LoginForm;
+
+interface State{
+    result : [],
+    username : String,
+    password : String   
+}
+
+interface Props{
+
+}
