@@ -23,10 +23,8 @@ public class ProjectContentProvider {
     public static JSONArray getContentsForAllProjects() throws ProjectNotFoundException, SQLException {
         ArrayList<Project> allProjects = new ArrayList<>();
         try {
-            System.out.println("here0");
             ProjectMapper pm = new ProjectMapper(false);
             allProjects = pm.findAllOrderBycreationDate();
-            System.out.println("here00");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +68,6 @@ public class ProjectContentProvider {
     public static JSONArray getProjectSkills(String pID, Project p) throws ProjectNotFoundException {
         //System.out.println("here3");
        // Project p = ProjectRepo.getProjectById(pID);
-        System.out.println("here4");
         JSONArray content = new JSONArray();
         JSONObject instance;
         HashMap<String, Skill> skills = new HashMap<>(p.getSkills());
@@ -143,10 +140,8 @@ public class ProjectContentProvider {
     public static JSONArray getSearchedProjects(String query) {
         ArrayList<Project> found = new ArrayList<>();
         try {
-            System.out.println("here23");
             ProjectMapper pm = new ProjectMapper(false);
             found = pm.findbyTitleOrDes(query);
-            System.out.println("here24");
             System.out.println(found.size());
         } catch (IOException | SQLException e) {
             e.printStackTrace();
