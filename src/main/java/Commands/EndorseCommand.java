@@ -6,12 +6,14 @@ import Exceptions.EndorseAlreadyDoneException;
 import Exceptions.SkillNotFoundException;
 import Exceptions.UserNotFoundException;
 import DataLayer.DataMappers.user.EndorsementMapper;
+import DataLayer.DataMappers.user.UserSkillMapper;
 
 public class EndorseCommand implements Command{
     private String userId;
     private String skillName;
     private String endorserId;
     EndorsementMapper em = new EndorsementMapper();
+    UserSkillMapper sm = new UserSkillMapper();
 
 
     public EndorseCommand(String userId, String endorserId, String skillName) {
@@ -29,6 +31,7 @@ public class EndorseCommand implements Command{
         values.add(skillName);
         try {
             em.addToTable(values);
+            sm.endorseSkill(userId, skillName);
         }catch (SQLException e){
             e.printStackTrace();
         }

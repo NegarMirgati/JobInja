@@ -13,8 +13,10 @@ public class User {
     private String profilePictureURL;
     private HashMap<String, Skill> skills;
     private String bio;
+    private String hashedPassword;
+    private String salt;
 
-    public User(String username, String firstName, String lastName, String jobTitle, String profilePictureURL, HashMap<String, Skill> skills, String bio) {
+    public User(String username, String hashedPassword, String salt, String firstName, String lastName, String jobTitle, String profilePictureURL, HashMap<String, Skill> skills, String bio) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,6 +24,8 @@ public class User {
         this.profilePictureURL = profilePictureURL;
         this.skills = skills;
         this.bio = bio;
+        this.salt = salt;
+        this.hashedPassword = hashedPassword;
     }
 
     public User(String username, HashMap<String, Skill> skills) {
@@ -67,6 +71,22 @@ public class User {
 
     public String getBio() {
         return bio;
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public void setBio(String bio) {

@@ -123,6 +123,22 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
 
     }
 
+    protected String updateCommand(String tableName){
+        String sqlCommand = "UPDATE " +  tableName +  " SET point = point + 1 WHERE username = ? AND skillName = ?";
+        return sqlCommand;
+    }
+
+    public void endorseSkill(String userId, String skillName) throws SQLException{
+        String sqlCommand = updateCommand("userSkills");
+        Connection con = DBCPDBConnectionPool.getConnection();
+        PreparedStatement prp = con.prepareStatement(sqlCommand);
+        prp.setString(1, userId);
+        prp.setString(2, skillName);
+        prp.executeUpdate();
+        prp.close();
+        con.close();
+    }
+
 
 
     @Override

@@ -1,4 +1,4 @@
-package Commands;
+/*package Commands;
 
 import Auctioneer.*;
 import Exceptions.ProjectNotFoundException;
@@ -15,3 +15,4 @@ public class AuctionCommand implements Command {
         Auctioneer.performAuction(this.projectTitle);
     }
 }
+*/

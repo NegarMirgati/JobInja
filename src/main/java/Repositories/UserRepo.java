@@ -1,4 +1,5 @@
 package Repositories;
+/*
 import Entities.*;
 import Exceptions.AddSkillAlreadyDoneException;
 import Exceptions.EndorseAlreadyDoneException;
@@ -147,3 +148,4 @@ public class UserRepo {
     }
 
 }
+*/

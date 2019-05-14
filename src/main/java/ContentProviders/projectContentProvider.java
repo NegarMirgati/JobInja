@@ -8,7 +8,6 @@ import Exceptions.ProjectAccessForbiddenException;
 import Exceptions.ProjectNotFoundException;
 import Entities.*;
 import Exceptions.UserNotFoundException;
-import Repositories.UserRepo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
