@@ -108,8 +108,11 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     System.out.println(creationDate);
                 }
                 try {
+                    values_list.get(i).add("");
                     addToTable(con,"project", attrs, values_list.get(i));
-                }catch (SQLException e){}
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
 
             }
             else if ( init == false) {
@@ -120,6 +123,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     //System.out.println(values_list.get(i));
                     toBeAdded.add(i);
                     try {
+                        values_list.get(i).add("");
                         addToTable(con, "project", attrs, values_list.get(i));
                     } catch (SQLException e) {
                     }
@@ -172,8 +176,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
 
     public static void addToTable(Connection con,String tableName,ArrayList<String> attrs,ArrayList<String> values  ) throws SQLException {
-        String sqlCommand = insertCommand(tableName,attrs);
+        String sqlCommand = insertCommand(tableName, attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
+        System.out.println("NUM OF VALUES" + values.size());
         for(int j = 1; j <= values.size(); j++)
             prp.setString(j, values.get(j-1));
         prp.executeUpdate();
@@ -190,6 +195,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             sqlCommand += "?,";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);
         sqlCommand += ");";
+        System.out.println(sqlCommand);
         return sqlCommand;
     }
 
