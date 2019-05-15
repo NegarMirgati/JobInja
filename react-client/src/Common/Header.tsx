@@ -7,6 +7,7 @@ class Header extends Component{
         console.log('here')
         localStorage.removeItem('jwt')
         sessionStorage.removeItem('jwt')
+        sessionStorage.removeItem('username')
     }
     getAccoutLink = () => {
         return "user?id=" + sessionStorage.getItem('username')  as string   
