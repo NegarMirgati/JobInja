@@ -47,6 +47,7 @@ public class ProjectContentProvider {
     public static JSONObject getProjectContent(Project p) throws ProjectNotFoundException, IOException, SQLException {
 
         BidMapper bm = new BidMapper();
+        UserMapper um = new UserMapper();
         JSONObject instance = new JSONObject();
         instance.put("id", p.getId());
         instance.put("title", p.getTitle());
@@ -61,6 +62,21 @@ public class ProjectContentProvider {
         boolean hasbade = bm.hasBade(p.getId(),"1");
         //System.out.println("here2");
         instance.put("hasBade", hasbade);
+        //System.out.println("wiwiwiwinwewee");
+        //System.out.println(p.getWinner());
+        if ( p.getWinner().equals("NULL")) {
+            instance.put("winner", "بدون برنده");
+            //System.out.println(p.getWinner());
+        }
+        else {
+            User u = um.find(p.getWinner());
+            if ( u == null){
+                instance.put("winner", "");
+            }
+            else {
+                instance.put("winner", u.getFirstName() + " " + u.getLastName());
+            }
+        }
         return instance;
 
     }
