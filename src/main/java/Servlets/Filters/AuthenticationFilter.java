@@ -28,7 +28,6 @@ public class AuthenticationFilter implements Filter {
             System.out.println("IN FILTER");
             HttpServletRequest httpRequest = (HttpServletRequest) req;
             String jwt = httpRequest.getHeader("authorization").substring(7);
-            System.out.println(jwt);
             verifyJWT(jwt, req, resp);
             chain.doFilter(req, resp);
         } catch (IOException e) {
