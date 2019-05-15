@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { withRouter } from "react-router-dom";
 const axios = require('axios');
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
@@ -10,7 +11,7 @@ import slide8 from 'src/Assets/images/slide8.jpg';
 import slide7 from 'src/Assets/images/slide7.jpg';
 import slide5 from 'src/Assets/images/slide5.jpg';
 
-class RegisterForm extends Component<Props, State>{
+class RegisterForm extends Component<any, State>{
     constructor(props : any, state : State) {
         super(props);
         this.state = {
@@ -84,7 +85,8 @@ class RegisterForm extends Component<Props, State>{
             axios.post(link)
             .then((response : any) => {
                 console.log(response)
-                toast.success(response.message);
+                toast.success('ثبت نام با موفقیت انجام شد.');
+                this.props.history.push("/home");
             })
               .catch(function (error : any) {
                 console.log(error)
@@ -145,7 +147,7 @@ class RegisterForm extends Component<Props, State>{
         );
     }
 }
-export default RegisterForm;
+export default withRouter(RegisterForm);
 
 interface State{
     result : [],
@@ -158,5 +160,3 @@ interface State{
     proLink : string,
     confirmPassword : string    
 }
-
-interface Props{}

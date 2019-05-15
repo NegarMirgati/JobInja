@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import { withRouter } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
 const axios = require('axios');
+import  'react-router';
 
-class LoginForm extends Component<Props, State>{
+class LoginForm extends Component<any, State>{
     constructor(props : any) {
         super(props);
         this.state = {
@@ -17,12 +19,10 @@ class LoginForm extends Component<Props, State>{
 
     handleUsernameChange = (event : any) => {
         this.setState({username: event.target.value});
-        console.log('user changed');
     }
 
     handlePasswordchange = (event : any) => {
         this.setState({password: event.target.value});
-        console.log('pass changed');
     }
 
     handleSubmit = (event : any) => {
@@ -44,6 +44,9 @@ class LoginForm extends Component<Props, State>{
                     console.log(response)
                     localStorage.setItem("jwt", response.data.jwt.toString());
                     toast.success("ورود موفق");
+                    const React = require('react-router');
+                    console.log(React.version);
+                    this.props.history.push("/home");
                 })
                 .catch(function (error : any) {
                     console.log(error)
@@ -81,7 +84,7 @@ class LoginForm extends Component<Props, State>{
         );
     }
 }
-export default LoginForm;
+export default withRouter(LoginForm);
 
 interface State{
     result : [],
@@ -89,6 +92,4 @@ interface State{
     password : String   
 }
 
-interface Props{
 
-}
