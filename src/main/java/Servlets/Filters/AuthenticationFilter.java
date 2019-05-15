@@ -10,8 +10,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
-import org.apache.http.HttpHeaders;
 
 import DataLayer.DataMappers.user.UserMapper;
 import Entities.User;
@@ -30,7 +28,6 @@ public class AuthenticationFilter implements Filter {
             System.out.println("IN FILTER");
             HttpServletRequest httpRequest = (HttpServletRequest) req;
             String jwt = httpRequest.getHeader("authorization").substring(7);
-            System.out.println(jwt);
             verifyJWT(jwt, req, resp);
             chain.doFilter(req, resp);
         } catch (IOException e) {

@@ -10,7 +10,6 @@ import java.io.IOException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import org.apache.commons.codec.binary.Hex;
 import org.json.JSONObject;
 import java.io.*;
 

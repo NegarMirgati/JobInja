@@ -5,6 +5,8 @@ import queryString from 'query-string'
 
 import UserComponentLogged from './UserComponentLogged'
 import OtherUserComponent from './OtherUserComponent'
+import UserId from '../Common/UserId'
+
 
 export default class User extends Component<any,  State> {
   constructor(props : any) {
@@ -18,9 +20,21 @@ export default class User extends Component<any,  State> {
   componentDidMount(){
     const parsed = queryString.parse(this.props.location.search); 
     let thisId = parsed.id
+    let tokenId = ""
     this.setState({userId : parsed.id});
+    var config = {
+      headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+    };
+    axios.get('http://localhost:8080/', config, config) .then((response : any) => {
+      console.log(response.username)
+      tokenId = response.username
+  })
+    .catch(function (error : any) {
+      console.log(error)
 
-    if(thisId == '1') 
+    })
+    console.log('id : ', sessionStorage.getItem('username'))
+    if(thisId == sessionStorage.getItem('username')) 
       this.setState({isLoggedInUser: 'true'});
     else 
       this.setState({isLoggedInUser: 'false'});    
