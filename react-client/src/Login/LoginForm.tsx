@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'src/Styles/style.css'
 const axios = require('axios');
 import  'react-router';
+import UserId from '../Common/UserId';
 
 class LoginForm extends Component<any, State>{
     constructor(props : any) {
@@ -46,7 +47,11 @@ class LoginForm extends Component<any, State>{
                     toast.success("ورود موفق");
                     const React = require('react-router');
                     console.log(React.version);
+                    UserId.setId(this.state.username)
+                    sessionStorage.setItem('username', this.state.username as string)
+                    console.log('herexxxxx', UserId.getId())
                     this.props.history.push("/home");
+                    
                 })
                 .catch(function (error : any) {
                     console.log(error)
