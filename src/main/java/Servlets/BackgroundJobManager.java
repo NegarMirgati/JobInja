@@ -1,5 +1,6 @@
 package Servlets;
 
+import Auctioneer.AuctionScheduler;
 import DataLayer.DataMappers.Project.UpdateProjects;
 
 import javax.servlet.ServletContextEvent;
@@ -18,6 +19,7 @@ public class BackgroundJobManager implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new UpdateProjects(), 5, 5, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(new AuctionScheduler(),1,2,TimeUnit.MINUTES);
     }
 
     @Override

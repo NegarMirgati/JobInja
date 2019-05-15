@@ -1,34 +1,56 @@
 package Auctioneer;
-/*
+
+import DataLayer.DataMappers.Project.BidMapper;
+import DataLayer.DataMappers.user.UserMapper;
 import Exceptions.UserNotFoundException;
 import Repositories.*;
 import Entities.*;
+
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Auctioneer {
 
-    public static void performAuction(String projectTitle) throws UserNotFoundException {
+    public static User performAuction(Project p ) {
         int bestValue = Integer.MIN_VALUE;
         int currentValue = 0;
-        String bestUser = "";
-        Project p = ProjectRepo.findItemInProjectList(projectTitle);
+        User bestUser = null;
+        ArrayList<Bid> projectBids = new ArrayList<>();
         int jobOffer = p.getBudget();
-        ArrayList<Bid> projectBids = BidRepo.getBids(projectTitle);
+        try {
+            BidMapper bm = new BidMapper();
+            projectBids =bm.findbyProjectId(p.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         if(projectBids == null)
-            return;
+            return null;
         for (Bid b : projectBids) {
             currentValue = 0;
-            User u = UserRepo.findItemInUserList(b.getBiddingUser());
+            //User u = UserRepo.findItemInUserList(b.getBiddingUser());
+            UserMapper um = new UserMapper();
+            User u = null;
+            try {
+                u = um.find(b.getBiddingUser());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             currentValue += calculatePartialValue(u, p);
             Integer userOffer = b.getBiddingAmount();
             currentValue += jobOffer - userOffer;
 
             if (currentValue > bestValue) {
                 bestValue = currentValue;
-                bestUser = b.getBiddingUser();
+                bestUser = u;
             }
         }
-        printWinner(bestUser);
+        //printWinner(bestUser);
+        return bestUser;
     }
 
     public static int calculatePartialValue(User u, Project p){
@@ -48,4 +70,3 @@ public class Auctioneer {
         System .out.println("-> winner: " + username);
     }
 }
-*/

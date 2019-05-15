@@ -2,6 +2,7 @@ package DataLayer.DataMappers.Project;
 
 import DataLayer.DBCPDBConnectionPool;
 import DataLayer.DataMappers.Mapper;
+import DataLayer.DataMappers.user.UserMapper;
 import Entities.Project;
 import Entities.Skill;
 import HttpConnection.HttpConnection;
@@ -28,7 +29,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 //    private HashMap<String, Bid> bids;
 //    private int budget;
 //    private long deadline;
-    private static final String COLUMNS = " id, title, description, imageURL, budget, deadline, creationDate";
+    private static final String COLUMNS = " id, title, description, imageURL, budget, deadline, creationDate, winner";
     private static String creationDate;
 
 
@@ -38,7 +39,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             Statement st =
                     con.createStatement();
             st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY, title TEXT," +
-                    " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER)");
+                    " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER, winner TEXT, FOREIGN KEY (winner) references user(username))");
             ProjectSkillMapper psm = new ProjectSkillMapper();
             try {
                 creationDate = "0";
@@ -65,7 +66,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 //        if (loadedMap.containsKey(id)) return (Project) loadedMap.get(id);
         //HashMap<String, Skill> alaki = new HashMap<String, Skill>();
         ProjectSkillMapper pm = new ProjectSkillMapper();
-//Project(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills)
+        UserMapper um = new UserMapper();
         return  new Project(
                 rs.getString(1),
                 rs.getString(2),
@@ -73,8 +74,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 rs.getString(4),
                 rs.getInt(5),
                 rs.getLong(6),
-                rs.getLong(7),
-                pm.findProjectSkillsById(rs.getString(1))
+                pm.findProjectSkillsById(rs.getString(1)),
+                rs.getString(8)
         );
     }
 
@@ -166,6 +167,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         attrs.add("budget");
         attrs.add("deadline");
         attrs.add("creationDate");
+        attrs.add("winner");
         return attrs;
     }
 
@@ -231,14 +233,49 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             prps.setString(1, "%" + query + "%");
             prps.setString(2, "%" + query + "%");
             ResultSet rs = prps.executeQuery();
-            ArrayList<Project> users = loadAll(rs);
+            ArrayList<Project> projects = loadAll(rs);
             prps.close();
             con.close();
-            return users;
+            return projects;
         }catch(SQLException e){
             e.printStackTrace();
         }
         return null;
+    }
+
+    public ArrayList<Project> findFinishedProjects(){
+        try {
+            String sqlCommand = getFindFinneshedStatement();
+            Connection con = DBCPDBConnectionPool.getConnection();
+            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            prps.setString(1, String.valueOf(System.currentTimeMillis()));
+            //prps.setString(2, "%" + query + "%");
+            ResultSet rs = prps.executeQuery();
+            ArrayList<Project> projects = loadAll(rs);
+            prps.close();
+            con.close();
+            return projects;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateWinner(String winner, String projectId){
+        try {
+            String sqlCommand = updateWinnerStatement();
+            Connection con = DBCPDBConnectionPool.getConnection();
+            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            prps.setString(1, winner);
+            prps.setString(2, projectId);
+            int result = prps.executeUpdate();
+            System.out.println("update result");
+            System.out.println(result);
+            prps.close();
+            con.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     private String getFindByTitleOrDesStatement() {
@@ -246,6 +283,15 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
         return sqlCommand;
     }
+    private String getFindFinneshedStatement() {
+        String sqlCommand = "SELECT * FROM project WHERE winner IS NULL AND ? > deadline";
+
+        return sqlCommand;
+    }
+    protected String updateWinnerStatement() {
+        return "UPDATE project SET winner = ? WHERE id = ?";
+    }
+
 
 }
 
