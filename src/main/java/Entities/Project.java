@@ -11,9 +11,9 @@ public class Project {
     private HashMap<String, Bid> bids;
     private int budget;
     private long deadline;
-    private User winner;
+    private String winner;
 
-    public Project(String id, String title, String description, String imageURL, int budget, long aLong, long deadline, HashMap<String, Skill> skills) {
+    public Project(String id, String title, String description, String imageURL, int budget, long deadline, HashMap<String, Skill> skills, String winner) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -22,6 +22,7 @@ public class Project {
         this.deadline = deadline;
         this.skills = new HashMap<String, Skill> (skills);
         this.bids = new HashMap<>();
+        this.winner = winner;
 
 
     }
@@ -70,11 +71,11 @@ public class Project {
         this.deadline = deadline;
     }
 
-    public User getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(User winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 

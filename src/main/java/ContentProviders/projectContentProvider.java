@@ -161,5 +161,19 @@ public class ProjectContentProvider {
         }
         return contentMap;
     }
+    public static  ArrayList<Project> getFinishedProjects(){
+        ArrayList<Project> found = new ArrayList<>();
+        try {
+            ProjectMapper pm = new ProjectMapper(false);
+            found = pm.findFinishedProjects();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return found;
+
+    }
 
 }

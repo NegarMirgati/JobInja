@@ -39,6 +39,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
     }
 
 
+
     @Override
     protected String getFindStatement() {
         return "SELECT " + COLUMNS +
@@ -49,7 +50,7 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
     protected String getFindStatementByProjectId() {
         return "SELECT " + COLUMNS +
                 " FROM bid" +
-                " WHERE projectId = ?";
+                " WHERE ProjectId = ?";
     }
 
     protected String getFindStatementByUserId() {
@@ -165,6 +166,33 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
         sqlCommand += ");";
         return sqlCommand;
     }
+
+    public ArrayList<Bid> findbyProjectId(String projectId){
+        try {
+            String sqlCommand = getFindStatementByProjectId();
+            Connection con = DBCPDBConnectionPool.getConnection();
+            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            prps.setString(1, projectId);
+            ResultSet rs = prps.executeQuery();
+            ArrayList<Bid> bids = loadAll(rs);
+            prps.close();
+            con.close();
+            return bids;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private ArrayList<Bid> loadAll(ResultSet rs) throws SQLException{
+        ArrayList <Bid> result = new ArrayList<>();
+        while(rs.next()) {
+            Bid b = convertResultSetToDomainModel(rs);
+            result.add(b);
+        }
+        return result;
+    }
+
 
 
 }
