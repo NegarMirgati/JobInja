@@ -8,7 +8,7 @@ import OtherUserComponent from './OtherUserComponent'
 import UserId from '../Common/UserId'
 
 
-export default class User extends Component<any,  State> {
+ class User extends Component<any,  State> {
   constructor(props : any) {
     super(props);
     this.state = {
@@ -20,17 +20,15 @@ export default class User extends Component<any,  State> {
   componentDidMount(){
     const parsed = queryString.parse(this.props.location.search); 
     let thisId = parsed.id
-    let tokenId = ""
     this.setState({userId : parsed.id});
     var config = {
       headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
     };
     axios.get('http://localhost:8080/', config, config) .then((response : any) => {
       console.log(response.username)
-      tokenId = response.username
-  })
-    .catch(function (error : any) {
-      console.log(error)
+    })
+    .catch((error : any) => {
+      this.props.history.push("/login");
 
     })
     console.log('id : ', sessionStorage.getItem('username'))
@@ -49,6 +47,7 @@ export default class User extends Component<any,  State> {
     )
   }
 }
+export default withRouter(User);
 
 interface State{
   isLoggedInUser : string,

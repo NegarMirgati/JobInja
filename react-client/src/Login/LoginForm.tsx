@@ -49,7 +49,6 @@ class LoginForm extends Component<any, State>{
                     console.log(React.version);
                     UserId.setId(this.state.username)
                     sessionStorage.setItem('username', this.state.username as string)
-                    console.log('herexxxxx', UserId.getId())
                     this.props.history.push("/home");
                     
                 })
@@ -58,6 +57,17 @@ class LoginForm extends Component<any, State>{
                     toast.error('نام کاربری یا رمز عبور اشتباه است');
             })
         }
+    }
+
+    componentDidMount(){
+        var config = {
+            headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+          };
+        axios.get('http://localhost:8080/', config, config) .then((response : any) => {
+            this.props.history.push("/home");
+        })
+        .catch((error : any) => {  
+        })
     }
 
     render(){

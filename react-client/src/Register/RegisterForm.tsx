@@ -27,6 +27,17 @@ class RegisterForm extends Component<any, State>{
         };
     }
 
+    componentDidMount(){
+        var config = {
+            headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+          };
+        axios.get('http://localhost:8080/', config, config) .then((response : any) => {
+            this.props.history.push("/home");
+        })
+        .catch((error : any) => {  
+        })
+    }
+
     handleInputChange = (event : any) => {
         switch(event.target.id){
             case "name" : 
@@ -88,9 +99,9 @@ class RegisterForm extends Component<any, State>{
                 toast.success('ثبت نام با موفقیت انجام شد.');
                 this.props.history.push("/home");
             })
-              .catch(function (error : any) {
+              .catch((error : any) => {
                 console.log(error)
-                  toast.error('عملیات ثبت نام با خطا مواجه شد.');
+                toast.error('عملیات ثبت نام با خطا مواجه شد.');
               })
         }
     }

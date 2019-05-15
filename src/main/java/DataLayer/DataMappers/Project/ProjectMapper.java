@@ -126,6 +126,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                         values_list.get(i).add("");
                         addToTable(con, "project", attrs, values_list.get(i));
                     } catch (SQLException e) {
+                        e.printStackTrace();
                     }
 
                 }
