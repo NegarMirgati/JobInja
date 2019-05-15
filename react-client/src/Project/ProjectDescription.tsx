@@ -18,6 +18,7 @@ export default class ProjectDescription extends Component<any, State> {
       title: "",
       description: "",
       imageURL: "",
+      projectId: "",
       budget: 0
     };
   }
@@ -25,7 +26,7 @@ export default class ProjectDescription extends Component<any, State> {
   static getDerivedStateFromProps(props, state) {
     if (
       props.description !== state.description ||
-      // props.time !== state.time ||
+      props.projectId !== state.projectId ||
       props.title !== state.title ||
       props.budget !== state.budget ||
       props.imageURL !== state.imageURL ||
@@ -34,7 +35,7 @@ export default class ProjectDescription extends Component<any, State> {
       props.deadline !== state.deadline
     ) {
       return {
-        // time: props.time,
+        projectId: props.projectId,
         title: props.title,
         description: props.description,
         budget: props.budget,
@@ -97,7 +98,9 @@ export default class ProjectDescription extends Component<any, State> {
               بودجه: {this.state.budget}
             </span>
           </p>
-          {Date.now() < this.state.deadline ? null : <ProjectWinner />}
+          {Date.now() < this.state.deadline ? null : (
+            <ProjectWinner {...this.state} />
+          )}
           <h6 className="textPosition descriptionTitle insideRowPos">
             توضیحات
           </h6>
@@ -119,5 +122,6 @@ interface State {
   imageURL: ""; //
   budget: number; //
   deadline: number; //
+  projectId: any;
   time; //
 }
