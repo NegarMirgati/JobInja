@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
+import org.apache.http.HttpHeaders;
 
 import DataLayer.DataMappers.user.UserMapper;
 import Entities.User;
@@ -27,7 +29,8 @@ public class AuthenticationFilter implements Filter {
         try {
             System.out.println("IN FILTER");
             HttpServletRequest httpRequest = (HttpServletRequest) req;
-            String jwt = httpRequest.getHeader("jwt");
+            String jwt = httpRequest.getHeader("authorization").substring(7);
+            System.out.println(jwt);
             verifyJWT(jwt, req, resp);
             chain.doFilter(req, resp);
         } catch (IOException e) {
@@ -39,7 +42,7 @@ public class AuthenticationFilter implements Filter {
                 System.out.println("in null exception");
                 HttpServletResponse res = (HttpServletResponse) resp;
                 res.setStatus(res.SC_UNAUTHORIZED);
-                res.addHeader("username", null);
+                req.setAttribute("username", null);
                 chain.doFilter(req, resp);
                 } catch (IOException e1) {
                     e1.printStackTrace();
@@ -66,7 +69,9 @@ public class AuthenticationFilter implements Filter {
             String username = jwt.getClaim("username").asString();
             UserMapper um = new UserMapper();
             User user = um.find(username);
-            res.addHeader("username", user.getUsername());
+            //res.addHeader("username", user.getUsername());
+            request.setAttribute("username", user.getUsername());
+            System.out.println("AUTORIZED!!!!!");
         } catch (JWTVerificationException exception){
             res.setStatus(res.SC_FORBIDDEN); // 403 error
         }
