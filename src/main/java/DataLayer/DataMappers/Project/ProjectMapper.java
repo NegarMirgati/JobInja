@@ -108,8 +108,11 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     System.out.println(creationDate);
                 }
                 try {
+                    values_list.get(i).add("");
                     addToTable(con,"project", attrs, values_list.get(i));
-                }catch (SQLException e){}
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
 
             }
             else if ( init == false) {
@@ -120,6 +123,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     //System.out.println(values_list.get(i));
                     toBeAdded.add(i);
                     try {
+                        values_list.get(i).add("");
                         addToTable(con, "project", attrs, values_list.get(i));
                     } catch (SQLException e) {
                     }
@@ -139,7 +143,9 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
 
                     try {
                         ProjectSkillMapper.addToTable(con, "projectSkill", attr, allProjectsSkill.get(j).get(k));
-                    }catch (SQLException e){}
+                    }catch (SQLException e){
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -248,8 +254,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             String sqlCommand = getFindFinneshedStatement();
             Connection con = DBCPDBConnectionPool.getConnection();
             PreparedStatement prps = con.prepareStatement(sqlCommand);
-            prps.setString(1, String.valueOf(System.currentTimeMillis()));
-            //prps.setString(2, "%" + query + "%");
+            prps.setString(1, "");
+            prps.setString(2, String.valueOf(System.currentTimeMillis()));
             ResultSet rs = prps.executeQuery();
             ArrayList<Project> projects = loadAll(rs);
             prps.close();
@@ -269,8 +275,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             prps.setString(1, winner);
             prps.setString(2, projectId);
             int result = prps.executeUpdate();
-            System.out.println("update result");
-            System.out.println(result);
+            //System.out.println("update result");
+            //System.out.println(result);
             prps.close();
             con.close();
         }catch(SQLException e){
@@ -284,7 +290,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return sqlCommand;
     }
     private String getFindFinneshedStatement() {
-        String sqlCommand = "SELECT * FROM project WHERE winner IS NULL AND ? > deadline";
+        String sqlCommand = "SELECT * FROM project WHERE winner == ? AND ? > deadline";
 
         return sqlCommand;
     }
