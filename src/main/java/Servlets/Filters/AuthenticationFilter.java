@@ -36,14 +36,16 @@ public class AuthenticationFilter implements Filter {
             e.printStackTrace();
         } catch (NullPointerException e) {
             try {
+                System.out.println("in null exception");
                 HttpServletResponse res = (HttpServletResponse) resp;
+                res.setStatus(res.SC_UNAUTHORIZED);
                 res.addHeader("username", null);
                 chain.doFilter(req, resp);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (ServletException e1) {
-                e1.printStackTrace();
-            }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ServletException e1) {
+                    e1.printStackTrace();
+                }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,7 +68,7 @@ public class AuthenticationFilter implements Filter {
             User user = um.find(username);
             res.addHeader("username", user.getUsername());
         } catch (JWTVerificationException exception){
-            res.setStatus(res.SC_FORBIDDEN);
+            res.setStatus(res.SC_FORBIDDEN); // 403 error
         }
     }
 
