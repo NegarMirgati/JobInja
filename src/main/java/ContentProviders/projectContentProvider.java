@@ -23,8 +23,10 @@ public class ProjectContentProvider {
     public static JSONArray getContentsForAllProjects() throws ProjectNotFoundException, SQLException {
         ArrayList<Project> allProjects = new ArrayList<>();
         try {
+            System.out.println("here in project content provider before find");
             ProjectMapper pm = new ProjectMapper(false);
             allProjects = pm.findAllOrderBycreationDate();
+            System.out.println("here in project content provider after find");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,9 +66,13 @@ public class ProjectContentProvider {
         instance.put("hasBade", hasbade);
         //System.out.println("wiwiwiwinwewee");
         //System.out.println(p.getWinner());
-        if ( p.getWinner().equals("NULL")) {
+        if ( p.getWinner().equals("NULL") || p.getWinner()=="NULL" ) {
             instance.put("winner", "بدون برنده");
             //System.out.println(p.getWinner());
+        }
+        else if (p.getWinner().equals("") || p.getWinner() == "" ){
+            instance.put("winner", p.getWinner());
+            System.out.println("in winner 0");
         }
         else {
             User u = um.find(p.getWinner());

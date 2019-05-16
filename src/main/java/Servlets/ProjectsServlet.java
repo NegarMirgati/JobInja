@@ -26,12 +26,13 @@ public class ProjectsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getParameter("q") == null) {
+        if(request.getParameter("q") == "" || request.getParameter("q").equals("")) {
             response.setContentType("application/json;charset=UTF-8");
             System.out.println("in ProjectsServlet");
             response.setStatus(response.SC_OK);
             JSONArray map = null;
             try {
+                System.out.println("here in projectsservlet for q null");
                 map = ProjectContentProvider.getContentsForAllProjects();
             } catch (ProjectNotFoundException e) {
                 e.printStackTrace();
@@ -44,6 +45,7 @@ public class ProjectsServlet extends HttpServlet {
         else {
             response.setContentType("application/json;charset=UTF-8");
             String q = request.getParameter("q");
+            System.out.println("qqq");
             System.out.println(q);
             JSONArray map = ProjectContentProvider.getSearchedProjects(q);
             response.setStatus(response.SC_OK);
