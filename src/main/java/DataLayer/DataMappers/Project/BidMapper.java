@@ -108,8 +108,8 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
 
     @Override
     protected Bid convertResultSetToDomainModel(ResultSet rs) throws SQLException {
-        String id = (rs.getString(1));
-        if (loadedMap.containsKey(id)) return (Bid) loadedMap.get(id);
+        //String id = (rs.getString(1));
+        //if (loadedMap.containsKey(id)) return (Bid) loadedMap.get(id);
         return  new Bid(
                 rs.getString(1),
                 rs.getInt(3),
@@ -167,11 +167,13 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
         return sqlCommand;
     }
 
-    public ArrayList<Bid> findbyProjectId(String projectId){
+    public ArrayList<Bid> findbyProjectId(String projectId) throws  SQLException{
+        PreparedStatement prps = null;
+        Connection con = null;
         try {
             String sqlCommand = getFindStatementByProjectId();
-            Connection con = DBCPDBConnectionPool.getConnection();
-            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            con = DBCPDBConnectionPool.getConnection();
+            prps = con.prepareStatement(sqlCommand);
             prps.setString(1, projectId);
             ResultSet rs = prps.executeQuery();
             ArrayList<Bid> bids = loadAll(rs);
@@ -180,6 +182,10 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
             return bids;
         }catch(SQLException e){
             e.printStackTrace();
+        }
+        finally {
+            prps.close();
+            con.close();
         }
         return null;
     }

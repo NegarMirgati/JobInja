@@ -13,7 +13,7 @@ public class UpdateProjects implements Runnable {
         // Do your quarterly job here.
         try {
             Connection conn = DBCPDBConnectionPool.getConnection();
-            ProjectMapper.fillTable(conn,false);
+            ProjectMapper.fillTable(false);
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
