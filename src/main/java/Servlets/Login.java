@@ -40,6 +40,7 @@ public class Login extends HttpServlet {
                 out.println(instance);
             }
             else {
+                System.out.println("HEREEEEEEEEEE");
                 response.setStatus(response.SC_FORBIDDEN);
                 JSONObject instance = new JSONObject();
                 instance.put("status", 403);

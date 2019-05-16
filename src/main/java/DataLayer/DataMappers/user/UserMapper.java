@@ -19,12 +19,8 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         Statement st = con.createStatement();
         st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username TEXT PRIMARY KEY, password TEXT, salt TEXT, firstName TEXT," +
                 " lastName TEXT, jobTitle TEXT, profilePictureURL TEXT, bio TEXT)");
-        try {
-            fillTable();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
 
+        fillTable();
         st.close();
         con.close();
     }
@@ -86,7 +82,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
 
     }
 
-    private void fillTable() throws SQLException {
+    private void fillTable() {
         ArrayList<User> users = new ArrayList<>();
         users.add(getUser1Data());
         users.add(getUser2Data());
@@ -103,7 +99,9 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
             userData.put("jobTitle", users.get(i).getJobTitle());
             userData.put("profilePictureURL", users.get(i).getProfilePictureURL());
             userData.put("bio", users.get(i).getBio());
-            addToTable(userData);
+            try {
+                addToTable(userData);
+            }catch (SQLException e){}
 
             ArrayList<String> attr = UserSkillMapper.createAttribute();
             User u = users.get(i);
@@ -114,7 +112,10 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
                 values.add(u.getUsername());
                 values.add(entry.getKey());
                 values.add(Integer.toString(s.getPoint()));
-                UserSkillMapper.addToTable("userSkills",attr, values);
+                try {
+                    UserSkillMapper.addToTable("userSkills",attr, values);
+                }catch (SQLException e){}
+
                 }
             }
         }

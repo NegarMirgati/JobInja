@@ -31,23 +31,25 @@ export default class UserComponentLogged extends Component<any,  State> {
   
   componentDidMount(){
     var linktmp = 'http://localhost:8080/user?id='
-    var  link = linktmp.concat(this.props.userId)
-    axios.get(link)
-    .then((response : any) => {
-      let obj: any = JSON.parse(JSON.stringify(response.data));
-      this.setState({name : obj["name"]});
-      this.setState({lastname : obj["lastname"]});
-      this.setState({id : obj["id"]});
-      this.setState({job : obj["jobTitle"]});
-      this.setState({bio : obj["bio"]});
-      this.setState({proLink : obj["proLink"]});
-      this.setState({skills : obj["skills"]});
-      this.setState({possibleSkills : obj["possibleSkills"]});
-      this.setState({loading : false})
-    })
-    .catch(function (error : any) {
-      toast.error('خطا در برقراری ارتباط با سرور');
-    })
+    if(this.props.userId){
+      var  link = linktmp.concat(this.props.userId)
+      axios.get(link)
+      .then((response : any) => {
+        let obj: any = JSON.parse(JSON.stringify(response.data));
+        this.setState({name : obj["name"]});
+        this.setState({lastname : obj["lastname"]});
+        this.setState({id : obj["id"]});
+        this.setState({job : obj["jobTitle"]});
+        this.setState({bio : obj["bio"]});
+        this.setState({proLink : obj["proLink"]});
+        this.setState({skills : obj["skills"]});
+        this.setState({possibleSkills : obj["possibleSkills"]});
+        this.setState({loading : false})
+      })
+      .catch(function (error : any) {
+        toast.error('خطا در برقراری ارتباط با سرور');
+      })
+    }
   }
 
   getMainElements(){

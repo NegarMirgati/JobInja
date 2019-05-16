@@ -97,7 +97,7 @@ class RegisterForm extends Component<any, State>{
             .then((response : any) => {
                 console.log(response)
                 toast.success('ثبت نام با موفقیت انجام شد.');
-                this.props.history.push("/home");
+                this.props.history.push("/login");
             })
               .catch((error : any) => {
                 console.log(error)
