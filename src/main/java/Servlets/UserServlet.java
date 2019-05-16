@@ -60,10 +60,12 @@ public class UserServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String path = (request).getRequestURI();
         String userId = request.getParameter("id");
+        String myId = (String) request.getAttribute("username");
         request.setAttribute("userID", userId);
+        System.out.println("myId : " + myId + " userId : " + userId);
 
         try {
-            JSONObject map = UserContentProvider.getHTMLContentsForUser(userId);
+            JSONObject map = UserContentProvider.getHTMLContentsForUser(myId, userId);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);

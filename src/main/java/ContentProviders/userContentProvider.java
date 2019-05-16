@@ -21,7 +21,7 @@ public class UserContentProvider {
     private static SkillMapper sm = new SkillMapper();
     private static EndorsementMapper em = new EndorsementMapper();
 
-    public static JSONObject getHTMLContentsForUser(String uID) throws UserNotFoundException {
+    public static JSONObject getHTMLContentsForUser(String myId, String uID) throws UserNotFoundException {
         JSONObject contentMap = new JSONObject();
         try{
             User u = um.find(uID);
@@ -33,8 +33,7 @@ public class UserContentProvider {
             contentMap.put("proLink", u.getProfilePictureURL());
             contentMap.put("skills",getUserSkills(u.getUsername()));
             contentMap.put("possibleSkills", getUserPossibleSkills(u.getUsername()));
-            contentMap.put("endorsedSkills", getUserEndorsedSkills(uID));
-            System.out.println(getUserEndorsedSkills(uID));
+            contentMap.put("endorsedSkills", getUserEndorsedSkills(myId, uID));
             return contentMap;
 
         }catch(SQLException e){
@@ -110,10 +109,10 @@ public class UserContentProvider {
         return contentMap;
     }
 
-    private static JSONArray getUserEndorsedSkills(String thatUser){
+    private static JSONArray getUserEndorsedSkills(String loggedInUser,String thatUser){
         JSONArray content = new JSONArray();
         ArrayList<String> values = new ArrayList<>();
-        values.add("1");
+        values.add(loggedInUser);
         values.add(thatUser);
         ArrayList<String> skills= em.getEndorsedSkills(values);
         for (int i  = 0; i < skills.size(); i++) {
@@ -138,8 +137,8 @@ public class UserContentProvider {
         }
     }
 
-    public static void checkCurrentUser(String id) throws UserAccessForbidden {
-        if ( !(id.equals("1"))) {
+    public static void checkCurrentUser(String tokenId, String urlId) throws UserAccessForbidden {
+        if ( !(urlId.equals(tokenId))) {
             throw new UserAccessForbidden("access forbidden");
 
         }

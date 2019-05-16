@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class DBCPDBConnectionPool {
 
     private static BasicDataSource ds = new BasicDataSource();
-    private final static String dbURL = "jdbc:sqlite:/Users/negar/Desktop/CA8/test.db";
+    private final static String dbURL = "jdbc:sqlite:/Users/negar/Desktop/CA8/newDB.db";
 
     static {
         ds.setUrl(dbURL);

@@ -28,9 +28,10 @@ public class EditSkill extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
         String name = request.getParameter("name");
-        String userID = request.getParameter("id");
-        System.out.println("userId: " +userID);
+        String userID = (String) request.getAttribute("username");
+        System.out.println("userID: " +userID);
         System.out.println("name: " +name);
+        String urlId = request.getParameter("id");
 
         try {
             if(userID == null)
@@ -38,7 +39,7 @@ public class EditSkill extends HttpServlet {
             else if(name == null)
                 throw new SkillNotFoundException("skill not found");
 
-            UserContentProvider.checkCurrentUser(userID);
+            UserContentProvider.checkCurrentUser(userID, urlId);
             DeleteSkillOfUserCommand command = new DeleteSkillOfUserCommand(userID, name);
             command.execute();
             JSONObject status = new JSONObject();
@@ -57,7 +58,7 @@ public class EditSkill extends HttpServlet {
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
-        String userID = request.getParameter("id");
+        String userID = (String) request.getAttribute("username");
         String selectedSkill = request.getParameter("name");
         System.out.println("id:" + userID);
         System.out.println("name:" + selectedSkill);
@@ -93,13 +94,14 @@ public class EditSkill extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String userID = request.getParameter("id");
         String name = request.getParameter("name");
-        String endrorserID = "1";
-        System.out.println("id: " +userID);
+        String endrorserID = (String) request.getAttribute("username");
+        System.out.println("endorsedId: " +userID);
+        System.out.println("endorserId: " +endrorserID);
         System.out.println("name: " +name);
 
         EndorseCommand command = new EndorseCommand(userID, endrorserID, name);
         try {
-            if(userID != null && userID.equals("1"))
+            if(userID != null && userID.equals(endrorserID))
                 throw new UserAccessForbidden("Forbidden endorse");
 
             //UserContentProvider.validateSkill(name);
