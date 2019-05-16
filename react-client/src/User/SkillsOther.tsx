@@ -53,11 +53,14 @@ export default class SkillsOther extends Component<Props, State> {
         if(event.target != event.currentTarget) {
           return;
         }
+        var config = {
+          headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+        };
         var linktmp = 'http://localhost:8080/user/skill?id=';
         var  link = linktmp.concat(this.state.id, '&name=')
         var selectedSkill = event.target.value;
         var finalLink = link.concat(selectedSkill);
-        axios.post(finalLink)
+        axios.post(finalLink, null, config)
         .then((response : any) => {
             var array : any[] = [...this.state.endorsedSkills]; // make a separate copy of the array
             array.push(selectedSkill);

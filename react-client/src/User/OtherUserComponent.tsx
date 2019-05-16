@@ -29,8 +29,7 @@ export default class OtherUserComponent extends Component<any,  State> {
       headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
   };
     
-    console.log(link);
-    axios.get(link, null, config)
+    axios.get(link, config, config)
     .then((response : any) => {
       let obj: any = JSON.parse(JSON.stringify(response.data));
       this.setState({name: obj["name"]});

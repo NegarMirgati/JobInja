@@ -62,7 +62,10 @@ export default class SkillsLogged extends Component<Props, State> {
         var selectedSkill = e.options[e.selectedIndex].value;
         var toAdd = selectedSkill.replace(/\+/g, "%2B");
         var finalLink = link.concat(toAdd);
-        axios.put(finalLink)
+        var config = {
+          headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+        };
+        axios.put(finalLink, null, config)
         .then((response : any) => {
             var array : any[] = [...this.state.possibleSkills]; // make a separate copy of the array
             var index = array.indexOf(selectedSkill)
@@ -84,16 +87,16 @@ export default class SkillsLogged extends Component<Props, State> {
       }
 
       delSkill = (event : any) => {
-        console.log(event.target.value);
         var linktmp = 'http://localhost:8080/user/skill?id=' + this.props.id + '&name=';
         var selectedSkill = event.target.value;
         if(selectedSkill === undefined)
           return;
-
         var toDelete = selectedSkill.replace(/\+/g, "%2B");
         var finalLink = linktmp.concat(toDelete);
-        console.log(finalLink)
-        axios.delete(finalLink)
+        var config = {
+          headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+        };
+        axios.delete(finalLink, config, config)
         .then((response : any) => {
             var mySkills : any[] = [...this.state.skills]; // make a separate copy of the array
             for(var i  = 0; i < mySkills.length; i ++){
