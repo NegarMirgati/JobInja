@@ -30,10 +30,13 @@ export default class UserComponentLogged extends Component<any,  State> {
   }
   
   componentDidMount(){
+    var config = {
+        headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
+    };
     var linktmp = 'http://localhost:8080/user?id='
     if(this.props.userId){
       var  link = linktmp.concat(this.props.userId)
-      axios.get(link)
+      axios.get(link, config, null)
       .then((response : any) => {
         let obj: any = JSON.parse(JSON.stringify(response.data));
         this.setState({name : obj["name"]});
