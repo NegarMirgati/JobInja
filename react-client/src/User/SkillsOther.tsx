@@ -58,17 +58,18 @@ export default class SkillsOther extends Component<Props, State> {
         };
         var linktmp = 'http://localhost:8080/user/skill?id=';
         var  link = linktmp.concat(this.state.id, '&name=')
-        var selectedSkill = event.target.value;
+        var skillTemp  = event.target.value;
+        var selectedSkill = skillTemp.replace(/\+/g, "%2B");
         var finalLink = link.concat(selectedSkill);
         axios.post(finalLink, null, config)
         .then((response : any) => {
             var array : any[] = [...this.state.endorsedSkills]; // make a separate copy of the array
-            array.push(selectedSkill);
+            array.push(skillTemp);
             this.setState({endorsedSkills: array}); 
             var mySkills : any[] = [...this.state.skills]; // make a separate copy of the array
             for(var i  = 0; i < mySkills.length; i ++){
-              if(mySkills[i].hasOwnProperty(selectedSkill)){
-                mySkills[i][selectedSkill] =  (Number(mySkills[i][selectedSkill]) + 1).toString();
+              if(mySkills[i].hasOwnProperty(skillTemp)){
+                mySkills[i][skillTemp] =  (Number(mySkills[i][skillTemp]) + 1).toString();
                 this.setState({skills: mySkills});
               }  
             }
