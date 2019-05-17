@@ -21,6 +21,8 @@ public class Auctioneer {
         try {
             BidMapper bm = new BidMapper();
             projectBids =bm.findbyProjectId(p.getId());
+            System.out.println("bid size: ");
+            System.out.println(projectBids.size());
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -47,6 +49,8 @@ public class Auctioneer {
             if (currentValue > bestValue) {
                 bestValue = currentValue;
                 bestUser = u;
+                System.out.println("u.getUsername() of candidates");
+                System.out.println(u.getUsername());
             }
         }
         //printWinner(bestUser);

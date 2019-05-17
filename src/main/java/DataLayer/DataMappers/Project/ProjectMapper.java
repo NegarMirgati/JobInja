@@ -43,7 +43,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             ProjectSkillMapper psm = new ProjectSkillMapper();
             try {
                 creationDate = "0";
-                fillTable(con, true);
+                fillTable( true);
             } catch (SQLException e) {
                 // Logger.getLogger(SQLiteJDBCLoader.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -80,7 +80,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
 
 
-    public static void fillTable(Connection con, boolean init) throws IOException, SQLException {
+    public static void fillTable(boolean init) throws IOException, SQLException {
         String creationDateUpdate = "0";
         System.out.println("adding projects");
         HttpConnection connection = new HttpConnection();
@@ -109,7 +109,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 }
                 try {
                     values_list.get(i).add("");
-                    addToTable(con,"project", attrs, values_list.get(i));
+                    addToTable("project", attrs, values_list.get(i));
                 }catch (SQLException e){
                     e.printStackTrace();
                 }
@@ -124,7 +124,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     toBeAdded.add(i);
                     try {
                         values_list.get(i).add("");
-                        addToTable(con, "project", attrs, values_list.get(i));
+                        addToTable("project", attrs, values_list.get(i));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -143,7 +143,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                 for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
 
                     try {
-                        ProjectSkillMapper.addToTable(con, "projectSkill", attr, allProjectsSkill.get(j).get(k));
+                        ProjectSkillMapper.addToTable("projectSkill", attr, allProjectsSkill.get(j).get(k));
                     }catch (SQLException e){
                         e.printStackTrace();
                     }
@@ -178,13 +178,15 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return attrs;
     }
 
-    public static void addToTable(Connection con,String tableName,ArrayList<String> attrs,ArrayList<String> values  ) throws SQLException {
+    public static void addToTable(String tableName,ArrayList<String> attrs,ArrayList<String> values  ) throws SQLException {
+        Connection con = DBCPDBConnectionPool.getConnection();
         String sqlCommand = insertCommand(tableName,attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
         for(int j = 1; j <= values.size(); j++)
             prp.setString(j, values.get(j-1));
         prp.executeUpdate();
         prp.close();
+        con.close();
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
@@ -200,21 +202,30 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return sqlCommand;
     }
 
-    public ArrayList<Project> findAllOrderBycreationDate(){
+    public ArrayList<Project> findAllOrderBycreationDate() throws SQLException {
+        ArrayList<Project> projects = null;
+        ResultSet rs = null;
+        PreparedStatement prps = null;
+        Connection con = null;
         try {
             String sqlCommand = getFindSortByDateStatement();
-            Connection con = DBCPDBConnectionPool.getConnection();
-            PreparedStatement prps = con.prepareStatement(sqlCommand);
-            ResultSet rs = prps.executeQuery();
-            ArrayList<Project> projects = loadAll(rs);
-            rs.close();
-            prps.close();
-            con.close();
-            return projects;
+            con = DBCPDBConnectionPool.getConnection();
+            prps = con.prepareStatement(sqlCommand);
+            rs = prps.executeQuery();
+            projects = loadAll(rs);
+//            rs.close();
+//            prps.close();
+//            con.close();
+           // return projects;
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return null;
+        finally {
+            rs.close();
+            prps.close();
+            con.close();
+        }
+        return projects;
     }
 
     protected String getFindSortByDateStatement(){
@@ -232,56 +243,79 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return result;
     }
 
-    public ArrayList<Project> findbyTitleOrDes(String query){
+    public ArrayList<Project> findbyTitleOrDes(String query) throws SQLException {
+        ResultSet rs = null;
+        PreparedStatement prps = null;
+        Connection con = null;
+        ArrayList<Project> projects = null;
         try {
             String sqlCommand = getFindByTitleOrDesStatement();
-            Connection con = DBCPDBConnectionPool.getConnection();
-            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            con = DBCPDBConnectionPool.getConnection();
+            prps = con.prepareStatement(sqlCommand);
             prps.setString(1, "%" + query + "%");
             prps.setString(2, "%" + query + "%");
-            ResultSet rs = prps.executeQuery();
-            ArrayList<Project> projects = loadAll(rs);
-            prps.close();
-            con.close();
+            rs = prps.executeQuery();
+            projects = loadAll(rs);
+//            prps.close();
+//            con.close();
             return projects;
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return null;
+        finally {
+            rs.close();
+            prps.close();
+            con.close();
+        }
+        return projects;
     }
 
-    public ArrayList<Project> findFinishedProjects(){
+    public ArrayList<Project> findFinishedProjects() throws SQLException {
+        ResultSet rs = null;
+        PreparedStatement prps = null;
+        Connection con = null;
+        ArrayList<Project> projects = null;
         try {
             String sqlCommand = getFindFinneshedStatement();
-            Connection con = DBCPDBConnectionPool.getConnection();
-            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            con = DBCPDBConnectionPool.getConnection();
+            prps = con.prepareStatement(sqlCommand);
             prps.setString(1, "");
             prps.setString(2, String.valueOf(System.currentTimeMillis()));
-            ResultSet rs = prps.executeQuery();
-            ArrayList<Project> projects = loadAll(rs);
+            rs = prps.executeQuery();
+            projects = loadAll(rs);
             prps.close();
             con.close();
             return projects;
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            rs.close();
+            prps.close();
+            con.close();
         }
-        return null;
+        return projects;
     }
 
-    public void updateWinner(String winner, String projectId){
+    public void updateWinner(String winner, String projectId) throws SQLException {
+        PreparedStatement prps = null;
+        Connection con = null;
         try {
             String sqlCommand = updateWinnerStatement();
-            Connection con = DBCPDBConnectionPool.getConnection();
-            PreparedStatement prps = con.prepareStatement(sqlCommand);
+            con = DBCPDBConnectionPool.getConnection();
+            prps = con.prepareStatement(sqlCommand);
             prps.setString(1, winner);
             prps.setString(2, projectId);
             int result = prps.executeUpdate();
             //System.out.println("update result");
             //System.out.println(result);
-            prps.close();
-            con.close();
+//            prps.close();
+//            con.close();
         }catch(SQLException e){
             e.printStackTrace();
+        }
+        finally {
+            con.close();
+            prps.close();
         }
     }
 

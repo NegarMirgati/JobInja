@@ -57,13 +57,15 @@ public class ProjectSkillMapper extends Mapper<Skill, String> implements IProjec
     }
 
 
-    public static void addToTable(Connection con,String tableName,ArrayList<String> attrs,ArrayList<String> values  ) throws SQLException {
+    public static void addToTable(String tableName,ArrayList<String> attrs,ArrayList<String> values  ) throws SQLException {
+        Connection con = DBCPDBConnectionPool.getConnection();
         String sqlCommand = insertCommand(tableName,attrs);
         PreparedStatement prp = con.prepareStatement(sqlCommand);
         for(int j = 1; j <= values.size(); j++)
             prp.setString(j, values.get(j-1));
         prp.executeUpdate();
         prp.close();
+        con.close();
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
@@ -98,22 +100,30 @@ public class ProjectSkillMapper extends Mapper<Skill, String> implements IProjec
     }
 
 
-    public  HashMap<String, Skill> findProjectSkillsById( String ProjectId) {
+    public  HashMap<String, Skill> findProjectSkillsById( String ProjectId) throws SQLException {
+        HashMap<String, Skill> retval = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            Connection con = DBCPDBConnectionPool.getConnection();
+            con = DBCPDBConnectionPool.getConnection();
             String query = getFindStatement();
-            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt = con.prepareStatement(query);
             pstmt.setString(1, ProjectId);
             rs = pstmt.executeQuery();
-            HashMap<String, Skill> retval = loadAll(rs);
-            pstmt.close();
-            con.close();
+            retval = loadAll(rs);
+//            pstmt.close();
+//            con.close();
             return retval;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        finally {
+            rs.close();
+            pstmt.close();
+            con.close();
+        }
+        return retval;
     }
 
 

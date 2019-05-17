@@ -68,7 +68,8 @@ public class ProjectContentProvider {
         //System.out.println(p.getWinner());
         if ( p.getWinner().equals("NULL") || p.getWinner()=="NULL" ) {
             instance.put("winner", "بدون برنده");
-            //System.out.println(p.getWinner());
+            System.out.println("p.getWinner().equals(\"NULL\")");
+            System.out.println(p.getWinner());
         }
         else if (p.getWinner().equals("") || p.getWinner() == "" ){
             instance.put("winner", p.getWinner());
@@ -165,6 +166,9 @@ public class ProjectContentProvider {
             ProjectMapper pm = new ProjectMapper(false);
             found = pm.findbyTitleOrDes(query);
             System.out.println(found.size());
+            for (Project p:found){
+                System.out.println(p.getBudget());
+            }
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
