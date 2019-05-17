@@ -11,10 +11,7 @@ import "src/Styles/style.css";
 import ProjectCommon from "./ProjectCommon";
 import ProjectWindow from "./ProjectWindow";
 
-class Project extends Component<
-  RouteComponentProps<any>,
-  State
-> {
+class Project extends Component<RouteComponentProps<any>, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -31,55 +28,51 @@ class Project extends Component<
     };
   }
   componentDidMount() {
+    const parsed = queryString.parse(this.props.location.search);
+    var linktmp = "http://localhost:8080/project?id=";
+    var link = linktmp.concat(parsed.id as string);
+
+    let changeProjectState = (errorType: number) => {
+      if (errorType == 404 || errorType == 403) {
+        console.log("403 404");
+        this.setState({ isProjectAvailable: "false" });
+      }
+    };
     var config = {
-      headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
-      };
-    axios.get('http://localhost:8080/', config, config) .then((response : any) => {
-      console.log("success")
-      const parsed = queryString.parse(this.props.location.search);
-      let changeProjectState = (errorType: number) => {
-        if (errorType == 404 || errorType == 403) {
-          console.log("403 404");
-          this.setState({ isProjectAvailable: "false" });
-        }
-      };
-
-      this.setState({ projectId: parsed.id }, () => {
-        var linktmp = "http://localhost:8080/project?id=";
-        var link = linktmp.concat(this.state.projectId);
-        axios
-          .get(link)
-          .then((response: any) => {
-            let obj: any = JSON.parse(JSON.stringify(response.data));
-
-            this.setState({ title: obj["title"] });
-            this.setState({ description: obj["description"] });
-            this.setState({ imageURL: obj["imageURL"] });
-            this.setState({ skills: obj["skills"] });
-            console.log("did mount project ");
-            console.log(obj["skills"]);
-            this.setState({ budget: obj["budget"] });
-            this.setState({ deadline: obj["deadline"] });
-            this.setState({ hasBade: obj["hasBade"] });
-          })
-          .catch(function(error: any) {
-            toast.error(error.response.data["message"]);
-            if (error.response.status == 404) {
-              console.log("here eee 404");
-              changeProjectState(404);
-            }
-            if (error.response.status == 403) {
-              console.log("here eee 403");
-              changeProjectState(403);
-            }
-            console.log(error.response.status);
-            console.log(error.response.data["message"]);
-          });
-      });
+      headers: { Authorization: "bearer " + localStorage.getItem("jwt") }
+    };
+    axios
+      .get(link, config, config)
+      .then((response: any) => {
+        console.log("success");
+        let obj: any = JSON.parse(JSON.stringify(response.data));
+        this.setState({ projectId: parsed.id });
+        this.setState({ title: obj["title"] });
+        this.setState({ description: obj["description"] });
+        this.setState({ imageURL: obj["imageURL"] });
+        this.setState({ skills: obj["skills"] });
+        console.log("did mount project ");
+        console.log(obj["skills"]);
+        this.setState({ budget: obj["budget"] });
+        this.setState({ deadline: obj["deadline"] });
+        this.setState({ hasBade: obj["hasBade"] });
       })
-    .catch((error : any) => {
-      this.props.history.push("/login");
-    })
+      .catch(function(error: any) {
+        toast.error(error.response.data["message"]);
+        if (error.response.status == 404) {
+          console.log("here eee 404");
+          changeProjectState(404);
+        }
+        if (error.response.status == 403) {
+          console.log("here eee 403");
+          changeProjectState(403);
+        }
+        console.log(error.response.status);
+        console.log(error.response.data["message"]);
+      })
+      .catch((error: any) => {
+        this.props.history.push("/login");
+      });
   }
 
   render() {
