@@ -38,6 +38,9 @@ class Project extends Component<RouteComponentProps<any>, State> {
         this.setState({ isProjectAvailable: "false" });
       }
     };
+    let directToLogin = () => {
+      this.props.history.push("/login");
+    };
     var config = {
       headers: { Authorization: "bearer " + localStorage.getItem("jwt") }
     };
@@ -69,9 +72,7 @@ class Project extends Component<RouteComponentProps<any>, State> {
         }
         console.log(error.response.status);
         console.log(error.response.data["message"]);
-      })
-      .catch((error: any) => {
-        this.props.history.push("/login");
+        directToLogin();
       });
   }
 
