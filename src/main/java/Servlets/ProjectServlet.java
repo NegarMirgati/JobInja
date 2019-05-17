@@ -39,7 +39,9 @@ public class ProjectServlet extends HttpServlet {
         //String context = tokenizer.nextToken();
        // String projectID = tokenizer.nextToken();
         String projectID = request.getParameter("id");
+        String userId = (String) request.getAttribute("username");
         request.setAttribute("projectID", projectID);
+        System.out.println("userID: " +userId);
         boolean hasBade = false;
 
         try {
@@ -47,7 +49,7 @@ public class ProjectServlet extends HttpServlet {
             ProjectMapper pm = new ProjectMapper(false);
             Project p = pm.find(projectID);
             JSONObject map = ProjectContentProvider.getProjectContent(p);
-            ProjectContentProvider.checkAccess("1",projectID);
+            ProjectContentProvider.checkAccess(userId,projectID);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
