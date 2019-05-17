@@ -41,7 +41,7 @@ export default class ProjectWinner extends Component<Props, State> {
           //this.setState({ winner: obj["winner"] });
           this.setState({ winner: obj["winner"] });
           //toast.success(obj["winner"]);
-          toast.success("اطلاعات برنده موفقیت کسب شد");
+          //toast.success("اطلاعات برنده موفقیت کسب شد");
           console.log(obj["winner"]);
         })
         .catch(function(error: any) {

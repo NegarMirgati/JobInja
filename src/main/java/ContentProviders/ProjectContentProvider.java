@@ -180,10 +180,11 @@ public class ProjectContentProvider {
             instance = new JSONObject();
             try {
                 instance.put(id, getProjectContent(p));
+                contentMap.put(instance);
             } catch (ProjectNotFoundException | IOException | SQLException e) {
                 e.printStackTrace();
             }
-            contentMap.put(instance);
+
         }
         return contentMap;
     }
