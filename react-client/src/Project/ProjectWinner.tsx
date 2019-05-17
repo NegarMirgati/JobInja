@@ -31,15 +31,18 @@ export default class ProjectWinner extends Component<Props, State> {
       var linktmp = "http://localhost:8080/project?id=";
       var link = linktmp.concat(this.state.projectId);
       //toast.error(this.state.projectId);
+      var config = {
+        headers: { Authorization: "bearer " + localStorage.getItem("jwt") }
+      };
       axios
-        .get(link)
+        .get(link, config, config)
         .then((response: any) => {
           let obj: any = JSON.parse(JSON.stringify(response.data));
           //this.setState({ winner: obj["winner"] });
           this.setState({ winner: obj["winner"] });
           //toast.success(obj["winner"]);
           toast.success("اطلاعات برنده موفقیت کسب شد");
-          // rvalue = true;
+          console.log(obj["winner"]);
         })
         .catch(function(error: any) {
           toast.error(error.response.data["message"]);

@@ -38,6 +38,7 @@ export default class ProjectRemainingTime extends Component<any, State> {
   };
 
   calcRemainigTime = () => {
+    //if ( this.state.deadline > this.state.time){
     let tmp = this.state.deadline - this.state.time;
     var day = Math.floor(tmp / 86400000);
     var remainder = tmp % 86400000;

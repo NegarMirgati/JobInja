@@ -41,15 +41,15 @@ public class ProjectServlet extends HttpServlet {
         String projectID = request.getParameter("id");
         String userId = (String) request.getAttribute("username");
         request.setAttribute("projectID", projectID);
-        System.out.println("userID: " +userId);
+        System.out.println("userId in project: " +userId);
         boolean hasBade = false;
 
         try {
             //JSONObject map = projectContentProvider.getHTMLContentsForProject("1", projectID);
             ProjectMapper pm = new ProjectMapper(false);
             Project p = pm.find(projectID);
-            JSONObject map = ProjectContentProvider.getProjectContent(p);
             ProjectContentProvider.checkAccess(userId,projectID);
+            JSONObject map = ProjectContentProvider.getProjectContent(p);
             response.setStatus(response.SC_OK);
             PrintWriter out = response.getWriter();
             out.println(map);
