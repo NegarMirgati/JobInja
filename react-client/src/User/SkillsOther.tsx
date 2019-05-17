@@ -23,16 +23,16 @@ export default class SkillsOther extends Component<Props, State> {
     }
 
     createSkills = () : any => {
+      if(this.props && !(this.props.skills === undefined)){
         var keys : string[] = [];
-        for(var i = 0; i < this.state.skills.length; i++){
-          Object.keys(this.state.skills[i]).map((key) => {
-            const value = this.state.skills[i][key];
+        for(var i = 0; i < this.props.skills.length; i++){
+          Object.keys(this.props.skills[i]).map((key) => {
+            const value = this.props.skills[i][key];
             var test = key.concat(", ",value)
             keys.push(test)
           });
         }
         var skillsJSX : JSX.Element[] = [];
-        var num = keys.length;
         for(var i = 0; i < keys.length; i ++) {
           var key = keys[i];
           var tkn : string = "skillBtn" + (i + 1).toString();
@@ -45,6 +45,7 @@ export default class SkillsOther extends Component<Props, State> {
          
        }
           return skillsJSX;
+      }
     }
 
     endorse = (event : any) : any => {
