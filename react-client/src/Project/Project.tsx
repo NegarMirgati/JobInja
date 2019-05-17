@@ -39,6 +39,9 @@ class Project extends Component<RouteComponentProps<any>, State> {
       }
     };
     let directToLogin = () => {
+      localStorage.removeItem('jwt')
+      sessionStorage.removeItem('jwt')
+      sessionStorage.removeItem('username')
       this.props.history.push("/login");
     };
     let directToHome = () => {

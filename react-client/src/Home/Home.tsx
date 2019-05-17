@@ -15,6 +15,9 @@ class Home extends Component<any, any> {
       console.log(response.username)
     })
     .catch((error : any) => {
+      localStorage.removeItem('jwt');
+      sessionStorage.removeItem('jwt');
+      sessionStorage.removeItem('username');
       this.props.history.push("/login");
     })
   }
