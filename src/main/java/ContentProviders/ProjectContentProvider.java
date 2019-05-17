@@ -68,12 +68,12 @@ public class ProjectContentProvider {
         //System.out.println(p.getWinner());
         if ( p.getWinner().equals("NULL") || p.getWinner()=="NULL" ) {
             instance.put("winner", "بدون برنده");
-            System.out.println("p.getWinner().equals(\"NULL\")");
-            System.out.println(p.getWinner());
+            //System.out.println("p.getWinner().equals(\"NULL\")");
+            //System.out.println(p.getWinner());
         }
         else if (p.getWinner().equals("") || p.getWinner() == "" ){
             instance.put("winner", p.getWinner());
-            System.out.println("in winner 0");
+            //System.out.println("in winner 0");
         }
         else {
             User u = um.find(p.getWinner());

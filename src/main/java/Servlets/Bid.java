@@ -32,6 +32,8 @@ public class Bid extends HttpServlet {
 
         String bidAmount = request.getParameter("amount");
         String projectID = request.getParameter("id");
+        String userId = (String) request.getAttribute("username");
+        System.out.println("userId in bid: " +userId);
         PrintWriter out = response.getWriter();
         JSONObject instance = new JSONObject();
 
@@ -41,10 +43,10 @@ public class Bid extends HttpServlet {
            // ProjectContentProvider.hasBadeForProject("1", projectID);
             BidMapper bm = new BidMapper();
             //bm.initialize();
-            if ( bm.hasBade(projectID,"1")){
+            if ( bm.hasBade(projectID,userId)){
                 throw new BidAlreadyDoneException("bid already done");
             }
-            ProjectContentProvider.checkAccess("1", projectID);
+            ProjectContentProvider.checkAccess(userId, projectID);
 
             if(bm.biddingPossible(projectID,Integer.valueOf(bidAmount)) == false){
                 response.setStatus(response.SC_BAD_REQUEST);
@@ -54,7 +56,7 @@ public class Bid extends HttpServlet {
             }
             else{
                 //bidCommand.execute();
-                bm.fillTable(projectID,"1",Integer.valueOf(bidAmount));
+                bm.fillTable(projectID,userId,Integer.valueOf(bidAmount));
                 response.setStatus(response.SC_OK);
                 JSONObject status = new JSONObject();
                 status.put("status", "bid successfully done.");
