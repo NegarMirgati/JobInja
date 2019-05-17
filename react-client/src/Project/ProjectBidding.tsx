@@ -84,6 +84,7 @@ export default class ProjectBidding extends Component<Props, State> {
     var linktmp1 = "http://localhost:8080/project/bid?id=";
     var link2 = linktmp1.concat(this.state.projectId, "&amount=");
     var link = link2.concat(this.state.inputValue);
+
     var config = {
       headers: { Authorization: "bearer " + localStorage.getItem("jwt") }
     };

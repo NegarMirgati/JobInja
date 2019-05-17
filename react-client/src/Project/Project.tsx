@@ -33,13 +33,16 @@ class Project extends Component<RouteComponentProps<any>, State> {
     var link = linktmp.concat(parsed.id as string);
 
     let changeProjectState = (errorType: number) => {
-      if (errorType == 404 || errorType == 403) {
-        console.log("403 404");
+      if (errorType == 404 || errorType == 403 || errorType == 401) {
+        console.log("403 404 401");
         this.setState({ isProjectAvailable: "false" });
       }
     };
     let directToLogin = () => {
       this.props.history.push("/login");
+    };
+    let directToHome = () => {
+      this.props.history.push("/home");
     };
     var config = {
       headers: { Authorization: "bearer " + localStorage.getItem("jwt") }
@@ -65,14 +68,20 @@ class Project extends Component<RouteComponentProps<any>, State> {
         if (error.response.status == 404) {
           console.log("here eee 404");
           changeProjectState(404);
+          directToHome();
         }
         if (error.response.status == 403) {
           console.log("here eee 403");
           changeProjectState(403);
+          directToHome();
         }
         console.log(error.response.status);
         console.log(error.response.data["message"]);
-        directToLogin();
+        if (error.response.status == 401) {
+          console.log("here eee 401");
+          changeProjectState(401);
+          directToLogin();
+        }
       });
   }
 
