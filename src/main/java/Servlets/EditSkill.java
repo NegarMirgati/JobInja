@@ -62,10 +62,11 @@ public class EditSkill extends HttpServlet {
         String selectedSkill = request.getParameter("name");
         System.out.println("id:" + userID);
         System.out.println("name:" + selectedSkill);
+        String urlId = request.getParameter("id");
 
         try {
-            //UserContentProvider.validateSkill(selectedSkill);
-            //UserContentProvider.checkCurrentUser(userID);
+            UserContentProvider.validateSkill(selectedSkill);
+            UserContentProvider.checkCurrentUser(userID, urlId);
             AddSkillToUserCommand command = new AddSkillToUserCommand(userID, selectedSkill);
             command.execute();
             JSONObject status = new JSONObject();
@@ -78,16 +79,16 @@ public class EditSkill extends HttpServlet {
         catch( UserNotFoundException e){
             printApiOutputError(e, 404,response);
 
-        //} catch (UserAccessForbidden e) {
-          //  printApiOutputError(e, 403,response);
+        } catch (UserAccessForbidden e) {
+            printApiOutputError(e, 403,response);
 
         } catch (AddSkillAlreadyDoneException e) {
             printApiOutputError(e, 409,response);
         }
-        //catch(InvalidSkillException e){
-          //  printApiOutputError(e, 422,response);
+        catch(InvalidSkillException e){
+            printApiOutputError(e, 422,response);
 
-       // }
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -104,7 +105,7 @@ public class EditSkill extends HttpServlet {
             if(userID != null && userID.equals(endrorserID))
                 throw new UserAccessForbidden("Forbidden endorse");
 
-            //UserContentProvider.validateSkill(name);
+            UserContentProvider.validateSkill(name);
             command.execute();
             response.setStatus(response.SC_OK);
             JSONObject instance = new JSONObject();
@@ -119,10 +120,10 @@ public class EditSkill extends HttpServlet {
         catch(UserNotFoundException e){
             printApiOutputError(e, 404,response);
         }
-        //catch (InvalidSkillException e){
+        catch (InvalidSkillException e){
 
-         //   printApiOutputError(e, 422,response);
-       // }
+           printApiOutputError(e, 422,response);
+       }
         catch (UserAccessForbidden e){
 
             printApiOutputError(e, 422,response);

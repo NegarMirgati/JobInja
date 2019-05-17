@@ -61,16 +61,14 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     public boolean hasSkill(String skillName) {
         try {
             Connection con = DBCPDBConnectionPool.getConnection();
-            String sqlCommand = "SELECT " + "COUNT(*)" +
-                    " FROM skill" +
-                    " WHERE name = ?";
-
+            String sqlCommand = "SELECT * FROM skill WHERE name = ?";
+            System.out.println("skill : " + skillName);
             PreparedStatement prp = con.prepareStatement(sqlCommand);
             prp.setString(1, skillName);
             ResultSet rs = prp.executeQuery();
+            int count = covertCountResultToInt(rs);
             prp.close();
             con.close();
-            int count = covertCountResultToInt(rs);
             if(count > 0)
                 return true;
             else
@@ -86,8 +84,7 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     protected int covertCountResultToInt(ResultSet rs){
         try {
             while (rs.next()) {
-                String count = rs.getString(1);
-                return Integer.valueOf(count);
+                return 1;
             }
         }catch (SQLException e){
             e.printStackTrace();
