@@ -12,7 +12,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import org.json.JSONObject;
 import java.io.*;
-
+import java.util.Date;
 import Entities.User;
 import DataLayer.DataMappers.user.UserMapper;
 import utils.HashGenerator;
@@ -62,13 +62,18 @@ public class Login extends HttpServlet {
 
     private String generateJWTToken(String username, String password) {
         String token = "";
+        Date date = new Date();
         try {
                 Algorithm algorithmHS = Algorithm.HMAC256("joboonja");
                 token = JWT.create()
                     .withClaim("username", username)
                     .withClaim("password", password)
+                        .withClaim("nbf", date)
+                        .withClaim("iat", date)
+                        .withClaim("exp", new Date(date.getTime()+ 60 * 60 * 1000))
                     .withIssuer("auth0")
                     .sign(algorithmHS);
+
             return token;
        // } catch (UnsupportedEncodingException exception) {
             //UTF-8 encoding not supported
