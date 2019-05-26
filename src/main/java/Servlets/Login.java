@@ -30,7 +30,7 @@ public class Login extends HttpServlet {
             String hashedPassword = u.getHashedPassword();
             String salt = u.getSalt();
             if(HashGenerator.passwordMatches(hashedPassword, password, salt)){
-                String jwt = generateJWTToken(id, password);
+                String jwt = generateJWTToken(id);
                 JSONObject instance = new JSONObject();
                 instance.put("jwt", jwt);
                 instance.put("status", 200);
@@ -40,7 +40,6 @@ public class Login extends HttpServlet {
                 out.println(instance);
             }
             else {
-                System.out.println("HEREEEEEEEEEE");
                 response.setStatus(response.SC_FORBIDDEN);
                 JSONObject instance = new JSONObject();
                 instance.put("status", 403);
@@ -60,14 +59,13 @@ public class Login extends HttpServlet {
 
     }
 
-    private String generateJWTToken(String username, String password) {
+    private String generateJWTToken(String username) {
         String token = "";
         Date date = new Date();
         try {
                 Algorithm algorithmHS = Algorithm.HMAC256("joboonja");
                 token = JWT.create()
                     .withClaim("username", username)
-                    .withClaim("password", password)
                         .withClaim("nbf", date)
                         .withClaim("iat", date)
                         .withClaim("exp", new Date(date.getTime()+ 60 * 60 * 1000))
