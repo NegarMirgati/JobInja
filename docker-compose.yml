@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 services:
   jobinja:
@@ -8,3 +8,11 @@ services:
       NODE_ENV: production
     ports:
       - 3000:3000
+
+  sqlite:
+    image: dockerpinata/sqlite
+    build : .
+    ports:
+      - 8080:8080
+    volumes:
+      - ./sqlite:/var/lib/sqlite
