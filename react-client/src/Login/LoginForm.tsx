@@ -37,7 +37,7 @@ class LoginForm extends Component<any, State>{
         }
         });
         if(hasError == false){
-            let url = 'http://localhost:8080/login?id=';
+            let url = 'http://localhost:8080/test/login?id=';
             url += this.state.username +  "&password=" + this.state.password;
             console.log(url);
             axios.post(url)
@@ -63,7 +63,7 @@ class LoginForm extends Component<any, State>{
         var config = {
             headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
           };
-        axios.get('http://localhost:8080/', config, config) .then((response : any) => {
+        axios.get('http://localhost:8080/test/', config, config) .then((response : any) => {
             this.props.history.push("/home");
         })
         .catch((error : any) => {  

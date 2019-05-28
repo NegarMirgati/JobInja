@@ -29,7 +29,7 @@ class Project extends Component<RouteComponentProps<any>, State> {
   }
   componentDidMount() {
     const parsed = queryString.parse(this.props.location.search);
-    var linktmp = "http://localhost:8080/project?id=";
+    var linktmp = "http://localhost:8080/test/project?id=";
     var link = linktmp.concat(parsed.id as string);
 
     let changeProjectState = (errorType: number) => {

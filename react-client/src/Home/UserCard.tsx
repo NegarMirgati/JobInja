@@ -21,22 +21,11 @@ export default class UserCard extends Component<any, State> {
         this.setState({lastname : this.props[key].lastname});
         this.setState({jobTitle : this.props[key].jobTitle});
         this.setState({proLink : this.props[key].proLink});
-        var link = "http://localhost:3000/user?id=" + this.props[key].id;
+        var link = "/user?id=" + this.props[key].id;
         this.setState({linkToProPage : link});
         console.log('dddd', this.state)
     }
-    componentWillReceiveProps(){
-        /*var key = Object.keys(this.props)[0]
-        console.log('here', this.props[key])        
-        this.setState({id: this.props[key].id});
-        this.setState({name : this.props[key].name});
-        this.setState({lastname : this.props[key].lastname});
-        this.setState({jobTitle : this.props[key].jobTitle});
-        this.setState({proLink : this.props[key].proLink});
-        var link = "http://localhost:3000/user?id=" + this.props[key].id;
-        this.setState({linkToProPage : link});
-        console.log('uuuu', this.state)*/
-    }
+
   render() {
     return (
         <div className = "row">

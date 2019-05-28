@@ -19,7 +19,7 @@ export default class SearchUsers extends Component<any, State> {
       for(var i = 0; i < response.data.length; i++){
         var key = Object.keys(response.data[i])[0]
         console.log('here', response.data[i][key])  
-        var link = "http://localhost:3000/user?id=" + response.data[i][key].id;
+        var link = "/user?id=" + response.data[i][key].id;
         var user = {
           id : response.data[i][key].id,
           name : response.data[i][key].name,
@@ -36,7 +36,7 @@ export default class SearchUsers extends Component<any, State> {
 }
 
   componentDidMount(){
-    var link = 'http://localhost:8080/users?q='
+    var link = 'http://localhost:8080/test/users?q='
     axios.get(link)
     .then((response : any) => {
         this.setDataToState(response)
@@ -48,7 +48,7 @@ export default class SearchUsers extends Component<any, State> {
   }
 
   handleChangeinput = (event : any) => {
-    var link = 'http://localhost:8080/users?q='
+    var link = 'http://localhost:8080/test/users?q='
     link += event.target.value;
     console.log('searching for ' + link);
     axios.get(link)

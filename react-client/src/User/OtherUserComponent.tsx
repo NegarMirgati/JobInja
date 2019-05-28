@@ -25,7 +25,7 @@ export default class OtherUserComponent extends Component<any,  State> {
 
   componentDidMount(){
     if(this.props.userId){
-      var link = 'http://localhost:8080/user?id='.concat(this.props.userId as string) ;
+      var link = 'http://localhost:8080/test/user?id='.concat(this.props.userId as string) ;
       var config = {
         headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
       };

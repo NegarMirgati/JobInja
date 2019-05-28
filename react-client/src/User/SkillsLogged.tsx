@@ -54,7 +54,7 @@ export default class SkillsLogged extends Component<Props, State> {
     }
 
     addSkill = () => {
-        var linktmp = 'http://localhost:8080/user/skill?id='
+        var linktmp = 'http://localhost:8080/test/user/skill?id='
         var  link = linktmp.concat(this.props.id, '&name=')
         var e = document.getElementById("addSkill") as  HTMLSelectElement;
         if(e.options[e.selectedIndex] === undefined)
@@ -87,7 +87,7 @@ export default class SkillsLogged extends Component<Props, State> {
       }
 
       delSkill = (event : any) => {
-        var linktmp = 'http://localhost:8080/user/skill?id=' + this.props.id + '&name=';
+        var linktmp = 'http://localhost:8080/test/user/skill?id=' + this.props.id + '&name=';
         var selectedSkill = event.target.value;
         if(selectedSkill === undefined)
           return;

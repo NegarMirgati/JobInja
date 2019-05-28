@@ -32,7 +32,7 @@ export default class UserComponentLogged extends Component<any, State> {
     var config = {
       headers: { Authorization: "bearer " + localStorage.getItem("jwt") }
     };
-    var linktmp = "http://localhost:8080/user?id=";
+    var linktmp = "http://localhost:8080/test/user?id=";
     if (this.props.userId) {
       var link = linktmp.concat(this.props.userId);
       axios

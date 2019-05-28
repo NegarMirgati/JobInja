@@ -10,7 +10,7 @@ export default class MainSearch extends Component<any, State> {
     const { inputValue } = this.state;
     e.preventDefault();
     //toast.success(this.state.inputValue);
-    // var link = "http://localhost:8080/users?q=";
+    // var link = "http://localhost:8080/test/users?q=";
     // link += this.state.inputValue;
     // console.log("searching for " + link);
     // axios

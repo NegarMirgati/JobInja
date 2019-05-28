@@ -13,7 +13,7 @@ export default class ProjectsList extends Component<any, State> {
     };
   }
   componentDidMount() {
-    var link = "http://localhost:8080/projects?q=";
+    var link = "http://localhost:8080/test/projects?q=";
     axios
       .get(link)
       .then((response: any) => {
@@ -35,7 +35,7 @@ export default class ProjectsList extends Component<any, State> {
         // console.log(" response.data[i].id in set data");
         // console.log(response.data[i].id);
         var link =
-          "http://localhost:3000/project?id=" + response.data[i][key].id;
+          "/project?id=" + response.data[i][key].id;
         var project = {
           projectId: response.data[i][key].id,
           title: response.data[i][key].title,
@@ -98,7 +98,7 @@ export default class ProjectsList extends Component<any, State> {
     e.preventDefault();
     //toast.success(this.state.inputValue);
     //this.setState({ projects: [] });
-    var link = "http://localhost:8080/projects?q=";
+    var link = "http://localhost:8080/test/projects?q=";
     link += this.state.inputValue;
     // console.log("searching for " + link);
     axios

@@ -11,7 +11,7 @@ class Home extends Component<any, any> {
     var config = {
       headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
     };
-    axios.get('http://localhost:8080/', config, config) .then((response : any) => {
+    axios.get('http://localhost:8080/test/', config, config) .then((response : any) => {
       console.log(response.username)
     })
     .catch((error : any) => {

@@ -31,7 +31,7 @@ class RegisterForm extends Component<any, State>{
         var config = {
             headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
           };
-        axios.get('http://localhost:8080/', config, config) .then((response : any) => {
+        axios.get('http://localhost:8080/test/', config, config) .then((response : any) => {
             this.props.history.push("/home");
         })
         .catch((error : any) => {  
@@ -91,7 +91,7 @@ class RegisterForm extends Component<any, State>{
             hasError = true
         } 
         if(hasError == false){
-            var link = 'http://localhost:8080/user?id=' + this.state.username + '&firstName=' + this.state.name + '&lastName=' + this.state.lastname +
+            var link = 'http://localhost:8080/test/user?id=' + this.state.username + '&firstName=' + this.state.name + '&lastName=' + this.state.lastname +
                         '&jobTitle=' + this.state.job + '&bio=' + this.state.bio + "&proLink=" + this.state.proLink + "&password=" + this.state.password
             axios.post(link)
             .then((response : any) => {

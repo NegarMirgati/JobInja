@@ -28,7 +28,7 @@ export default class ProjectInfo extends Component<any, State> {
     this.setState({ skills: this.props.skills });
     this.setState({ budget: this.props.budget });
     this.setState({ deadline: this.props.deadline });
-    var link = "http://localhost:3000/project?id=" + this.props.id;
+    var link = "/project?id=" + this.props.id;
     this.setState({ linkToProPage: link });
     console.log(this.state);
   }

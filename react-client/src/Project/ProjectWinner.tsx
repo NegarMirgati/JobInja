@@ -28,7 +28,7 @@ export default class ProjectWinner extends Component<Props, State> {
   }
   componentDidUpdate() {
      if (this.state.winner == "" && this.state.projectId != "") {
-      var linktmp = "http://localhost:8080/project?id=";
+      var linktmp = "http://localhost:8080/test/project?id=";
       var link = linktmp.concat(this.state.projectId);
       //toast.error(this.state.projectId);
       var config = {

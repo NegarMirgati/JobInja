@@ -57,7 +57,7 @@ export default class SkillsOther extends Component<Props, State> {
         var config = {
           headers: {'Authorization': "bearer " + localStorage.getItem('jwt')}
         };
-        var linktmp = 'http://localhost:8080/user/skill?id=';
+        var linktmp = 'http://localhost:8080/test/user/skill?id=';
         var  link = linktmp.concat(this.state.id, '&name=')
         var skillTemp  = event.target.value;
         var selectedSkill = skillTemp.replace(/\+/g, "%2B");
