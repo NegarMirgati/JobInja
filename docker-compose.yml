@@ -1,18 +1,28 @@
 version: '3'
 
 services:
-  jobinja:
-    image: jobinja
+  react-client:
+    image: client
     build: .
     environment:
       NODE_ENV: production
     ports:
-      - 3000:3000
+      - 5000:5000
+
+  tomcat-server:
+    image : tomcat-server
+    build : .
+    ports :
+      - 8080:8080
+    depends_on: 
+      - sqlite
+    
+
 
   sqlite:
     image: dockerpinata/sqlite
     build : .
     ports:
-      - 8080:8080
+      - 8000:8000
     volumes:
       - ./sqlite:/var/lib/sqlite

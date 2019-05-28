@@ -1,8 +1,5 @@
-FROM node:10.13-alpine
-ENV NODE_ENV production
-WORKDIR /react-client
-COPY ["react-client/package.json", "react-client/package-lock.json*", "./"]
-RUN npm install --production --silent 
-COPY react-client/ .
-EXPOSE 3000
-CMD npm start
+FROM tomcat:9.0.16-jre8
+ADD test.war /usr/local/tomcat/webapps/
+COPY ["sqlite/", "/var/lib/sqlite/"]
+#RUN sudo apt-get install -y sqlite3 libsqlite3-dev
+
