@@ -23,20 +23,14 @@ public class ProjectSkillMapper extends Mapper<Skill, String> implements IProjec
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st =
                 con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "projectSkill" + " " + "(ProjectId TEXT," +
-                " name TEXT, point INTEGER, PRIMARY KEY (ProjectId, name), FOREIGN KEY (name) references skill(name), FOREIGN KEY (ProjectId) references project(id))");
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "projectSkill" + " " + "(ProjectId VARCHAR(256)," +
+                " name VARCHAR(256), point INTEGER, PRIMARY KEY (ProjectId, name), FOREIGN KEY (name) references skill(name))");
 
       //  fillTable(con);
         st.close();
         con.close();
 
     }
-
-//    protected String getFindStatementByProjectId() {
-//        return "SELECT " + COLUMNS +
-//                " FROM projectSkill" +
-//                " WHERE ProjectId = ?";
-//    }
 
 
     @Override
@@ -69,7 +63,7 @@ public class ProjectSkillMapper extends Mapper<Skill, String> implements IProjec
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
-        String sqlCommand = "INSERT OR IGNORE INTO " + tableName + "(";
+        String sqlCommand = "INSERT INTO " + tableName + "(";
         for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);

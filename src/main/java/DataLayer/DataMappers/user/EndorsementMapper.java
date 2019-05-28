@@ -15,8 +15,8 @@ public class EndorsementMapper extends Mapper<String, String> implements IEndors
         try {
             Connection con = DBCPDBConnectionPool.getConnection();
             Statement st = con.createStatement();
-            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId TEXT, endorsedId Text, skillName TEXT," +
-                    " FOREIGN KEY(endorserId) REFERENCES user(username), FOREIGN KEY(endorsedId) REFERENCES userSkills(username) , FOREIGN KEY(skillName) REFERENCES userSkills(name)"
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "endorsement" + " " + "(endorserId VARCHAR(256), endorsedId VARCHAR(256), skillName VARCHAR(256)," +
+                    " FOREIGN KEY(endorserId) REFERENCES user(username), FOREIGN KEY(endorsedId) REFERENCES user(username) , FOREIGN KEY(skillName) REFERENCES userSkills(skillName)"
                     + ",PRIMARY KEY(endorserId, endorsedId, skillName))");
 
             st.close();

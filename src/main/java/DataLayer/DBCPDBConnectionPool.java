@@ -3,6 +3,7 @@ package DataLayer;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /***
@@ -11,17 +12,25 @@ import java.sql.SQLException;
 public class DBCPDBConnectionPool {
 
     private static BasicDataSource ds = new BasicDataSource();
-    private final static String dbURL = "jdbc:sqlite:/Users/negar/Desktop/CA8/newDB.db";
+    private final static String dbURL = "jdbc:mysql://localhost:3306/var/lib/newDB.db";
 
     static {
         ds.setUrl(dbURL);
         ds.setMinIdle(1);
         ds.setMaxIdle(4);
-        ds.setDriverClassName("org.sqlite.JDBC");
+        ds.setUsername("root");
+        ds.setPassword("password");
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
     }
 
     public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return DriverManager.getConnection("jdbc:mysql://localhost:3303/jobinja","root", "");
     }
 
     private DBCPDBConnectionPool(){ }

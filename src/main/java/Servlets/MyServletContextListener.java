@@ -19,15 +19,13 @@ public class MyServletContextListener implements ServletContextListener {
         try {
             SkillMapper sm = new SkillMapper();
             sm.initialize();
-            ProjectMapper pm = new ProjectMapper(true);
-            UserSkillMapper usm = new UserSkillMapper();
-            usm.initialize();
             UserMapper um = new UserMapper();
             um.initialize();
+            UserSkillMapper usm = new UserSkillMapper();
+            usm.initialize();
             EndorsementMapper em = new EndorsementMapper();
             em.initialize();
-            User u = um.find("1");
-            System.out.println(u.getJobTitle());
+            ProjectMapper pm = new ProjectMapper(true);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {

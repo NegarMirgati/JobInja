@@ -20,7 +20,7 @@ public class SkillMapper extends Mapper<Skill, Integer> implements ISkillMapper 
     public void initialize() throws SQLException{
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name TEXT PRIMARY KEY)");
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "skill" + " " + "(name VARCHAR(256) PRIMARY KEY)");
         try {
             fillTable(con);
         } catch (SQLException| IOException e ){

@@ -38,8 +38,8 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
             Connection con = DBCPDBConnectionPool.getConnection();
             Statement st =
                     con.createStatement();
-            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id TEXT PRIMARY KEY, title TEXT," +
-                    " description TEXT, imageURL TEXT, budget INTEGER, deadline INTEGER, creationDate INTEGER, winner TEXT, FOREIGN KEY (winner) references user(username))");
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "project" + " " + "(id VARCHAR(256) PRIMARY KEY, title TEXT," +
+                    " description TEXT, imageURL TEXT, budget INTEGER, deadline BIGINT, creationDate BIGINT, winner VARCHAR(256))");
             ProjectSkillMapper psm = new ProjectSkillMapper();
             try {
                 creationDate = "0";
@@ -91,8 +91,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         ArrayList<ArrayList<String>> values_list = new ArrayList<ArrayList<String>>(tempPair.getKey());
         ArrayList< ArrayList<ArrayList<String>>> allProjectsSkill = new ArrayList< ArrayList<ArrayList<String>>>(tempPair.getValue());
         ArrayList<String> attrs = createAttribute();
-        // loadedMap
-        //  insert skills
         ArrayList<Integer>toBeAdded = new ArrayList<>();
         boolean anythingAdded = false;
         for (int i = 0; i < values_list.size(); i++) {
@@ -120,7 +118,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
                     System.out.println("found new project");
                     anythingAdded =true;
                     creationDateUpdate = creationDateTemp;
-                    //System.out.println(values_list.get(i));
                     toBeAdded.add(i);
                     try {
                         values_list.get(i).add("");
@@ -135,9 +132,6 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         }
         ArrayList<String> attr = ProjectSkillMapper.createAttribute();
         for (int j = 0; j < allProjectsSkill.size(); j++) {
-
-            //System.out.println(allProjectsSkill.size());
-            //System.out.println(allProjectsSkill.get(j));
             if ( (init == false && toBeAdded.contains(j)) || (init == true) ){
                 System.out.println("add new project");
                 for (int k = 0; k < allProjectsSkill.get(j).size(); k++) {
@@ -190,7 +184,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
     }
 
     private static String insertCommand(String tableName, ArrayList<String> attributes){
-        String sqlCommand = "INSERT OR IGNORE INTO " + tableName + "(";
+        String sqlCommand = "INSERT INTO " + tableName + "(";
         for(String attr: attributes)
             sqlCommand += attr + ",";
         sqlCommand = sqlCommand.substring(0, sqlCommand.length()-1);

@@ -13,8 +13,8 @@ public class UserSkillMapper extends Mapper<Skill, String> implements IUserSkill
     public void initialize() throws SQLException{
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "userSkills" + " " + "(username TEXT," +
-                " skillName TEXT, point INTEGER, PRIMARY KEY (username, skillName), FOREIGN KEY (skillName) references skill(name), FOREIGN KEY (username) references user(username))");
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "userSkills" + " " + "(username VARCHAR(256)," +
+                " skillName VARCHAR(256), point INTEGER, PRIMARY KEY (username, skillName), FOREIGN KEY (skillName) references skill(name), FOREIGN KEY (username) references user(username))");
 
         st.close();
         con.close();

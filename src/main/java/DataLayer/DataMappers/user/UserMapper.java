@@ -17,7 +17,7 @@ public class UserMapper extends Mapper<User, String> implements IUserMapper{
         System.out.println("here for user Table!!");
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st = con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username TEXT PRIMARY KEY, password TEXT, salt TEXT, firstName TEXT," +
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "user" + " " + "(username VARCHAR(256) PRIMARY KEY, password TEXT, salt TEXT, firstName TEXT," +
                 " lastName TEXT, jobTitle TEXT, profilePictureURL TEXT, bio TEXT)");
 
         fillTable();
