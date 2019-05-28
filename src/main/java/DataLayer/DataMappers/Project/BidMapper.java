@@ -30,8 +30,8 @@ public class BidMapper extends Mapper<Bid, String> implements IBidMapper {
         Connection con = DBCPDBConnectionPool.getConnection();
         Statement st =
                 con.createStatement();
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "bid" + " " + "(ProjectId TEXT," +
-                " userId TEXT, amount INTEGER, PRIMARY KEY (ProjectId, userId), FOREIGN KEY (userId) references user(username), FOREIGN KEY (ProjectId) references project(id))");
+        st.executeUpdate("CREATE TABLE IF NOT EXISTS " + "bid" + " " + "(ProjectId VARCHAR(256)," +
+                " userId VARCHAR(256), amount INTEGER, PRIMARY KEY (ProjectId, userId), FOREIGN KEY (userId) references user(username), FOREIGN KEY (ProjectId) references project(id))");
 
         st.close();
         con.close();

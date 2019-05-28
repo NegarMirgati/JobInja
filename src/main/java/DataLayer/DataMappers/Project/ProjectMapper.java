@@ -319,7 +319,7 @@ public class ProjectMapper extends Mapper<Project, String> implements IProjectMa
         return sqlCommand;
     }
     private String getFindFinneshedStatement() {
-        String sqlCommand = "SELECT * FROM project WHERE winner == ? AND ? > deadline";
+        String sqlCommand = "SELECT * FROM project WHERE winner = ? AND ? > deadline";
 
         return sqlCommand;
     }
