@@ -21,7 +21,6 @@ services:
   mysql:
     image: mysql:8
     container_name : dbtest
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_USER : 'root1'
