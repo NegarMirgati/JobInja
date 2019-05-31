@@ -3,6 +3,7 @@ version: '3'
 services:
   react-client:
     image: client
+    container_name : r_client
     build: .
     environment:
       NODE_ENV: production
@@ -11,21 +12,28 @@ services:
 
   tomcat-server:
     image : tomcat-server
+    container_name : test
     build : .
     ports :
       - 8080:8080
     depends_on: 
-      - sqlite
+      - mysql
   mysql:
-    image: mysql
+    image: mysql:8
+    container_name : dbtest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER : 'root1'
+      MYSQL_DATABASE : 'jobinja'
+      MYSQL_PASSWORD : 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - 3306:3306
+      - 3333:3306
+    expose :
+      - '3333'
     volumes:
-      - ./sqlite:/sqlite
+      - jobinja:/var/lib/mysql
   
   sqlite:
     image: mysql
@@ -33,4 +41,8 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./sqlite:/var/lib/sqlite
+      - sqlite:/var/lib/sqlite
+volumes:
+  jobinja:
+  sqlite:
+
