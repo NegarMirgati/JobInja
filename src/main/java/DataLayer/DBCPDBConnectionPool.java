@@ -11,18 +11,6 @@ import java.sql.SQLException;
  ***/
 public class DBCPDBConnectionPool {
 
-    private static BasicDataSource ds = new BasicDataSource();
-    private final static String dbURL = "jdbc:mysql://localhost:3306/var/lib/newDB.db";
-
-    static {
-        ds.setUrl(dbURL);
-        ds.setMinIdle(1);
-        ds.setMaxIdle(4);
-        ds.setUsername("root");
-        ds.setPassword("password");
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-    }
-
     public static Connection getConnection() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,7 +18,7 @@ public class DBCPDBConnectionPool {
         catch (ClassNotFoundException e) {
             System.out.println(e);
         }
-        return DriverManager.getConnection("jdbc:mysql://localhost:3303/jobinja","root", "");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3333/jobinja?allowPublicKeyRetrieval=true&useSSL=false","root", "");
     }
 
     private DBCPDBConnectionPool(){ }
