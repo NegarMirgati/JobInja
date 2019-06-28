@@ -4,7 +4,6 @@ services:
   react-client:
     image: client
     container_name : r_client
-    build: .
     environment:
       NODE_ENV: production
     ports:
@@ -13,7 +12,6 @@ services:
   tomcat-server:
     image : tomcat-server
     container_name : test
-    build : .
     ports :
       - 8080:8080
     depends_on: 
@@ -34,14 +32,4 @@ services:
     volumes:
       - jobinja:/var/lib/mysql
   
-  sqlite:
-    image: mysql
-    build : .
-    ports:
-      - 8000:8000
-    volumes:
-      - sqlite:/var/lib/sqlite
-volumes:
-  jobinja:
-  sqlite:
 
